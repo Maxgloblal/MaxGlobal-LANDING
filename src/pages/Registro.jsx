@@ -354,7 +354,25 @@ export default function Registro() {
                   style={{ marginTop: '3px', accentColor: 'var(--brand-green)' }}
                 />
                 <span>
-                  He leído y acepto la Política de Privacidad y autorizo el tratamiento de mis datos personales para gestionar mi afiliación.
+                  He leído y acepto los{' '}
+                  <a
+                    href="/terminos-y-condiciones"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    style={{ color: 'var(--brand-green)', fontWeight: 700, textDecoration: 'underline' }}
+                  >
+                    Términos y Condiciones
+                  </a>{' '}
+                  y la{' '}
+                  <a
+                    href="/politica-de-privacidad"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    style={{ color: 'var(--brand-green)', fontWeight: 700, textDecoration: 'underline' }}
+                  >
+                    Política de Privacidad
+                  </a>{' '}
+                  y autorizo el tratamiento de mis datos personales para gestionar mi afiliación conforme a la Ley N° 29733.
                 </span>
               </label>
 

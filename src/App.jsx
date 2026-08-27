@@ -12,6 +12,9 @@ import Packs from './pages/Packs';
 import Registro from './pages/Registro';
 import Confirmacion from './pages/Confirmacion';
 import Nosotros from './pages/Nosotros';
+import PoliticaPrivacidad from './pages/PoliticaPrivacidad';
+import TerminosCondiciones from './pages/TerminosCondiciones';
+import LibroReclamaciones from './pages/LibroReclamaciones';
 
 // Captura y persiste el código de referido (?ref=MG-XXXXX) en sessionStorage
 function RefTracker() {
@@ -39,6 +42,9 @@ function RouteManager() {
       '/registro': 'Registro de Afiliación | Max Global',
       '/confirmacion': 'Registro Recibido — Confirmación | Max Global',
       '/nosotros': 'Sobre Nosotros — Max Global Corporation',
+      '/terminos-y-condiciones': 'Términos y Condiciones | Max Global Corporation',
+      '/politica-de-privacidad': 'Política de Privacidad | Max Global Corporation',
+      '/libro-de-reclamaciones': 'Libro de Reclamaciones Virtual | Max Global Corporation',
     };
 
     document.title = titles[pathname] || 'Max Global Corporation';
@@ -78,6 +84,9 @@ export default function App() {
               <Route path="/registro" element={<Registro />} />
               <Route path="/confirmacion" element={<Confirmacion />} />
               <Route path="/nosotros" element={<Nosotros />} />
+              <Route path="/terminos-y-condiciones" element={<TerminosCondiciones />} />
+              <Route path="/politica-de-privacidad" element={<PoliticaPrivacidad />} />
+              <Route path="/libro-de-reclamaciones" element={<LibroReclamaciones />} />
               <Route path="*" element={<Portada />} />
             </Routes>
           </main>

@@ -91,14 +91,15 @@ export default function SiteFooter() {
             <span className="mg-eyebrow" style={{ color: 'var(--text-muted)' }}>
               Legal
             </span>
-            <a href="#terminos" style={linkStyle}>
+            <Link to="/terminos-y-condiciones" data-testid="footer-link-terminos" style={linkStyle}>
               Términos y condiciones
-            </a>
-            <a href="#privacidad" style={linkStyle}>
+            </Link>
+            <Link to="/politica-de-privacidad" data-testid="footer-link-privacidad" style={linkStyle}>
               Política de privacidad
-            </a>
-            <a
-              href="#libro-reclamaciones"
+            </Link>
+            <Link
+              to="/libro-de-reclamaciones"
+              data-testid="footer-link-libro"
               style={{
                 display: 'inline-flex',
                 alignItems: 'center',
@@ -116,7 +117,7 @@ export default function SiteFooter() {
             >
               <BookOpen size={16} color="var(--brand-gold)" />
               <span>Libro de Reclamaciones</span>
-            </a>
+            </Link>
           </div>
         </div>
 

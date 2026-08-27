@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { BookOpen, MessageCircle, Mail, MapPin, Sparkles, Award, ShieldCheck, HeartHandshake } from 'lucide-react';
 import { EMPRESA } from '../config';
 
@@ -317,8 +318,8 @@ export default function Nosotros() {
                 Conforme al Código de Protección y Defensa del Consumidor, puedes
                 registrar tu queja o reclamo en nuestro libro virtual.
               </p>
-              <a
-                href="/libro-de-reclamaciones"
+              <Link
+                to="/libro-de-reclamaciones"
                 data-testid="btn-libro-reclamaciones"
                 style={{
                   display: 'inline-flex',
@@ -337,7 +338,7 @@ export default function Nosotros() {
               >
                 <BookOpen size={16} aria-hidden="true" />
                 <span>Abrir el libro</span>
-              </a>
+              </Link>
             </div>
           </div>
 
