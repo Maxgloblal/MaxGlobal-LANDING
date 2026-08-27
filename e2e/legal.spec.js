@@ -40,12 +40,13 @@ test.describe('Legal Pages, Compliance & Libro de Reclamaciones E2E', () => {
     // Verification
     const code = page.locator('[data-testid="lr-confirmation-code"]');
     await expect(code).toBeVisible();
-    await expect(code).toContainText('LR-2026-');
+    await expect(code).toContainText('MG-LR-');
 
     await expect(page.locator('text=Constancia de Recepción Oficial')).toBeVisible();
     await expect(page.locator('text=15 días hábiles')).toBeVisible();
 
     // Check action buttons
+    await expect(page.locator('[data-testid="btn-lr-download-txt"]')).toBeVisible();
     await expect(page.locator('[data-testid="btn-lr-email-copy"]')).toBeVisible();
     await expect(page.locator('[data-testid="btn-lr-whatsapp"]')).toBeVisible();
   });

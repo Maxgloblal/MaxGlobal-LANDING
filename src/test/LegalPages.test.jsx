@@ -73,7 +73,8 @@ describe('Legal Pages and Compliance (Ley 32495, Ley 29571, Ley 29733)', () => {
 
     // Should display confirmation view with LR code
     expect(screen.getByTestId('lr-confirmation-code')).toBeInTheDocument();
-    expect(screen.getByText(/LR-2026-/)).toBeInTheDocument();
+    expect(screen.getByText(/MG-LR-/)).toBeInTheDocument();
+    expect(screen.getByTestId('btn-lr-download-txt')).toBeInTheDocument();
     expect(screen.getByText(/Constancia de Recepción Oficial/i)).toBeInTheDocument();
   });
 

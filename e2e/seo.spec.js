@@ -47,7 +47,7 @@ test.describe('SEO, Metatags & Canonical URL (P-07) E2E', () => {
     await expect(page).toHaveTitle(/Sobre Nosotros/);
   });
 
-  test('should set noindex, nofollow on registro and confirmacion routes and index, follow on public routes', async ({ page }) => {
+  test('should set noindex, nofollow on registro, confirmacion and libro-de-reclamaciones routes and index, follow on public routes', async ({ page }) => {
     // Portada: index, follow
     await page.goto('/');
     const robots = page.locator('meta[name="robots"]');
@@ -60,6 +60,14 @@ test.describe('SEO, Metatags & Canonical URL (P-07) E2E', () => {
     // Confirmacion: noindex, nofollow
     await page.goto('/confirmacion');
     await expect(robots).toHaveAttribute('content', 'noindex, nofollow');
+
+    // Libro de Reclamaciones: noindex, nofollow
+    await page.goto('/libro-de-reclamaciones');
+    await expect(robots).toHaveAttribute('content', 'noindex, nofollow');
+
+    // Términos y Condiciones: index, follow
+    await page.goto('/terminos-y-condiciones');
+    await expect(robots).toHaveAttribute('content', 'index, follow');
 
     // Productos: index, follow
     await page.goto('/productos');

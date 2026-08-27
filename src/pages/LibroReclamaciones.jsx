@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { BookOpen, CheckCircle, AlertCircle, ArrowLeft, Printer, Mail, MessageCircle, FileText } from 'lucide-react';
+import { BookOpen, CheckCircle, AlertCircle, ArrowLeft, Printer, Mail, MessageCircle, Download, FileText } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { EMPRESA } from '../config';
 
@@ -44,13 +44,14 @@ export default function LibroReclamaciones() {
       return;
     }
 
-    // Generar correlativo único
-    const currentYear = new Date().getFullYear();
-    const storedCount = parseInt(localStorage.getItem('mg_lr_count') || '100', 10) + 1;
-    localStorage.setItem('mg_lr_count', String(storedCount));
-    const generatedCode = `LR-${currentYear}-${String(storedCount).padStart(4, '0')}`;
-
+    // Generar correlativo provisional (Fase 1 en navegador / localStorage)
+    // NOTA DE ARQUITECTURA: En Fase 2 el correlativo y almacenamiento centralizado provendrán de backend/Supabase.
     const now = new Date();
+    const yyyymmdd = now.toISOString().slice(0, 10).replace(/-/g, '');
+    const storedCount = parseInt(localStorage.getItem('mg_lr_count') || '0', 10) + 1;
+    localStorage.setItem('mg_lr_count', String(storedCount));
+    const generatedCode = `MG-LR-${yyyymmdd}-${String(storedCount).padStart(4, '0')}`;
+
     const dateFormatted = now.toLocaleString('es-PE', {
       year: 'numeric',
       month: 'long',
@@ -65,8 +66,83 @@ export default function LibroReclamaciones() {
     window.scrollTo(0, 0);
   };
 
+  // Función para descargar copia en archivo .txt
+  const handleDownloadTxt = () => {
+    const content = [
+      '============================================================',
+      'MAX GLOBAL CORPORATION S.A — LIBRO DE RECLAMACIONES VIRTUAL',
+      'Constancia de Hoja de Reclamación Conforme a la Ley N° 32495',
+      '============================================================',
+      '',
+      `CÓDIGO DE SEGUIMIENTO : ${submittedCode}`,
+      `FECHA Y HORA REGISTRO : ${submissionDate}`,
+      `PROVEEDOR             : ${EMPRESA.razonSocial} (RUC: ${EMPRESA.ruc})`,
+      `DOMICILIO FISCAL      : ${EMPRESA.domicilio}`,
+      `CORREO OFICIAL        : ${EMPRESA.email}`,
+      '',
+      '--- 1. IDENTIFICACIÓN DEL CONSUMIDOR RECLAMANTE ---',
+      `Nombre completo       : ${formData.nombres}`,
+      `Documento             : ${formData.tipoDoc} ${formData.numeroDoc}`,
+      `Domicilio             : ${formData.domicilio}`,
+      `Ubicación             : ${formData.provincia}, ${formData.departamento}`,
+      `Teléfono / Celular    : ${formData.telefono}`,
+      `Correo Electrónico    : ${formData.email}`,
+      formData.esMenor ? `Padre / Apoderado     : ${formData.nombreApoderado} (DNI: ${formData.dniApoderado})` : '',
+      '',
+      '--- 2. DETALLE DEL BIEN CONTRATADO ---',
+      `Tipo de Bien          : ${formData.tipoBien}`,
+      `Monto Reclamado       : S/. ${formData.montoReclamado || '0.00'}`,
+      `Descripción           : ${formData.descripcionBien}`,
+      '',
+      '--- 3. DETALLE DE LA RECLAMACIÓN ---',
+      `Tipo de Registro      : ${formData.tipoReclamacion.toUpperCase()}`,
+      `Detalle de los hechos : ${formData.detalle}`,
+      `Pedido del consumidor : ${formData.pedido}`,
+      '',
+      '============================================================',
+      'PLAZO LEGAL DE ATENCIÓN: Máximo 15 días hábiles.',
+      'La formulación del reclamo no impide acudir a otras vías de',
+      'solución de controversias ni es requisito previo ante INDECOPI.',
+      '============================================================',
+    ].filter(Boolean).join('\n');
+
+    const blob = new Blob([content], { type: 'text/plain;charset=utf-8' });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = `Reclamo_${submittedCode}.txt`;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    URL.revokeObjectURL(url);
+  };
+
   // En caso de reclamo enviado con éxito:
   if (submittedCode) {
+    const waText = [
+      `*LIBRO DE RECLAMACIONES VIRTUAL - MAX GLOBAL*`,
+      `*Código:* ${submittedCode}`,
+      `*Fecha:* ${submissionDate}`,
+      ``,
+      `*Consumidor:* ${formData.nombres}`,
+      `*Documento:* ${formData.tipoDoc} ${formData.numeroDoc}`,
+      `*Teléfono:* ${formData.telefono}`,
+      `*Correo:* ${formData.email}`,
+      `*Domicilio:* ${formData.domicilio} (${formData.provincia}, ${formData.departamento})`,
+      formData.esMenor ? `*Apoderado:* ${formData.nombreApoderado} (DNI: ${formData.dniApoderado})` : null,
+      ``,
+      `*Bien:* ${formData.tipoBien} - Monto: S/. ${formData.montoReclamado || '0.00'}`,
+      `*Descripción:* ${formData.descripcionBien}`,
+      ``,
+      `*Tipo:* ${formData.tipoReclamacion.toUpperCase()}`,
+      `*Detalle:* ${formData.detalle}`,
+      `*Pedido:* ${formData.pedido}`,
+      ``,
+      `_Registrado conforme a la Ley N° 32495._`,
+    ].filter(Boolean).join('\n');
+
+    const waUrl = `https://wa.me/${EMPRESA.whatsapp}?text=${encodeURIComponent(waText)}`;
+
     const emailSubject = encodeURIComponent(`Hoja de Reclamación Virtual ${submittedCode} - ${formData.nombres}`);
     const emailBody = encodeURIComponent(
       `CONSTANCIA DE REGISTRO EN EL LIBRO DE RECLAMACIONES VIRTUAL\n\n` +
@@ -84,11 +160,6 @@ export default function LibroReclamaciones() {
       `Plazo legal de respuesta: Máximo 15 días hábiles conforme a la Ley N° 32495.`
     );
     const mailtoUrl = `mailto:${EMPRESA.email}?cc=${encodeURIComponent(formData.email)}&subject=${emailSubject}&body=${emailBody}`;
-
-    const waMsg = encodeURIComponent(
-      `Hola Max Global, acabo de registrar la Hoja de Reclamación *${submittedCode}* a nombre de *${formData.nombres}*.`
-    );
-    const waUrl = `https://wa.me/${EMPRESA.whatsapp}?text=${waMsg}`;
 
     return (
       <div style={{ backgroundColor: 'var(--surface-page)', minHeight: '100vh', padding: 'var(--section-y) 0' }}>
@@ -158,33 +229,37 @@ export default function LibroReclamaciones() {
             </div>
 
             <div style={{ textAlign: 'left', fontSize: 'var(--fs-sm)', lineHeight: 'var(--lh-relaxed)', color: 'var(--text-body)', marginBottom: 'var(--sp-6)' }}>
+              <p style={{ fontWeight: 700, color: 'var(--text-strong)', marginBottom: '8px' }}>
+                Guarda este código. Te responderemos en un plazo máximo de 15 días hábiles.
+              </p>
               <p>
-                Hemos recibido satisfactoriamente tu <strong>{formData.tipoReclamacion.toLowerCase()}</strong>. Conforme a la <strong>Ley N° 32495</strong> y las disposiciones de INDECOPI, <strong>{EMPRESA.razonSocial}</strong> brindará respuesta formal a través de tu correo electrónico (<em>{formData.email}</em>) en un plazo legal máximo de <strong>15 días hábiles</strong>.
+                Hemos recibido tu <strong>{formData.tipoReclamacion.toLowerCase()}</strong>. Conforme a la <strong>Ley N° 32495</strong> y las directivas de INDECOPI, <strong>{EMPRESA.razonSocial}</strong> brindará respuesta formal a través de tu correo electrónico (<em>{formData.email}</em>).
               </p>
             </div>
 
             {/* Acciones */}
             <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--sp-3)' }}>
-              <a
-                href={mailtoUrl}
-                data-testid="btn-lr-email-copy"
+              <button
+                onClick={handleDownloadTxt}
+                data-testid="btn-lr-download-txt"
                 style={{
                   display: 'inline-flex',
                   alignItems: 'center',
                   justifyContent: 'center',
                   gap: '8px',
-                  backgroundColor: 'var(--brand-green)',
-                  color: '#FFFFFF',
+                  backgroundColor: 'var(--brand-gold)',
+                  color: 'var(--n-700)',
                   padding: '12px 20px',
                   borderRadius: 'var(--r-pill)',
                   fontWeight: 700,
                   fontSize: 'var(--fs-sm)',
-                  textDecoration: 'none',
+                  border: 'none',
+                  cursor: 'pointer',
                 }}
               >
-                <Mail size={18} />
-                <span>Enviar copia digital a mi correo</span>
-              </a>
+                <Download size={18} />
+                <span>Descargar copia de mi reclamo (.txt)</span>
+              </button>
 
               <a
                 href={waUrl}
@@ -206,7 +281,28 @@ export default function LibroReclamaciones() {
                 }}
               >
                 <MessageCircle size={18} />
-                <span>Notificar registro por WhatsApp</span>
+                <span>Enviar reclamo completo por WhatsApp a Max Global</span>
+              </a>
+
+              <a
+                href={mailtoUrl}
+                data-testid="btn-lr-email-copy"
+                style={{
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  gap: '8px',
+                  backgroundColor: 'var(--brand-green)',
+                  color: '#FFFFFF',
+                  padding: '12px 20px',
+                  borderRadius: 'var(--r-pill)',
+                  fontWeight: 700,
+                  fontSize: 'var(--fs-sm)',
+                  textDecoration: 'none',
+                }}
+              >
+                <Mail size={18} />
+                <span>Enviar copia a mi correo</span>
               </a>
 
               <button

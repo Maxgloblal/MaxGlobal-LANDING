@@ -2,5 +2,6 @@ User-agent: *
 Allow: /
 Disallow: /registro
 Disallow: /confirmacion
+Disallow: /libro-de-reclamaciones
 
 Sitemap: https://maxglobaloficial.com/sitemap.xml

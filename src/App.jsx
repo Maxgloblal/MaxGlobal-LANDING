@@ -44,14 +44,14 @@ function RouteManager() {
       '/nosotros': 'Sobre Nosotros — Max Global Corporation',
       '/terminos-y-condiciones': 'Términos y Condiciones | Max Global Corporation',
       '/politica-de-privacidad': 'Política de Privacidad | Max Global Corporation',
-      '/libro-de-reclamaciones': 'Libro de Reclamaciones Virtual | Max Global Corporation',
+      '/libro-de-reclamaciones': 'Libro de Reclamaciones | Max Global Corporation',
     };
 
     document.title = titles[pathname] || 'Max Global Corporation';
 
-    // Control de indexación SEO: No indexar formularios ni pantallas de confirmación
+    // Control de indexación SEO: No indexar formularios ni pantallas de confirmación ni libro de reclamaciones
     let robotsMeta = document.querySelector('meta[name="robots"]');
-    if (pathname === '/registro' || pathname === '/confirmacion') {
+    if (pathname === '/registro' || pathname === '/confirmacion' || pathname === '/libro-de-reclamaciones') {
       if (!robotsMeta) {
         robotsMeta = document.createElement('meta');
         robotsMeta.setAttribute('name', 'robots');
