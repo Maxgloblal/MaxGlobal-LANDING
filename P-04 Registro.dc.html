@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="stylesheet" href="_ds/max-global-design-system-db9172c7-eb06-4175-a281-c6d20ad52644/tokens/fonts.css">
+  <link rel="stylesheet" href="_ds/max-global-design-system-db9172c7-eb06-4175-a281-c6d20ad52644/tokens/colors.css">
+  <link rel="stylesheet" href="_ds/max-global-design-system-db9172c7-eb06-4175-a281-c6d20ad52644/tokens/typography.css">
+  <link rel="stylesheet" href="_ds/max-global-design-system-db9172c7-eb06-4175-a281-c6d20ad52644/tokens/spacing.css">
+  <link rel="stylesheet" href="_ds/max-global-design-system-db9172c7-eb06-4175-a281-c6d20ad52644/tokens/elevation.css">
+  <link rel="stylesheet" href="_ds/max-global-design-system-db9172c7-eb06-4175-a281-c6d20ad52644/tokens/motion.css">
+  <link rel="stylesheet" href="_ds/max-global-design-system-db9172c7-eb06-4175-a281-c6d20ad52644/tokens/base.css">
+  <link rel="stylesheet" href="_ds/max-global-design-system-db9172c7-eb06-4175-a281-c6d20ad52644/styles.css">
+  <script src="https://unpkg.com/lucide@0.460.0/dist/umd/lucide.js"></script>
+  <script src="_ds/max-global-design-system-db9172c7-eb06-4175-a281-c6d20ad52644/_ds_bundle.js"></script>
+  <style>
+    @media (max-width: 900px) { .mg-container { padding-inline: var(--page-pad-mobile); } .mg-form-grid { grid-template-columns: 1fr !important; } .mg-reg-grid { grid-template-columns: 1fr !important; } }
+  </style>
+</helmet>
+
+<div style="background: var(--surface-page);">
+
+  <dc-import name="SiteHeader" style="position: sticky; top: 0; z-index: 40;" active="packs" phone="{{ phone }}" ref-name="{{ refName }}" hint-size="100%,76px"></dc-import>
+
+  <section style="background: linear-gradient(180deg, var(--gold-50) 0%, var(--n-0) 80%); padding: var(--section-y) 0 var(--sp-12);">
+    <div class="mg-container">
+      <span class="mg-eyebrow">Afiliación</span>
+      <h1 style="margin-top: var(--sp-4); font-size: var(--fs-4xl);">Regístrate para afiliarte</h1>
+      <p style="margin-top: var(--sp-5); max-width: 56ch; font-size: var(--fs-md); line-height: var(--lh-relaxed);">Completa tus datos y un asesor te contacta por WhatsApp para cerrar tu afiliación. <span style="color: var(--text-strong); font-weight: 700;">No se cobra nada en este paso.</span></p>
+    </div>
+  </section>
+
+  <section style="padding-bottom: var(--section-y);">
+    <div class="mg-container mg-reg-grid" style="display: grid; grid-template-columns: 1.5fr 1fr; gap: var(--sp-12); align-items: start;">
+
+      <form onSubmit="{{ onSubmit }}" style="background: var(--surface-card); border: 1px solid var(--border-subtle); border-radius: var(--r-card); padding: var(--sp-8); box-shadow: var(--shadow-xs);">
+        <div class="mg-form-grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: var(--sp-5);">
+          <x-import component-from-global-scope="MaxGlobalDesignSystem_db9172.Input" label="Nombres y apellidos" placeholder="Como figura en tu DNI" required="{{ true }}" style="{{ spanTwo }}" hint-size="100%,72px"></x-import>
+          <x-import component-from-global-scope="MaxGlobalDesignSystem_db9172.Input" label="DNI" placeholder="8 dígitos" inputmode="numeric" maxlength="8" required="{{ true }}" hint-size="100%,72px"></x-import>
+          <x-import component-from-global-scope="MaxGlobalDesignSystem_db9172.Input" label="Celular / WhatsApp" placeholder="9 dígitos" inputmode="tel" hint="Ahí te escribe el asesor" required="{{ true }}" hint-size="100%,72px"></x-import>
+          <x-import component-from-global-scope="MaxGlobalDesignSystem_db9172.Input" label="Correo electrónico" type="email" placeholder="tucorreo@ejemplo.com" required="{{ true }}" style="{{ spanTwo }}" hint-size="100%,72px"></x-import>
+          <x-import component-from-global-scope="MaxGlobalDesignSystem_db9172.Select" label="Departamento" placeholder="Elige tu departamento" options="{{ departamentos }}" required="{{ true }}" hint-size="100%,72px"></x-import>
+          <x-import component-from-global-scope="MaxGlobalDesignSystem_db9172.Input" label="Provincia" placeholder="Tu provincia" required="{{ true }}" hint-size="100%,72px"></x-import>
+          <x-import component-from-global-scope="MaxGlobalDesignSystem_db9172.Input" label="Dirección de envío" placeholder="Calle, número, referencia" required="{{ true }}" style="{{ spanTwo }}" hint-size="100%,72px"></x-import>
+          <x-import component-from-global-scope="MaxGlobalDesignSystem_db9172.Select" label="Pack que te interesa" placeholder="Elige un pack" options="{{ packs }}" required="{{ true }}" hint-size="100%,72px"></x-import>
+          <x-import component-from-global-scope="MaxGlobalDesignSystem_db9172.Input" label="Código de tu patrocinador" placeholder="MG-00000" hint="Se llena solo si llegaste por un enlace" value="{{ refCode }}" hint-size="100%,72px"></x-import>
+        </div>
+
+        <div style="margin-top: var(--sp-8); display: flex; flex-direction: column; gap: var(--sp-5); padding-top: var(--sp-6); border-top: 1px solid var(--border-subtle);">
+          <x-import component-from-global-scope="MaxGlobalDesignSystem_db9172.Checkbox" checked="{{ consent }}" on-change="{{ toggleConsent }}" label="He leído y acepto la Política de Privacidad y autorizo el tratamiento de mis datos personales para gestionar mi afiliación." hint-size="100%,44px"></x-import>
+          <x-import component-from-global-scope="MaxGlobalDesignSystem_db9172.Checkbox" checked="{{ marketing }}" on-change="{{ toggleMarketing }}" label="Quiero recibir información sobre productos y promociones." hint-size="100%,44px"></x-import>
+        </div>
+
+        <div style="margin-top: var(--sp-8); display: flex; flex-wrap: wrap; gap: var(--sp-4); align-items: center;">
+          <x-import component-from-global-scope="MaxGlobalDesignSystem_db9172.Button" type="submit" size="lg" disabled="{{ notConsented }}" hint-size="290px,54px">Enviar y hablar con un asesor</x-import>
+          <span style="font-size: var(--fs-2xs); color: var(--text-muted);">{{ consentHint }}</span>
+        </div>
+      </form>
+
+      <aside style="display: flex; flex-direction: column; gap: var(--sp-6); position: sticky; top: 100px;">
+        <div style="background: var(--surface-gold); border: 1px solid var(--border-gold); border-radius: var(--r-card); padding: var(--sp-6);">
+          <h4>Qué pasa cuando envías</h4>
+          <div style="margin-top: var(--sp-4); display: flex; flex-direction: column; gap: var(--sp-3);">
+            <p style="font-size: var(--fs-sm); line-height: var(--lh-normal); color: var(--n-600);">Un asesor te escribe por WhatsApp, confirma tu pack y te dice el costo del envío a tu dirección.</p>
+            <p style="font-size: var(--fs-sm); line-height: var(--lh-normal); color: var(--n-600);">Recién ahí se paga. En este formulario no se cobra nada.</p>
+          </div>
+        </div>
+        <div style="border: 1px solid var(--border-subtle); border-radius: var(--r-card); padding: var(--sp-6);">
+          <h4>¿No sabes qué pack elegir?</h4>
+          <p style="margin-top: var(--sp-3); font-size: var(--fs-sm); line-height: var(--lh-relaxed);">Compara los cinco packs antes de registrarte.</p>
+          <div style="margin-top: var(--sp-5); display: flex; flex-direction: column; gap: var(--sp-3);">
+            <a href="P-03%20Packs.dc.html" style="border: none;"><x-import component-from-global-scope="MaxGlobalDesignSystem_db9172.Button" variant="outline" full-width="{{ true }}" hint-size="100%,44px">Ver los packs</x-import></a>
+            <x-import component-from-global-scope="MaxGlobalDesignSystem_db9172.WhatsAppButton" full-width="{{ true }}" phone="{{ phone }}" message="Hola, quiero afiliarme y tengo dudas sobre el pack." hint-size="100%,44px">Hablar por WhatsApp</x-import>
+          </div>
+        </div>
+      </aside>
+
+    </div>
+  </section>
+
+  <dc-import name="SiteFooter" hint-size="100%,420px"></dc-import>
+
+  <x-import component-from-global-scope="MaxGlobalDesignSystem_db9172.WhatsAppButton" floating="{{ true }}" phone="{{ phone }}" message="Hola, quiero afiliarme a Max Global." hint-size="58px,58px"></x-import>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;phone&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;51999999999&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Contacto&quot;},&quot;refName&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;María T.&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Enlace de referido&quot;},&quot;refCode&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;MG-00417&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Enlace de referido&quot;}}">
+class Component extends DCLogic {
+  state = { consent: false, marketing: false };
+  renderVals() {
+    const deps = ["Amazonas","Áncash","Apurímac","Arequipa","Ayacucho","Cajamarca","Callao","Cusco","Huancavelica","Huánuco","Ica","Junín","La Libertad","Lambayeque","Lima","Loreto","Madre de Dios","Moquegua","Pasco","Piura","Puno","San Martín","Tacna","Tumbes","Ucayali"];
+    return {
+      phone: this.props.phone ?? "51999999999",
+      refName: this.props.refName ?? "",
+      refCode: this.props.refCode ?? "",
+      spanTwo: { gridColumn: "1 / -1" },
+      departamentos: deps.map(d => ({ value: d, label: d })),
+      packs: [
+        { value: "kit", label: "Kit Emprendedor — S/. 120" },
+        { value: "ejecutivo", label: "Pack Ejecutivo — S/. 360" },
+        { value: "gold", label: "Pack Gold — S/. 1,200" },
+        { value: "familiar", label: "Pack Familiar — S/. 4,000" },
+        { value: "empresarial", label: "Pack Empresarial — S/. 8,000" },
+      ],
+      consent: this.state.consent,
+      marketing: this.state.marketing,
+      notConsented: !this.state.consent,
+      consentHint: this.state.consent ? "" : "Marca la primera casilla para poder enviar.",
+      toggleConsent: () => this.setState(s => ({ consent: !s.consent })),
+      toggleMarketing: () => this.setState(s => ({ marketing: !s.marketing })),
+      onSubmit: (e) => {
+        e.preventDefault();
+        if (this.state.consent) window.location.href = "P-05%20Confirmacion.dc.html";
+      },
+    };
+  }
+}
+</script>
+</body>
+</html>

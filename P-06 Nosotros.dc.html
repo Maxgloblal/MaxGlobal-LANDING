@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="stylesheet" href="_ds/max-global-design-system-db9172c7-eb06-4175-a281-c6d20ad52644/tokens/fonts.css">
+  <link rel="stylesheet" href="_ds/max-global-design-system-db9172c7-eb06-4175-a281-c6d20ad52644/tokens/colors.css">
+  <link rel="stylesheet" href="_ds/max-global-design-system-db9172c7-eb06-4175-a281-c6d20ad52644/tokens/typography.css">
+  <link rel="stylesheet" href="_ds/max-global-design-system-db9172c7-eb06-4175-a281-c6d20ad52644/tokens/spacing.css">
+  <link rel="stylesheet" href="_ds/max-global-design-system-db9172c7-eb06-4175-a281-c6d20ad52644/tokens/elevation.css">
+  <link rel="stylesheet" href="_ds/max-global-design-system-db9172c7-eb06-4175-a281-c6d20ad52644/tokens/motion.css">
+  <link rel="stylesheet" href="_ds/max-global-design-system-db9172c7-eb06-4175-a281-c6d20ad52644/tokens/base.css">
+  <link rel="stylesheet" href="_ds/max-global-design-system-db9172c7-eb06-4175-a281-c6d20ad52644/styles.css">
+  <script src="https://unpkg.com/lucide@0.460.0/dist/umd/lucide.js"></script>
+  <script src="_ds/max-global-design-system-db9172c7-eb06-4175-a281-c6d20ad52644/_ds_bundle.js"></script>
+  <style>
+    .mg-pend { font-family: var(--font-body); font-size: var(--fs-3xs); letter-spacing: var(--ls-wide); text-transform: uppercase; color: var(--gold-700); }
+    @media (max-width: 900px) { .mg-container { padding-inline: var(--page-pad-mobile); } .mg-nos-grid { grid-template-columns: 1fr !important; } }
+  </style>
+</helmet>
+
+<div style="background: var(--surface-page);">
+
+  <dc-import name="SiteHeader" style="position: sticky; top: 0; z-index: 40;" active="nosotros" phone="{{ phone }}" ref-name="{{ refName }}" hint-size="100%,76px"></dc-import>
+
+  <section style="background: linear-gradient(180deg, var(--gold-50) 0%, var(--n-0) 80%); padding: var(--section-y) 0 var(--sp-12);">
+    <div class="mg-container">
+      <span class="mg-eyebrow">La empresa</span>
+      <h1 style="margin-top: var(--sp-4); font-size: var(--fs-4xl);">Max Global Corporation</h1>
+      <p style="margin-top: var(--sp-5); max-width: 52ch; font-size: var(--fs-md); line-height: var(--lh-relaxed);">Empresa peruana de venta directa de productos naturales.</p>
+    </div>
+  </section>
+
+  <section style="padding-bottom: var(--section-y);">
+    <div class="mg-container mg-nos-grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: var(--sp-8); align-items: start;">
+      <div style="border: 1px solid var(--border-subtle); border-radius: var(--r-card); padding: var(--sp-8); min-height: 200px;">
+        <h3>Qué hacemos</h3>
+        <p class="mg-pend" style="margin-top: var(--sp-5);">Texto pendiente de entrega</p>
+      </div>
+      <div style="border: 1px solid var(--border-subtle); border-radius: var(--r-card); padding: var(--sp-8); min-height: 200px;">
+        <h3>Nuestros valores</h3>
+        <p class="mg-pend" style="margin-top: var(--sp-5);">Texto pendiente de entrega</p>
+      </div>
+      <div style="grid-column: 1 / -1; background: var(--surface-gold); border: 1px solid var(--border-gold); border-radius: var(--r-card); aspect-ratio: 16 / 6; display: flex; align-items: center; justify-content: center; text-align: center; padding: var(--sp-8);">
+        <span class="mg-pend">Fotografía de la empresa o el equipo · pendiente de entrega</span>
+      </div>
+    </div>
+  </section>
+
+  <section style="background: var(--surface-sunken); border-top: 1px solid var(--border-subtle); border-bottom: 1px solid var(--border-subtle); padding: var(--section-y) 0;">
+    <div class="mg-container">
+      <span class="mg-eyebrow">Contacto</span>
+      <h2 style="margin-top: var(--sp-4);">Cómo llegar a nosotros</h2>
+      <div class="mg-nos-grid" style="margin-top: var(--sp-10); display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: var(--sp-6);">
+        <div style="background: var(--surface-card); border: 1px solid var(--border-subtle); border-radius: var(--r-card); padding: var(--sp-6); display: flex; flex-direction: column; gap: var(--sp-4);">
+          <span class="mg-eyebrow" style="color: var(--text-muted);">WhatsApp</span>
+          <p style="font-size: var(--fs-sm); line-height: var(--lh-normal);">Es el canal por el que atendemos pedidos y afiliaciones.</p>
+          <x-import component-from-global-scope="MaxGlobalDesignSystem_db9172.WhatsAppButton" phone="{{ phone }}" message="Hola, quiero contactar con Max Global." hint-size="200px,44px">Escribir por WhatsApp</x-import>
+        </div>
+        <div style="background: var(--surface-card); border: 1px solid var(--border-subtle); border-radius: var(--r-card); padding: var(--sp-6); display: flex; flex-direction: column; gap: var(--sp-4);">
+          <span class="mg-eyebrow" style="color: var(--text-muted);">Correo</span>
+          <p style="font-size: var(--fs-sm); line-height: var(--lh-normal);">[correo de contacto]</p>
+          <span class="mg-pend">Dato pendiente</span>
+        </div>
+        <div style="background: var(--surface-card); border: 1px solid var(--border-subtle); border-radius: var(--r-card); padding: var(--sp-6); display: flex; flex-direction: column; gap: var(--sp-4);">
+          <span class="mg-eyebrow" style="color: var(--text-muted);">Dirección</span>
+          <p style="font-size: var(--fs-sm); line-height: var(--lh-normal);">[domicilio fiscal]</p>
+          <span class="mg-pend">Dato pendiente</span>
+        </div>
+        <div style="background: var(--surface-card); border: 1px solid var(--border-gold); border-radius: var(--r-card); padding: var(--sp-6); display: flex; flex-direction: column; gap: var(--sp-4);">
+          <span class="mg-eyebrow">Reclamos</span>
+          <p style="font-size: var(--fs-sm); line-height: var(--lh-normal);">Puedes registrar tu reclamo en nuestro libro virtual.</p>
+          <a href="#" style="display: inline-flex; align-items: center; gap: 8px; border: 1px solid var(--border-subtle); border-radius: var(--r-sm); padding: 10px 14px; font-size: var(--fs-sm); color: var(--text-strong); font-weight: 700; align-self: flex-start;">
+            <x-import component-from-global-scope="MaxGlobalDesignSystem_db9172.Icon" name="book" size="16" hint-size="16px,16px"></x-import>
+            Libro de Reclamaciones
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <dc-import name="SiteFooter" hint-size="100%,420px"></dc-import>
+
+  <x-import component-from-global-scope="MaxGlobalDesignSystem_db9172.WhatsAppButton" floating="{{ true }}" phone="{{ phone }}" message="Hola, quiero contactar con Max Global." hint-size="58px,58px"></x-import>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;phone&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;51999999999&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Contacto&quot;},&quot;refName&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;María T.&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Enlace de referido&quot;}}">
+class Component extends DCLogic {
+  renderVals() {
+    return {
+      phone: this.props.phone ?? "51999999999",
+      refName: this.props.refName ?? "",
+    };
+  }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,6 @@
+User-agent: *
+Allow: /
+Disallow: /registro
+Disallow: /confirmacion
+
+Sitemap: https://maxglobaloficial.com/sitemap.xml

@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="stylesheet" href="_ds/max-global-design-system-db9172c7-eb06-4175-a281-c6d20ad52644/tokens/fonts.css">
+  <link rel="stylesheet" href="_ds/max-global-design-system-db9172c7-eb06-4175-a281-c6d20ad52644/tokens/colors.css">
+  <link rel="stylesheet" href="_ds/max-global-design-system-db9172c7-eb06-4175-a281-c6d20ad52644/tokens/typography.css">
+  <link rel="stylesheet" href="_ds/max-global-design-system-db9172c7-eb06-4175-a281-c6d20ad52644/tokens/spacing.css">
+  <link rel="stylesheet" href="_ds/max-global-design-system-db9172c7-eb06-4175-a281-c6d20ad52644/tokens/elevation.css">
+  <link rel="stylesheet" href="_ds/max-global-design-system-db9172c7-eb06-4175-a281-c6d20ad52644/tokens/motion.css">
+  <link rel="stylesheet" href="_ds/max-global-design-system-db9172c7-eb06-4175-a281-c6d20ad52644/tokens/base.css">
+  <link rel="stylesheet" href="_ds/max-global-design-system-db9172c7-eb06-4175-a281-c6d20ad52644/styles.css">
+  <script src="https://unpkg.com/lucide@0.460.0/dist/umd/lucide.js"></script>
+  <script src="_ds/max-global-design-system-db9172c7-eb06-4175-a281-c6d20ad52644/_ds_bundle.js"></script>
+  <style>
+    body { background: var(--surface-page); }
+    .mg-cell { padding: 14px 16px; font-family: var(--font-body); font-size: var(--fs-sm); color: var(--text-body); border-bottom: 1px solid var(--border-subtle); text-align: center; }
+    .mg-cell-row { text-align: left; color: var(--text-strong); font-weight: 700; white-space: nowrap; }
+    .mg-cell-gold { background: var(--gold-50); color: var(--text-strong); font-weight: 700; }
+    .mg-lvl { display: flex; justify-content: space-between; gap: var(--sp-6); padding: 10px 0; border-bottom: 1px solid var(--border-subtle); font-family: var(--font-body); font-size: var(--fs-sm); color: var(--text-body); }
+    .mg-lvl > b { font-family: var(--font-display); text-transform: uppercase; letter-spacing: var(--ls-display); font-weight: 400; font-size: var(--fs-lg); color: var(--text-strong); }
+    .mg-head-wa a, .mg-head-wa { white-space: nowrap; }
+    @media (max-width: 900px) { .mg-container { padding-inline: var(--page-pad-mobile); } }
+    @media (max-width: 1060px) { .mg-head-nav a:nth-child(3) { display: none !important; } .mg-head-ref { display: none !important; } }
+    @media (max-width: 1000px) { .mg-head-nav, .mg-head-wa, .mg-head-ref { display: none !important; } .mg-foot-grid { grid-template-columns: 1fr 1fr !important; } }
+  </style>
+</helmet>
+
+<div style="background: var(--surface-page); min-height: 100%; padding-bottom: 0;">
+
+  <dc-import name="SiteHeader" style="position: sticky; top: 0; z-index: 40;" active="packs" phone="{{ phone }}" ref-name="{{ refName }}" hint-size="100%,76px"></dc-import>
+
+  <section id="packs" style="background: linear-gradient(180deg, var(--gold-50) 0%, var(--n-0) 60%); padding: var(--section-y) 0 var(--sp-12);">
+    <div class="mg-container">
+      <span class="mg-eyebrow">Packs de afiliación</span>
+      <h1 style="margin-top: var(--sp-4); max-width: 18ch; font-size: var(--fs-4xl);">Elige cómo quieres empezar</h1>
+      <p style="margin-top: var(--sp-5); max-width: 54ch; font-size: var(--fs-md); line-height: var(--lh-relaxed); color: var(--text-body);">Cinco formas de entrar a Max Global. Todas incluyen producto, descuento de por vida y derecho a comisiones. La diferencia está en cuánto alcance tiene tu red.</p>
+    </div>
+  </section>
+
+  <section style="padding-bottom: var(--section-y);">
+    <div class="mg-container">
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(214px, 1fr)); gap: var(--sp-4); padding-top: 18px; align-items: stretch;">
+        <x-import component-from-global-scope="MaxGlobalDesignSystem_db9172.PackCard" name="Kit Emprendedor" price="S/. 120" lead="Para probar el producto y empezar de a poco." features="{{ fKit }}" cta="Empezar con el Kit" on-select="{{ goRegistro }}" hint-size="100%,430px"></x-import>
+        <x-import component-from-global-scope="MaxGlobalDesignSystem_db9172.PackCard" name="Pack Ejecutivo" price="S/. 360" lead="El primer paso con comisiones reales." features="{{ fEjecutivo }}" cta="Elegir Ejecutivo" on-select="{{ goRegistro }}" hint-size="100%,430px"></x-import>
+        <x-import component-from-global-scope="MaxGlobalDesignSystem_db9172.PackCard" name="Pack Gold" price="S/. 1,200" lead="El plan completo. El que eligen la mayoría." features="{{ fGold }}" cta="Elegir Gold" ribbon="El más elegido" featured="{{ true }}" on-select="{{ goRegistro }}" hint-size="100%,470px"></x-import>
+        <x-import component-from-global-scope="MaxGlobalDesignSystem_db9172.PackCard" name="Pack Familiar" price="S/. 4,000" lead="Arma tu propio pedido." features="{{ fFamiliar }}" cta="Elegir Familiar" on-select="{{ goRegistro }}" hint-size="100%,430px"></x-import>
+        <x-import component-from-global-scope="MaxGlobalDesignSystem_db9172.PackCard" name="Pack Empresarial" price="S/. 8,000" lead="Para quien va a manejar volumen." features="{{ fEmpresarial }}" cta="Elegir Empresarial" on-select="{{ goRegistro }}" hint-size="100%,430px"></x-import>
+      </div>
+    </div>
+  </section>
+
+  <section style="background: var(--surface-sunken); padding: var(--section-y) 0; border-top: 1px solid var(--border-subtle); border-bottom: 1px solid var(--border-subtle);">
+    <div class="mg-container">
+      <span class="mg-eyebrow">Comparativa</span>
+      <h2 style="margin-top: var(--sp-4);">Los cinco packs, lado a lado</h2>
+      <div style="margin-top: var(--sp-8); overflow-x: auto; background: var(--surface-card); border: 1px solid var(--border-subtle); border-radius: var(--r-card);">
+        <table style="width: 100%; min-width: 720px; border-collapse: collapse;">
+          <thead>
+            <tr>
+              <th class="mg-cell mg-cell-row" style="background: var(--surface-card);"></th>
+              <th class="mg-cell" style="font-family: var(--font-subtitle); font-weight: 700; color: var(--text-strong);">Kit</th>
+              <th class="mg-cell" style="font-family: var(--font-subtitle); font-weight: 700; color: var(--text-strong);">Ejecutivo</th>
+              <th class="mg-cell mg-cell-gold" style="font-family: var(--font-subtitle); border-top: 2px solid var(--brand-gold);">Gold</th>
+              <th class="mg-cell" style="font-family: var(--font-subtitle); font-weight: 700; color: var(--text-strong);">Familiar</th>
+              <th class="mg-cell" style="font-family: var(--font-subtitle); font-weight: 700; color: var(--text-strong);">Empresarial</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="mg-cell mg-cell-row">Precio</td>
+              <td class="mg-cell">S/. 120</td>
+              <td class="mg-cell">S/. 360</td>
+              <td class="mg-cell mg-cell-gold">S/. 1,200</td>
+              <td class="mg-cell">S/. 4,000</td>
+              <td class="mg-cell">S/. 8,000</td>
+            </tr>
+            <tr>
+              <td class="mg-cell mg-cell-row">Productos</td>
+              <td class="mg-cell">1</td>
+              <td class="mg-cell">4</td>
+              <td class="mg-cell mg-cell-gold">13</td>
+              <td class="mg-cell">a elección</td>
+              <td class="mg-cell">a elección</td>
+            </tr>
+            <tr>
+              <td class="mg-cell mg-cell-row">Descuento de recompra</td>
+              <td class="mg-cell">40%</td>
+              <td class="mg-cell">50%</td>
+              <td class="mg-cell mg-cell-gold">50%</td>
+              <td class="mg-cell">50%</td>
+              <td class="mg-cell">50%</td>
+            </tr>
+            <tr>
+              <td class="mg-cell mg-cell-row">Niveles de comisión</td>
+              <td class="mg-cell" style="color: var(--text-muted);">—</td>
+              <td class="mg-cell">5</td>
+              <td class="mg-cell mg-cell-gold">10</td>
+              <td class="mg-cell">10</td>
+              <td class="mg-cell">10</td>
+            </tr>
+            <tr>
+              <td class="mg-cell mg-cell-row">Puntos de rango</td>
+              <td class="mg-cell" style="color: var(--text-muted);">—</td>
+              <td class="mg-cell">70</td>
+              <td class="mg-cell mg-cell-gold">150</td>
+              <td class="mg-cell">400</td>
+              <td class="mg-cell">800</td>
+            </tr>
+            <tr>
+              <td class="mg-cell mg-cell-row" style="border-bottom: none;">Bono Global</td>
+              <td class="mg-cell" style="border-bottom: none; color: var(--text-muted);">—</td>
+              <td class="mg-cell" style="border-bottom: none; color: var(--text-muted);">—</td>
+              <td class="mg-cell mg-cell-gold" style="border-bottom: none; color: var(--text-green);">✓</td>
+              <td class="mg-cell" style="border-bottom: none; color: var(--text-green);">✓</td>
+              <td class="mg-cell" style="border-bottom: none; color: var(--text-green);">✓</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <p style="margin-top: var(--sp-4); font-size: var(--fs-2xs); color: var(--text-muted);">Desliza la tabla en horizontal para ver todas las columnas.</p>
+    </div>
+  </section>
+
+  <section id="comisiones" style="padding: var(--section-y) 0;">
+    <div class="mg-container">
+      <span class="mg-eyebrow">Plan de compensación</span>
+      <h2 style="margin-top: var(--sp-4);">Cómo se pagan las comisiones</h2>
+      <p style="margin-top: var(--sp-5); max-width: 50ch; font-size: var(--fs-md); line-height: var(--lh-relaxed);">No hay letra chica. Estos son los porcentajes exactos del plan.</p>
+
+      <div style="margin-top: var(--sp-10); display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: var(--sp-6); align-items: start;">
+
+        <div style="background: var(--surface-card); border: 1px solid var(--border-subtle); border-radius: var(--r-card); padding: var(--sp-8);">
+          <span class="mg-eyebrow" style="color: var(--text-muted);">Bono de patrocinio</span>
+          <h3 style="margin-top: var(--sp-3);">Cuando alguien de tu red se afilia</h3>
+          <div style="margin-top: var(--sp-6);">
+            <div class="mg-lvl"><span>Nivel 1</span><b>20%</b></div>
+            <div class="mg-lvl"><span>Nivel 2</span><b>4%</b></div>
+            <div class="mg-lvl"><span>Nivel 3</span><b>3%</b></div>
+            <div class="mg-lvl"><span>Nivel 4</span><b>2%</b></div>
+            <div class="mg-lvl"><span>Nivel 5</span><b>1%</b></div>
+            <div class="mg-lvl"><span>Nivel 6</span><b>0.5%</b></div>
+            <div class="mg-lvl" style="border-bottom: none;"><span>Nivel 7</span><b>0.3%</b></div>
+          </div>
+          <p style="margin-top: var(--sp-5); font-size: var(--fs-sm); line-height: var(--lh-normal); color: var(--text-muted);">Se calcula sobre el precio del pack que compró esa persona.</p>
+        </div>
+
+        <div style="background: var(--surface-card); border: 1px solid var(--border-subtle); border-radius: var(--r-card); padding: var(--sp-8);">
+          <span class="mg-eyebrow" style="color: var(--text-muted);">Bono residual</span>
+          <h3 style="margin-top: var(--sp-3);">Cuando tu red recompra cada mes</h3>
+          <div style="margin-top: var(--sp-6); display: grid; grid-template-columns: 1fr 1fr; gap: 0 var(--sp-8);">
+            <div>
+              <div class="mg-lvl"><span>Nivel 1</span><b>40%</b></div>
+              <div class="mg-lvl"><span>Nivel 2</span><b>20%</b></div>
+              <div class="mg-lvl"><span>Nivel 3</span><b>10%</b></div>
+              <div class="mg-lvl"><span>Nivel 4</span><b>5%</b></div>
+              <div class="mg-lvl" style="border-bottom: none;"><span>Nivel 5</span><b>3%</b></div>
+            </div>
+            <div>
+              <div class="mg-lvl"><span>Nivel 6</span><b>2%</b></div>
+              <div class="mg-lvl"><span>Nivel 7</span><b>1%</b></div>
+              <div class="mg-lvl" style="border-color: var(--border-gold);"><span style="color: var(--text-strong); font-weight: 700;">Nivel 8</span><b style="color: var(--text-gold);">10%</b></div>
+              <div class="mg-lvl"><span>Nivel 9</span><b>5%</b></div>
+              <div class="mg-lvl" style="border-bottom: none;"><span>Nivel 10</span><b>1%</b></div>
+            </div>
+          </div>
+          <p style="margin-top: var(--sp-5); font-size: var(--fs-sm); line-height: var(--lh-normal); color: var(--text-muted);">Se calcula sobre los puntos de los productos que compró tu red. <span style="color: var(--text-strong); font-weight: 700;">El nivel 8 sube al 10%: es el beneficio de tener el plan de 10 niveles.</span></p>
+        </div>
+
+        <div style="background: var(--surface-gold); border: 1px solid var(--border-gold); border-radius: var(--r-card); padding: var(--sp-8);">
+          <span class="mg-eyebrow">Requisito de actividad</span>
+          <h3 style="margin-top: var(--sp-3);">Para cobrar tienes que estar activo</h3>
+          <div style="margin-top: var(--sp-6); display: flex; align-items: baseline; gap: var(--sp-3);">
+            <span style="font-family: var(--font-display); text-transform: uppercase; letter-spacing: var(--ls-display); font-size: var(--fs-4xl); line-height: 1; color: var(--text-strong);">70</span>
+            <span style="font-family: var(--font-subtitle); font-weight: 700; font-size: var(--fs-md); color: var(--text-strong);">puntos personales al mes</span>
+          </div>
+          <p style="margin-top: var(--sp-5); font-size: var(--fs-sm); line-height: var(--lh-relaxed); color: var(--n-600);">Cada mes necesitas 70 puntos personales de compra para cobrar tus comisiones. Si un mes no te activas, no cobras ese mes — pero conservas tu red, tus puntos acumulados y tu rango.</p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <section style="background: var(--surface-inverse); padding: var(--section-y-tight) 0;">
+    <div class="mg-container" style="display: flex; flex-wrap: wrap; gap: var(--sp-8); align-items: center; justify-content: space-between;">
+      <div style="max-width: 46ch;">
+        <h3 style="color: var(--text-on-dark); font-size: var(--fs-xl);">¿Tienes dudas sobre cuál te conviene?</h3>
+        <p style="margin-top: var(--sp-3); font-size: var(--fs-md); line-height: var(--lh-relaxed); color: var(--n-300);">Escríbenos y te explicamos sin compromiso.</p>
+      </div>
+      <x-import component-from-global-scope="MaxGlobalDesignSystem_db9172.WhatsAppButton" size="lg" phone="{{ phone }}" message="Hola, quiero que me expliquen cuál pack me conviene." hint-size="240px,54px">Hablar por WhatsApp</x-import>
+    </div>
+  </section>
+
+  <dc-import name="SiteFooter" hint-size="100%,420px"></dc-import>
+
+  <x-import component-from-global-scope="MaxGlobalDesignSystem_db9172.WhatsAppButton" floating="{{ true }}" phone="{{ phone }}" message="Hola, vi los packs de Max Global y quiero más información." hint-size="58px,58px"></x-import>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;phone&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;51999999999&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Contacto&quot;},&quot;refName&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;María T.&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Enlace de referido&quot;}}">
+class Component extends DCLogic {
+  renderVals() {
+    const p = this.props;
+    const ref = p.refName ?? "";
+    return {
+      phone: p.phone ?? "51999999999",
+      refName: ref,
+      goRegistro: () => { window.location.href = "P-04%20Registro.dc.html"; },
+      fKit: [
+        { text: "1 producto incluido" },
+        { text: "40% de descuento en tus recompras" },
+        { text: "Puedes invitar a otros Kit Emprendedor" },
+        { text: "Sin comisiones por niveles", muted: true },
+      ],
+      fEjecutivo: [
+        { text: "4 productos incluidos" },
+        { text: "50% de descuento de por vida" },
+        { text: "Comisiones hasta 5 niveles" },
+        { text: "70 puntos que cubren tu primer mes activo" },
+      ],
+      fGold: [
+        { text: "13 productos incluidos" },
+        { text: "50% de descuento de por vida" },
+        { text: "Comisiones hasta 10 niveles — el alcance máximo" },
+        { text: "150 puntos de rango" },
+        { text: "Participas del Bono Global semestral" },
+      ],
+      fFamiliar: [
+        { text: "Eliges los productos hasta completar S/. 4,000" },
+        { text: "50% de descuento de por vida" },
+        { text: "Comisiones hasta 10 niveles" },
+        { text: "400 puntos de rango" },
+        { text: "Participas del Bono Global" },
+      ],
+      fEmpresarial: [
+        { text: "Armas tu pedido con 55% de descuento" },
+        { text: "50% de descuento en tus recompras" },
+        { text: "Comisiones hasta 10 niveles" },
+        { text: "800 puntos de rango" },
+        { text: "Participas del Bono Global" },
+      ],
+    };
+  }
+}
+</script>
+</body>
+</html>

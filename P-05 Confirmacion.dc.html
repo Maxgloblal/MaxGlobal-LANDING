@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="stylesheet" href="_ds/max-global-design-system-db9172c7-eb06-4175-a281-c6d20ad52644/tokens/fonts.css">
+  <link rel="stylesheet" href="_ds/max-global-design-system-db9172c7-eb06-4175-a281-c6d20ad52644/tokens/colors.css">
+  <link rel="stylesheet" href="_ds/max-global-design-system-db9172c7-eb06-4175-a281-c6d20ad52644/tokens/typography.css">
+  <link rel="stylesheet" href="_ds/max-global-design-system-db9172c7-eb06-4175-a281-c6d20ad52644/tokens/spacing.css">
+  <link rel="stylesheet" href="_ds/max-global-design-system-db9172c7-eb06-4175-a281-c6d20ad52644/tokens/elevation.css">
+  <link rel="stylesheet" href="_ds/max-global-design-system-db9172c7-eb06-4175-a281-c6d20ad52644/tokens/motion.css">
+  <link rel="stylesheet" href="_ds/max-global-design-system-db9172c7-eb06-4175-a281-c6d20ad52644/tokens/base.css">
+  <link rel="stylesheet" href="_ds/max-global-design-system-db9172c7-eb06-4175-a281-c6d20ad52644/styles.css">
+  <script src="https://unpkg.com/lucide@0.460.0/dist/umd/lucide.js"></script>
+  <script src="_ds/max-global-design-system-db9172c7-eb06-4175-a281-c6d20ad52644/_ds_bundle.js"></script>
+  <style>
+    .mg-dato { display: flex; justify-content: space-between; gap: var(--sp-6); padding: 12px 0; border-bottom: 1px solid var(--border-subtle); font-family: var(--font-body); font-size: var(--fs-sm); }
+    .mg-dato > span:first-child { color: var(--text-muted); }
+    .mg-dato > span:last-child { color: var(--text-strong); font-weight: 700; }
+    @media (max-width: 900px) { .mg-container { padding-inline: var(--page-pad-mobile); } .mg-conf-grid { grid-template-columns: 1fr !important; } }
+  </style>
+</helmet>
+
+<div style="background: var(--surface-page);">
+
+  <dc-import name="SiteHeader" style="position: sticky; top: 0; z-index: 40;" active="packs" phone="{{ phone }}" ref-name="{{ refName }}" hint-size="100%,76px"></dc-import>
+
+  <section style="background: linear-gradient(180deg, var(--gold-50) 0%, var(--n-0) 80%); padding: var(--section-y) 0 var(--sp-12);">
+    <div class="mg-container">
+      <span style="display: inline-flex; align-items: center; gap: 8px; background: var(--surface-green); border: 1px solid var(--border-green); color: var(--text-green); border-radius: var(--r-pill); padding: 6px 14px; font-family: var(--font-body); font-size: var(--fs-2xs); font-weight: 700; letter-spacing: var(--ls-wide); text-transform: uppercase;">
+        <x-import component-from-global-scope="MaxGlobalDesignSystem_db9172.Icon" name="check" size="14" hint-size="14px,14px"></x-import>
+        Registro recibido
+      </span>
+      <h1 style="margin-top: var(--sp-5); font-size: var(--fs-4xl);">Ya recibimos tus datos</h1>
+      <p style="margin-top: var(--sp-5); max-width: 56ch; font-size: var(--fs-md); line-height: var(--lh-relaxed);">Un asesor te va a escribir por WhatsApp para confirmar tu pedido y el costo del envío a tu dirección.</p>
+    </div>
+  </section>
+
+  <section style="padding-bottom: var(--section-y);">
+    <div class="mg-container mg-conf-grid" style="display: grid; grid-template-columns: 1.3fr 1fr; gap: var(--sp-8); align-items: start;">
+
+      <div style="background: var(--surface-card); border: 1px solid var(--border-subtle); border-radius: var(--r-card); padding: var(--sp-8); box-shadow: var(--shadow-xs);">
+        <h3>Cómo pagar</h3>
+        <p style="margin-top: var(--sp-3); font-size: var(--fs-sm); line-height: var(--lh-relaxed);">Cuando el asesor confirme tu pedido, deposita en:</p>
+        <div style="margin-top: var(--sp-6); background: var(--surface-sunken); border: 1px solid var(--border-subtle); border-radius: var(--r-card); padding: var(--sp-6);">
+          <div class="mg-dato"><span>Banco</span><span>[Banco]</span></div>
+          <div class="mg-dato"><span>Cuenta</span><span>[número]</span></div>
+          <div class="mg-dato"><span>CCI</span><span>[número]</span></div>
+          <div class="mg-dato" style="border-bottom: none;"><span>Titular</span><span>[razón social]</span></div>
+        </div>
+        <p style="margin-top: var(--sp-5); font-size: var(--fs-sm); line-height: var(--lh-relaxed);">Guarda tu voucher y mándalo por WhatsApp.</p>
+        <div style="margin-top: var(--sp-6);">
+          <x-import component-from-global-scope="MaxGlobalDesignSystem_db9172.WhatsAppButton" size="lg" phone="{{ phone }}" message="Hola, aquí les envío mi voucher de pago." hint-size="290px,54px">Enviar mi voucher por WhatsApp</x-import>
+        </div>
+      </div>
+
+      <div style="border: 1px solid var(--border-subtle); border-radius: var(--r-card); padding: var(--sp-8);">
+        <h3>Qué pasa después</h3>
+        <div style="margin-top: var(--sp-6); display: flex; flex-direction: column; gap: var(--sp-5);">
+          <div style="display: flex; gap: var(--sp-4); align-items: flex-start;">
+            <span style="font-family: var(--font-display); text-transform: uppercase; letter-spacing: var(--ls-display); font-size: var(--fs-lg); color: var(--brand-gold); line-height: 1; min-width: 20px;">1</span>
+            <span style="font-size: var(--fs-sm); line-height: var(--lh-normal); color: var(--text-strong);">Confirmamos tu pago</span>
+          </div>
+          <div style="display: flex; gap: var(--sp-4); align-items: flex-start;">
+            <span style="font-family: var(--font-display); text-transform: uppercase; letter-spacing: var(--ls-display); font-size: var(--fs-lg); color: var(--brand-gold); line-height: 1; min-width: 20px;">2</span>
+            <span style="font-size: var(--fs-sm); line-height: var(--lh-normal); color: var(--text-strong);">Preparamos y despachamos tu pedido</span>
+          </div>
+          <div style="display: flex; gap: var(--sp-4); align-items: flex-start;">
+            <span style="font-family: var(--font-display); text-transform: uppercase; letter-spacing: var(--ls-display); font-size: var(--fs-lg); color: var(--brand-gold); line-height: 1; min-width: 20px;">3</span>
+            <span style="font-size: var(--fs-sm); line-height: var(--lh-normal); color: var(--text-strong);">Te mandamos el número de guía</span>
+          </div>
+          <div style="display: flex; gap: var(--sp-4); align-items: flex-start;">
+            <span style="font-family: var(--font-display); text-transform: uppercase; letter-spacing: var(--ls-display); font-size: var(--fs-lg); color: var(--brand-gold); line-height: 1; min-width: 20px;">4</span>
+            <span style="font-size: var(--fs-sm); line-height: var(--lh-normal); color: var(--text-strong);">Recibes tus accesos al backoffice</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <dc-import name="SiteFooter" hint-size="100%,420px"></dc-import>
+
+  <x-import component-from-global-scope="MaxGlobalDesignSystem_db9172.WhatsAppButton" floating="{{ true }}" phone="{{ phone }}" message="Hola, tengo una consulta sobre mi afiliación." hint-size="58px,58px"></x-import>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;phone&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;51999999999&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Contacto&quot;},&quot;refName&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;María T.&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Enlace de referido&quot;}}">
+class Component extends DCLogic {
+  renderVals() {
+    return {
+      phone: this.props.phone ?? "51999999999",
+      refName: this.props.refName ?? "",
+    };
+  }
+}
+</script>
+</body>
+</html>

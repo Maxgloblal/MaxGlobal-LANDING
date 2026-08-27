@@ -1,0 +1,17 @@
+/* Max Global — espaciado y ritmo. Base 4px. */
+:root{
+  --sp-0:0; /* @kind spacing */
+  --sp-1:4px;--sp-2:8px;--sp-3:12px;--sp-4:16px;--sp-5:20px;--sp-6:24px;
+  --sp-8:32px;--sp-10:40px;--sp-12:48px;--sp-16:64px;--sp-20:80px;--sp-24:96px;--sp-32:128px;
+
+  --gutter:24px;
+  --page-max:1200px;
+  --page-pad-desktop:48px;
+  --page-pad-mobile:20px;
+
+  --section-y-tight:64px;
+  --section-y:96px;
+  --section-y-loose:128px;
+
+  --control-h-sm:34px;--control-h-md:44px;--control-h-lg:54px;
+}

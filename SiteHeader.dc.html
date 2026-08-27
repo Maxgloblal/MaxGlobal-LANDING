@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="stylesheet" href="_ds/max-global-design-system-db9172c7-eb06-4175-a281-c6d20ad52644/tokens/fonts.css">
+  <link rel="stylesheet" href="_ds/max-global-design-system-db9172c7-eb06-4175-a281-c6d20ad52644/tokens/colors.css">
+  <link rel="stylesheet" href="_ds/max-global-design-system-db9172c7-eb06-4175-a281-c6d20ad52644/tokens/typography.css">
+  <link rel="stylesheet" href="_ds/max-global-design-system-db9172c7-eb06-4175-a281-c6d20ad52644/tokens/spacing.css">
+  <link rel="stylesheet" href="_ds/max-global-design-system-db9172c7-eb06-4175-a281-c6d20ad52644/tokens/elevation.css">
+  <link rel="stylesheet" href="_ds/max-global-design-system-db9172c7-eb06-4175-a281-c6d20ad52644/tokens/motion.css">
+  <link rel="stylesheet" href="_ds/max-global-design-system-db9172c7-eb06-4175-a281-c6d20ad52644/tokens/base.css">
+  <link rel="stylesheet" href="_ds/max-global-design-system-db9172c7-eb06-4175-a281-c6d20ad52644/styles.css">
+  <script src="https://unpkg.com/lucide@0.460.0/dist/umd/lucide.js"></script>
+  <script src="_ds/max-global-design-system-db9172c7-eb06-4175-a281-c6d20ad52644/_ds_bundle.js"></script>
+  <style>
+    .mg-head-wa a, .mg-head-wa { white-space: nowrap; }
+    .mg-head-nav[data-active="portada"] a[data-nav="portada"],
+    .mg-head-nav[data-active="productos"] a[data-nav="productos"],
+    .mg-head-nav[data-active="packs"] a[data-nav="packs"],
+    .mg-head-nav[data-active="nosotros"] a[data-nav="nosotros"] { color: var(--text-strong) !important; font-weight: 700; }
+    @media (max-width: 900px) { .mg-container { padding-inline: var(--page-pad-mobile); } }
+    @media (max-width: 1060px) { .mg-head-ref { display: none !important; } }
+    @media (max-width: 1000px) { .mg-head-nav, .mg-head-wa, .mg-head-ref { display: none !important; } }
+  </style>
+</helmet>
+
+<header style="background: var(--glass-bg); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border-subtle);">
+  <div class="mg-container" style="display: flex; align-items: center; gap: var(--sp-6); height: 76px;">
+    <a href="P-01%20Portada.dc.html" style="border: none; display: flex; align-items: center; gap: 10px;">
+      <span style="width: 34px; height: 34px; border-radius: var(--r-pill); background: var(--brand-gold); color: var(--n-700); display: inline-flex; align-items: center; justify-content: center; font-family: var(--font-display); text-transform: uppercase; letter-spacing: 0.02em; font-size: var(--fs-xs);">MG</span>
+      <span style="font-family: var(--font-display); text-transform: uppercase; letter-spacing: var(--ls-display); font-size: var(--fs-sm); color: var(--text-strong); white-space: nowrap;">Max Global</span>
+    </a>
+    <nav class="mg-head-nav" data-active="{{ active }}" style="display: flex; gap: var(--sp-6); margin-left: var(--sp-6); flex: 1; white-space: nowrap;">
+      <a data-nav="productos" href="P-02%20Productos.dc.html" style="border: none; font-size: var(--fs-sm); color: var(--text-body);">Productos</a>
+      <a data-nav="packs" href="P-03%20Packs.dc.html" style="border: none; font-size: var(--fs-sm); color: var(--text-body);">Packs</a>
+      <a data-nav="nosotros" href="P-06%20Nosotros.dc.html" style="border: none; font-size: var(--fs-sm); color: var(--text-body);">Nosotros</a>
+    </nav>
+    <span class="mg-head-ref" style="font-family: var(--font-body); font-size: var(--fs-2xs); color: var(--text-muted); white-space: nowrap; margin-left: auto;">{{ refLabel }}</span>
+    <span class="mg-head-wa" style="display: inline-flex; flex: 0 0 auto;"><x-import component-from-global-scope="MaxGlobalDesignSystem_db9172.WhatsAppButton" size="sm" phone="{{ phone }}" message="Hola, quiero información sobre Max Global." hint-size="180px,34px">Hablar por WhatsApp</x-import></span>
+  </div>
+</header>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1200,&quot;height&quot;:76},&quot;active&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;portada&quot;,&quot;productos&quot;,&quot;packs&quot;,&quot;nosotros&quot;],&quot;default&quot;:&quot;packs&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;phone&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;51999999999&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;refName&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;María T.&quot;,&quot;tsType&quot;:&quot;string&quot;}}">
+class Component extends DCLogic {
+  renderVals() {
+    const ref = this.props.refName ?? "";
+    return {
+      active: this.props.active ?? "",
+      phone: this.props.phone ?? "51999999999",
+      refLabel: ref ? "Te recomendó: " + ref : "",
+    };
+  }
+}
+</script>
+</body>
+</html>

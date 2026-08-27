@@ -1,0 +1,249 @@
+@import "./tokens/fonts.css";
+@import "./tokens/colors.css";
+@import "./tokens/typography.css";
+@import "./tokens/spacing.css";
+@import "./tokens/elevation.css";
+@import "./tokens/motion.css";
+@import "./tokens/base.css";
+
+/* ============================================================
+   Optimizaciones Globales para Móvil y Desktop (Responsive & Touch)
+   ============================================================ */
+
+html, body {
+  overflow-x: hidden;
+  width: 100%;
+  -webkit-text-size-adjust: 100%;
+}
+
+@media (max-width: 900px) {
+  .mg-container {
+    padding-inline: var(--page-pad-mobile) !important;
+  }
+
+  /* En móviles: mantener el fondo limpio y no saturado */
+  .mg-botanical-bg {
+    display: none !important;
+  }
+  .mg-bg-aurora {
+    display: none !important;
+  }
+}
+
+@media (max-width: 768px) {
+  input, select, textarea {
+    font-size: 16px !important;
+  }
+}
+
+.mg-strip, .mg-scrollable {
+  -webkit-overflow-scrolling: touch;
+  scroll-behavior: smooth;
+}
+
+/* ============================================================
+   Efectos Visuales: Olas, 3D Badges, Listones y Glassmorphism
+   ============================================================ */
+
+/* 1. Separadores de Olas Orgánicas de Doble Capa */
+.mg-wave-divider {
+  width: 100%;
+  overflow: hidden;
+  line-height: 0;
+  display: block;
+}
+
+.mg-wave-divider svg {
+  position: relative;
+  display: block;
+  width: calc(100% + 1.3px);
+  height: 56px;
+}
+
+@media (max-width: 768px) {
+  .mg-wave-divider svg {
+    height: 36px;
+  }
+}
+
+/* 2. Listón / Cinta Decorativa de Marca */
+.mg-ribbon-gold {
+  height: 3px;
+  width: 48px;
+  background: linear-gradient(90deg, var(--brand-gold) 0%, var(--brand-green) 100%);
+  border-radius: var(--r-pill);
+}
+
+.mg-ribbon-full {
+  height: 2px;
+  width: 100%;
+  background: linear-gradient(90deg, transparent 0%, var(--border-gold) 50%, transparent 100%);
+}
+
+/* 3. Resplandores y Atmósfera de Fondo (Desktop Only) */
+.mg-bg-aurora {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(80px);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.mg-glow-gold {
+  background: radial-gradient(circle, rgba(209, 173, 104, 0.32) 0%, rgba(209, 173, 104, 0) 70%);
+}
+
+.mg-glow-green {
+  background: radial-gradient(circle, rgba(27, 167, 65, 0.25) 0%, rgba(27, 167, 65, 0) 70%);
+}
+
+/* 4. Tarjetas de Confianza con Vidrio Esmerilado (Glassmorphism) */
+.mg-trust-card {
+  background: rgba(255, 255, 255, 0.98);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(209, 173, 104, 0.45);
+  border-radius: var(--r-card);
+  padding: 16px 20px;
+  display: flex;
+  align-items: center;
+  gap: var(--sp-4);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.04), 0 2px 5px rgba(209, 173, 104, 0.08);
+  transition: transform var(--t-control), box-shadow var(--t-control), border-color var(--t-control);
+  position: relative;
+  overflow: hidden;
+}
+
+.mg-trust-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--brand-gold) 0%, var(--brand-green) 100%);
+  opacity: 0.8;
+}
+
+.mg-trust-card:hover {
+  transform: translateY(-4px);
+  border-color: var(--brand-gold);
+  box-shadow: 0 16px 36px rgba(209, 173, 104, 0.22), 0 4px 8px rgba(0, 0, 0, 0.04);
+}
+
+/* 5. Iconos 3D Premium con Relieve y Brillo Especular */
+.mg-badge-3d-green {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 52px;
+  height: 52px;
+  border-radius: 14px;
+  background: linear-gradient(145deg, #22c55e 0%, #16a34a 50%, #15803d 100%);
+  box-shadow: inset 0 2px 3px rgba(255, 255, 255, 0.5),
+              inset 0 -2px 4px rgba(0, 0, 0, 0.25),
+              0 6px 16px rgba(22, 163, 74, 0.35);
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  flex-shrink: 0;
+  transition: transform var(--t-control), box-shadow var(--t-control);
+}
+
+.mg-badge-3d-gold {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 52px;
+  height: 52px;
+  border-radius: 14px;
+  background: linear-gradient(145deg, #f5d485 0%, #d1ad68 50%, #9e7a2b 100%);
+  box-shadow: inset 0 2px 3px rgba(255, 255, 255, 0.7),
+              inset 0 -2px 4px rgba(0, 0, 0, 0.25),
+              0 6px 16px rgba(209, 173, 104, 0.4);
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  flex-shrink: 0;
+  transition: transform var(--t-control), box-shadow var(--t-control);
+}
+
+.mg-trust-card:hover .mg-badge-3d-green,
+.mg-trust-card:hover .mg-badge-3d-gold,
+.mg-luxury-card:hover .mg-badge-3d-green,
+.mg-luxury-card:hover .mg-badge-3d-gold {
+  transform: translateY(-2px) scale(1.08);
+}
+
+/* 6. Tarjetas de Pasos Luxury con Fondo Blanco Profundo */
+.mg-luxury-card {
+  background: rgba(255, 255, 255, 0.98);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(209, 173, 104, 0.35);
+  border-radius: var(--r-card);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.04), 0 2px 6px rgba(0, 0, 0, 0.02);
+  transition: transform var(--t-control), box-shadow var(--t-control), border-color var(--t-control);
+  position: relative;
+  overflow: hidden;
+}
+
+.mg-luxury-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--brand-gold) 0%, var(--brand-green) 100%);
+  opacity: 0.7;
+}
+
+.mg-luxury-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 22px 44px rgba(209, 173, 104, 0.22), 0 4px 10px rgba(0, 0, 0, 0.04);
+  border-color: var(--brand-gold);
+}
+
+/* 7. Insignia Flotante Botánica (Hero Floating Badge) */
+.mg-hero-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(255, 255, 255, 0.98);
+  backdrop-filter: blur(8px);
+  border: 1px solid var(--brand-gold);
+  padding: 6px 16px;
+  border-radius: var(--r-pill);
+  box-shadow: 0 4px 16px rgba(209, 173, 104, 0.18);
+  margin-bottom: var(--sp-4);
+  width: fit-content;
+}
+
+/* 8. Grid de 4 Productos: 4 columnas en PC, 2x2 en Móvil (sin scroll horizontal) */
+.mg-products-grid-preview,
+.mg-products-2x2 {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--sp-6);
+}
+
+@media (max-width: 992px) {
+  .mg-products-grid-preview,
+  .mg-products-2x2 {
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--sp-4);
+  }
+}
+
+@media (max-width: 540px) {
+  .mg-products-grid-preview,
+  .mg-products-2x2 {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+  }
+}
+
+/* 9. Animación de Flotación Sutil */
+@keyframes mg-float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
+}
+
+.mg-animate-float {
+  animation: mg-float 4s ease-in-out infinite;
+}

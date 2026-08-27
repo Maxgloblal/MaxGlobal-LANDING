@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="stylesheet" href="_ds/max-global-design-system-db9172c7-eb06-4175-a281-c6d20ad52644/tokens/fonts.css">
+  <link rel="stylesheet" href="_ds/max-global-design-system-db9172c7-eb06-4175-a281-c6d20ad52644/tokens/colors.css">
+  <link rel="stylesheet" href="_ds/max-global-design-system-db9172c7-eb06-4175-a281-c6d20ad52644/tokens/typography.css">
+  <link rel="stylesheet" href="_ds/max-global-design-system-db9172c7-eb06-4175-a281-c6d20ad52644/tokens/spacing.css">
+  <link rel="stylesheet" href="_ds/max-global-design-system-db9172c7-eb06-4175-a281-c6d20ad52644/tokens/elevation.css">
+  <link rel="stylesheet" href="_ds/max-global-design-system-db9172c7-eb06-4175-a281-c6d20ad52644/tokens/motion.css">
+  <link rel="stylesheet" href="_ds/max-global-design-system-db9172c7-eb06-4175-a281-c6d20ad52644/tokens/base.css">
+  <link rel="stylesheet" href="_ds/max-global-design-system-db9172c7-eb06-4175-a281-c6d20ad52644/styles.css">
+  <script src="https://unpkg.com/lucide@0.460.0/dist/umd/lucide.js"></script>
+  <script src="_ds/max-global-design-system-db9172c7-eb06-4175-a281-c6d20ad52644/_ds_bundle.js"></script>
+  <style>
+    @media (max-width: 900px) { .mg-container { padding-inline: var(--page-pad-mobile); } }
+  </style>
+</helmet>
+
+<div style="background: var(--surface-page);">
+
+  <dc-import name="SiteHeader" style="position: sticky; top: 0; z-index: 40;" active="productos" phone="{{ phone }}" ref-name="{{ refName }}" hint-size="100%,76px"></dc-import>
+
+  <section style="background: linear-gradient(180deg, var(--gold-50) 0%, var(--n-0) 80%); padding: var(--section-y) 0 var(--sp-12);">
+    <div class="mg-container">
+      <span class="mg-eyebrow">Catálogo</span>
+      <h1 style="margin-top: var(--sp-4); font-size: var(--fs-4xl);">Nuestros productos</h1>
+      <p style="margin-top: var(--sp-5); max-width: 56ch; font-size: var(--fs-md); line-height: var(--lh-relaxed);">Productos naturales de consumo diario. Los precios que ves son los de venta al público. <span style="color: var(--text-strong); font-weight: 700;">Como socio, los compras con 50% de descuento.</span></p>
+    </div>
+  </section>
+
+  <section style="padding-bottom: var(--section-y);">
+    <div class="mg-container" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: var(--sp-6);">
+      <x-import component-from-global-scope="MaxGlobalDesignSystem_db9172.ProductCard" name="Café de Moringa" description="Café instantáneo con moringa. Para reemplazar tu café de la mañana por uno que además aporta nutrientes." price="S/. 150" points="18" phone="{{ phone }}" wa-message="Hola, quiero pedir Café de Moringa (S/. 150)." hint-size="100%,470px"></x-import>
+      <x-import component-from-global-scope="MaxGlobalDesignSystem_db9172.ProductCard" name="Colágeno" description="Colágeno hidrolizado en polvo. Se disuelve en agua o en tu bebida de la mañana." price="S/. 150" points="18" phone="{{ phone }}" wa-message="Hola, quiero pedir Colágeno (S/. 150)." hint-size="100%,470px"></x-import>
+      <x-import component-from-global-scope="MaxGlobalDesignSystem_db9172.ProductCard" name="Aceite de Moringa" description="Aceite de moringa de uso tópico, para piel y cabello." price="S/. 120" points="14" phone="{{ phone }}" wa-message="Hola, quiero pedir Aceite de Moringa (S/. 120)." hint-size="100%,470px"></x-import>
+      <x-import component-from-global-scope="MaxGlobalDesignSystem_db9172.ProductCard" name="Esplendor" description="Descripción pendiente de confirmación." price="S/. 120" points="14" phone="{{ phone }}" wa-message="Hola, quiero pedir Esplendor (S/. 120)." hint-size="100%,470px"></x-import>
+      <x-import component-from-global-scope="MaxGlobalDesignSystem_db9172.ProductCard" name="Aceite de Orégano" description="Aceite esencial de orégano. Uso tradicional en gotas." price="S/. 60" points="8" phone="{{ phone }}" wa-message="Hola, quiero pedir Aceite de Orégano (S/. 60)." hint-size="100%,470px"></x-import>
+      <x-import component-from-global-scope="MaxGlobalDesignSystem_db9172.ProductCard" name="Cápsulas de Moringa" description="Moringa en cápsulas, para quien prefiere no preparar bebidas." price="S/. 60" points="8" phone="{{ phone }}" wa-message="Hola, quiero pedir Cápsulas de Moringa (S/. 60)." hint-size="100%,470px"></x-import>
+      <x-import component-from-global-scope="MaxGlobalDesignSystem_db9172.ProductCard" name="Harina de Moringa" description="Harina de hoja de moringa para agregar a comidas y batidos." price="S/. 50" points="6" phone="{{ phone }}" wa-message="Hola, quiero pedir Harina de Moringa (S/. 50)." hint-size="100%,470px"></x-import>
+      <x-import component-from-global-scope="MaxGlobalDesignSystem_db9172.ProductCard" name="Perfume Dalba" description="Perfume de la línea Dalba." price="S/. 70" points="10" phone="{{ phone }}" wa-message="Hola, quiero pedir Perfume Dalba (S/. 70)." hint-size="100%,470px"></x-import>
+    </div>
+  </section>
+
+  <section style="background: var(--surface-sunken); border-top: 2px solid var(--brand-gold); padding: var(--section-y-tight) 0;">
+    <div class="mg-container" style="display: flex; flex-wrap: wrap; gap: var(--sp-8); align-items: center; justify-content: space-between;">
+      <div style="max-width: 52ch;">
+        <h3>Los socios pagan la mitad</h3>
+        <p style="margin-top: var(--sp-3); font-size: var(--fs-md); line-height: var(--lh-relaxed);">Con cualquier pack desde S/. 360 compras todos estos productos con <span style="color: var(--text-strong); font-weight: 700;">50% de descuento, de por vida</span>.</p>
+      </div>
+      <a href="P-03%20Packs.dc.html" style="border: none;"><x-import component-from-global-scope="MaxGlobalDesignSystem_db9172.Button" size="lg" hint-size="270px,54px">Ver los packs de afiliación</x-import></a>
+    </div>
+  </section>
+
+  <dc-import name="SiteFooter" hint-size="100%,420px"></dc-import>
+
+  <x-import component-from-global-scope="MaxGlobalDesignSystem_db9172.WhatsAppButton" floating="{{ true }}" phone="{{ phone }}" message="Hola, quiero hacer un pedido de productos Max Global." hint-size="58px,58px"></x-import>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;phone&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;51999999999&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Contacto&quot;},&quot;refName&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;María T.&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Enlace de referido&quot;}}">
+class Component extends DCLogic {
+  renderVals() {
+    return {
+      phone: this.props.phone ?? "51999999999",
+      refName: this.props.refName ?? "",
+    };
+  }
+}
+</script>
+</body>
+</html>

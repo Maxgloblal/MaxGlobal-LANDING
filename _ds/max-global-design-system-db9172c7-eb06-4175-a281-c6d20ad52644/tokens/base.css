@@ -1,0 +1,17 @@
+/* Max Global — base: resets mínimos y estilos de enlace. */
+*,*::before,*::after{box-sizing:border-box}
+body{margin:0;background:var(--surface-page);color:var(--text-body);font-family:var(--font-body);font-size:var(--type-body-size);line-height:var(--type-body-lh);-webkit-font-smoothing:antialiased;text-wrap:pretty}
+h1,h2{font-family:var(--font-display);color:var(--text-strong);font-weight:400;letter-spacing:var(--ls-display);line-height:var(--lh-snug);text-transform:uppercase;margin:0}
+h1{font-size:var(--fs-4xl);line-height:var(--lh-tight)}
+h2{font-size:var(--fs-2xl)}
+h3,h4{font-family:var(--font-subtitle);color:var(--text-strong);font-weight:700;letter-spacing:var(--ls-normal);line-height:var(--lh-snug);margin:0}
+h3{font-size:var(--fs-xl)}
+h4{font-size:var(--fs-lg)}
+p{margin:0}
+a{color:var(--text-link);text-decoration:none;border-bottom:1px solid var(--border-green);transition:var(--t-control)}
+a:hover{color:var(--text-link-hover);border-bottom-color:var(--green-400)}
+a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{outline:none;box-shadow:var(--ring-focus)}
+::selection{background:var(--gold-200);color:var(--n-700)}
+.mg-eyebrow{font-family:var(--font-body);font-size:var(--type-eyebrow-size);letter-spacing:var(--type-eyebrow-ls);text-transform:uppercase;color:var(--text-gold);font-weight:700}
+.mg-display{font-family:var(--font-display);text-transform:uppercase;letter-spacing:var(--ls-display);font-weight:400}
+.mg-container{max-width:var(--page-max);margin:0 auto;padding-inline:var(--page-pad-desktop)}

@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="stylesheet" href="_ds/max-global-design-system-db9172c7-eb06-4175-a281-c6d20ad52644/tokens/fonts.css">
+  <link rel="stylesheet" href="_ds/max-global-design-system-db9172c7-eb06-4175-a281-c6d20ad52644/tokens/colors.css">
+  <link rel="stylesheet" href="_ds/max-global-design-system-db9172c7-eb06-4175-a281-c6d20ad52644/tokens/typography.css">
+  <link rel="stylesheet" href="_ds/max-global-design-system-db9172c7-eb06-4175-a281-c6d20ad52644/tokens/spacing.css">
+  <link rel="stylesheet" href="_ds/max-global-design-system-db9172c7-eb06-4175-a281-c6d20ad52644/tokens/elevation.css">
+  <link rel="stylesheet" href="_ds/max-global-design-system-db9172c7-eb06-4175-a281-c6d20ad52644/tokens/motion.css">
+  <link rel="stylesheet" href="_ds/max-global-design-system-db9172c7-eb06-4175-a281-c6d20ad52644/tokens/base.css">
+  <link rel="stylesheet" href="_ds/max-global-design-system-db9172c7-eb06-4175-a281-c6d20ad52644/styles.css">
+  <script src="https://unpkg.com/lucide@0.460.0/dist/umd/lucide.js"></script>
+  <script src="_ds/max-global-design-system-db9172c7-eb06-4175-a281-c6d20ad52644/_ds_bundle.js"></script>
+  <style>
+    html.mg-reveal [data-reveal] { opacity: 0; transform: translateY(12px); }
+    html.mg-reveal [data-reveal].mg-in { animation: mgIn 600ms cubic-bezier(.2,0,.2,1) forwards; }
+    @keyframes mgIn { to { opacity: 1; transform: none; } }
+    @media (prefers-reduced-motion: reduce) { html.mg-reveal [data-reveal] { opacity: 1 !important; transform: none !important; animation: none !important; } }
+
+    .mg-strip { display: grid; grid-auto-flow: column; grid-auto-columns: minmax(268px, 1fr); gap: var(--sp-6); overflow-x: auto; scroll-snap-type: x mandatory; padding-bottom: var(--sp-4); scrollbar-width: thin; }
+    .mg-strip > * { scroll-snap-align: start; }
+    .mg-row { display: grid; grid-template-columns: 56px 1.1fr 1fr 1.2fr; gap: var(--sp-6); align-items: baseline; padding: var(--sp-6) 0; border-top: 1px solid rgba(255,255,255,.14); }
+    .mg-row:first-of-type { border-top: none; }
+    .mg-num { font-family: var(--font-display); text-transform: uppercase; letter-spacing: var(--ls-display); font-size: var(--fs-xl); color: var(--brand-gold); line-height: 1; }
+    @media (max-width: 900px) {
+      .mg-container { padding-inline: var(--page-pad-mobile); }
+      .mg-hero { grid-template-columns: 1fr !important; gap: var(--sp-10) !important; }
+      .mg-steps { grid-template-columns: 1fr !important; }
+      .mg-steps-title { position: static !important; }
+      .mg-row { grid-template-columns: 40px 1fr; row-gap: var(--sp-2); }
+      .mg-close { grid-template-columns: 1fr !important; }
+      .mg-stats { position: static !important; margin-top: var(--sp-4); box-shadow: none !important; flex-wrap: wrap; }
+    }
+  </style>
+</helmet>
+
+<div style="background: var(--surface-page);">
+
+  <dc-import name="SiteHeader" style="position: sticky; top: 0; z-index: 40;" active="portada" phone="{{ phone }}" ref-name="{{ refName }}" hint-size="100%,76px"></dc-import>
+
+  <section style="position: relative; background: linear-gradient(180deg, var(--gold-50) 0%, var(--n-0) 78%); padding: var(--section-y-loose) 0 var(--section-y);">
+    <div class="mg-container mg-hero" style="display: grid; grid-template-columns: 1.35fr 0.95fr; gap: var(--sp-16); align-items: end;">
+      <div>
+        <div data-reveal style="display: flex; align-items: center; gap: var(--sp-4);">
+          <span style="display: block; width: 56px; height: 2px; background: var(--brand-gold);"></span>
+          <span class="mg-eyebrow">Venta directa · Perú</span>
+        </div>
+        <h1 data-reveal style="margin-top: var(--sp-6); font-size: clamp(2.75rem, 6.4vw, 5.1rem); line-height: 0.98; max-width: 15ch;">Un negocio propio</h1>
+        <p data-reveal style="margin-top: var(--sp-5); font-family: var(--font-subtitle); font-weight: 700; font-size: clamp(1.25rem, 2.2vw, 1.9rem); line-height: var(--lh-snug); color: var(--text-strong); max-width: 26ch;">con productos que la gente vuelve a comprar</p>
+        <p data-reveal style="margin-top: var(--sp-6); max-width: 50ch; font-size: var(--fs-md); line-height: var(--lh-relaxed);">Max Global es una empresa peruana de venta directa. Te damos el producto, el descuento y el plan de comisiones. Tú construyes tu red.</p>
+        <div data-reveal style="margin-top: var(--sp-8); display: flex; flex-wrap: wrap; gap: var(--sp-3);">
+          <a href="P-03%20Packs.dc.html" style="border: none;"><x-import component-from-global-scope="MaxGlobalDesignSystem_db9172.Button" size="lg" hint-size="170px,54px">Ver los packs</x-import></a>
+          <x-import component-from-global-scope="MaxGlobalDesignSystem_db9172.WhatsAppButton" size="lg" phone="{{ phone }}" message="Hola, quiero información sobre Max Global." hint-size="230px,54px">Hablar por WhatsApp</x-import>
+        </div>
+      </div>
+
+      <div data-reveal style="position: relative;">
+        <div style="background: var(--surface-gold); border: 1px solid var(--border-gold); border-radius: var(--r-card); aspect-ratio: 3 / 4; display: flex; align-items: center; justify-content: center; text-align: center; padding: var(--sp-8);">
+          <span style="font-family: var(--font-body); font-size: var(--fs-3xs); letter-spacing: var(--ls-wide); text-transform: uppercase; color: var(--gold-700); line-height: var(--lh-normal);">Fotografía de producto<br>pendiente de entrega</span>
+        </div>
+        <div class="mg-stats" style="position: absolute; left: calc(-1 * var(--sp-8)); bottom: calc(-1 * var(--sp-8)); background: var(--surface-card); border: 1px solid var(--border-subtle); border-radius: var(--r-card); box-shadow: var(--shadow-md); padding: var(--sp-5) var(--sp-6); display: flex; gap: var(--sp-8);">
+          <div style="display: flex; flex-direction: column; gap: 2px;">
+            <span style="font-family: var(--font-display); text-transform: uppercase; letter-spacing: var(--ls-display); font-size: var(--fs-xl); color: var(--text-strong); line-height: 1;">8</span>
+            <span style="font-size: var(--fs-2xs); color: var(--text-muted);">productos</span>
+          </div>
+          <div style="width: 1px; background: var(--border-subtle);"></div>
+          <div style="display: flex; flex-direction: column; gap: 2px;">
+            <span style="font-family: var(--font-display); text-transform: uppercase; letter-spacing: var(--ls-display); font-size: var(--fs-xl); color: var(--text-strong); line-height: 1;">50%</span>
+            <span style="font-size: var(--fs-2xs); color: var(--text-muted);">descuento de socio</span>
+          </div>
+          <div style="width: 1px; background: var(--border-subtle);"></div>
+          <div style="display: flex; flex-direction: column; gap: 2px;">
+            <span style="font-family: var(--font-display); text-transform: uppercase; letter-spacing: var(--ls-display); font-size: var(--fs-xl); color: var(--text-strong); line-height: 1;">10</span>
+            <span style="font-size: var(--fs-2xs); color: var(--text-muted);">niveles</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section style="border-top: 1px solid var(--border-subtle); border-bottom: 1px solid var(--border-subtle); background: var(--surface-sunken); padding: var(--sp-8) 0;">
+    <div class="mg-container" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: var(--sp-6);">
+      <div data-reveal style="display: flex; gap: var(--sp-3); align-items: center;">
+        <span style="color: var(--brand-green); display: inline-flex;"><x-import component-from-global-scope="MaxGlobalDesignSystem_db9172.Icon" name="badge-check" size="22" hint-size="22px,22px"></x-import></span>
+        <span style="font-size: var(--fs-sm); color: var(--text-strong); line-height: var(--lh-normal);">Productos con registro sanitario</span>
+      </div>
+      <div data-reveal style="display: flex; gap: var(--sp-3); align-items: center;">
+        <span style="color: var(--brand-green); display: inline-flex;"><x-import component-from-global-scope="MaxGlobalDesignSystem_db9172.Icon" name="truck" size="22" hint-size="22px,22px"></x-import></span>
+        <span style="font-size: var(--fs-sm); color: var(--text-strong); line-height: var(--lh-normal);">Envíos a todo el Perú</span>
+      </div>
+      <div data-reveal style="display: flex; gap: var(--sp-3); align-items: center;">
+        <span style="color: var(--brand-green); display: inline-flex;"><x-import component-from-global-scope="MaxGlobalDesignSystem_db9172.Icon" name="wallet" size="22" hint-size="22px,22px"></x-import></span>
+        <span style="font-size: var(--fs-sm); color: var(--text-strong); line-height: var(--lh-normal);">Descuento de por vida para socios</span>
+      </div>
+      <div data-reveal style="display: flex; gap: var(--sp-3); align-items: center;">
+        <span style="color: var(--brand-green); display: inline-flex;"><x-import component-from-global-scope="MaxGlobalDesignSystem_db9172.Icon" name="trending-up" size="22" hint-size="22px,22px"></x-import></span>
+        <span style="font-size: var(--fs-sm); color: var(--text-strong); line-height: var(--lh-normal);">Comisiones hasta 10 niveles</span>
+      </div>
+    </div>
+  </section>
+
+  <section style="padding: var(--section-y) 0;">
+    <div class="mg-container mg-steps" style="display: grid; grid-template-columns: 0.8fr 1.2fr; gap: var(--sp-16); align-items: start;">
+      <div class="mg-steps-title" style="position: sticky; top: 120px;">
+        <span class="mg-eyebrow">Cómo funciona</span>
+        <h2 data-reveal style="margin-top: var(--sp-4); font-size: var(--fs-3xl); line-height: var(--lh-snug);">Empezar toma tres pasos</h2>
+        <a href="P-03%20Packs.dc.html" style="border: none; display: inline-flex; margin-top: var(--sp-8);"><x-import component-from-global-scope="MaxGlobalDesignSystem_db9172.Button" variant="outline" hint-size="170px,44px">Ver los packs</x-import></a>
+      </div>
+      <div style="display: flex; flex-direction: column;">
+        <div data-reveal style="display: grid; grid-template-columns: 88px 1fr; gap: var(--sp-6); padding: var(--sp-8) 0; border-top: 1px solid var(--border-subtle);">
+          <span style="font-family: var(--font-display); text-transform: uppercase; letter-spacing: var(--ls-display); font-size: var(--fs-3xl); color: var(--brand-gold); line-height: 1;">01</span>
+          <div>
+            <h3>Eliges tu pack</h3>
+            <p style="margin-top: var(--sp-3); font-size: var(--fs-md); line-height: var(--lh-relaxed); max-width: 46ch;">Desde S/. 120. Cada uno incluye producto y define hasta cuántos niveles cobras.</p>
+          </div>
+        </div>
+        <div data-reveal style="display: grid; grid-template-columns: 88px 1fr; gap: var(--sp-6); padding: var(--sp-8) 0; border-top: 1px solid var(--border-subtle);">
+          <span style="font-family: var(--font-display); text-transform: uppercase; letter-spacing: var(--ls-display); font-size: var(--fs-3xl); color: var(--brand-gold); line-height: 1;">02</span>
+          <div>
+            <h3>Recibes tu producto</h3>
+            <p style="margin-top: var(--sp-3); font-size: var(--fs-md); line-height: var(--lh-relaxed); max-width: 46ch;">Lo enviamos a tu dirección por agencia, a cualquier parte del Perú.</p>
+          </div>
+        </div>
+        <div data-reveal style="display: grid; grid-template-columns: 88px 1fr; gap: var(--sp-6); padding: var(--sp-8) 0; border-top: 1px solid var(--border-subtle); border-bottom: 1px solid var(--border-subtle);">
+          <span style="font-family: var(--font-display); text-transform: uppercase; letter-spacing: var(--ls-display); font-size: var(--fs-3xl); color: var(--brand-gold); line-height: 1;">03</span>
+          <div>
+            <h3>Empiezas a construir</h3>
+            <p style="margin-top: var(--sp-3); font-size: var(--fs-md); line-height: var(--lh-relaxed); max-width: 46ch;">Compartes tu enlace, tu red compra, y cobras según el plan.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section style="background: var(--surface-sunken); border-top: 1px solid var(--border-subtle); border-bottom: 1px solid var(--border-subtle); padding: var(--section-y) 0;">
+    <div class="mg-container">
+      <div style="display: flex; flex-wrap: wrap; gap: var(--sp-6); align-items: flex-end; justify-content: space-between;">
+        <div data-reveal>
+          <span class="mg-eyebrow">Catálogo</span>
+          <h2 style="margin-top: var(--sp-4); font-size: var(--fs-3xl);">Los productos</h2>
+          <p style="margin-top: var(--sp-5); max-width: 52ch; font-size: var(--fs-md); line-height: var(--lh-relaxed);">Ocho productos naturales de consumo diario. Los socios los compran con 50% de descuento.</p>
+        </div>
+        <a href="P-02%20Productos.dc.html" style="border: none;"><x-import component-from-global-scope="MaxGlobalDesignSystem_db9172.Button" variant="outline" hint-size="220px,44px">Ver el catálogo completo</x-import></a>
+      </div>
+      <div class="mg-strip" data-reveal style="margin-top: var(--sp-10);">
+        <x-import component-from-global-scope="MaxGlobalDesignSystem_db9172.ProductCard" name="Café de Moringa" price="S/. 150" points="18" phone="{{ phone }}" wa-message="Hola, quiero pedir Café de Moringa (S/. 150)." hint-size="100%,420px"></x-import>
+        <x-import component-from-global-scope="MaxGlobalDesignSystem_db9172.ProductCard" name="Colágeno" price="S/. 150" points="18" phone="{{ phone }}" wa-message="Hola, quiero pedir Colágeno (S/. 150)." hint-size="100%,420px"></x-import>
+        <x-import component-from-global-scope="MaxGlobalDesignSystem_db9172.ProductCard" name="Aceite de Moringa" price="S/. 120" points="14" phone="{{ phone }}" wa-message="Hola, quiero pedir Aceite de Moringa (S/. 120)." hint-size="100%,420px"></x-import>
+        <x-import component-from-global-scope="MaxGlobalDesignSystem_db9172.ProductCard" name="Cápsulas de Moringa" price="S/. 60" points="8" phone="{{ phone }}" wa-message="Hola, quiero pedir Cápsulas de Moringa (S/. 60)." hint-size="100%,420px"></x-import>
+        <x-import component-from-global-scope="MaxGlobalDesignSystem_db9172.ProductCard" name="Perfume Dalba" price="S/. 70" points="10" phone="{{ phone }}" wa-message="Hola, quiero pedir Perfume Dalba (S/. 70)." hint-size="100%,420px"></x-import>
+      </div>
+      <p style="margin-top: var(--sp-2); font-size: var(--fs-2xs); color: var(--text-muted);">Desliza para ver más productos.</p>
+    </div>
+  </section>
+
+  <section style="background: var(--surface-inverse); padding: var(--section-y-loose) 0;">
+    <div class="mg-container">
+      <div data-reveal style="display: flex; align-items: center; gap: var(--sp-4);">
+        <span style="display: block; width: 56px; height: 2px; background: var(--brand-gold);"></span>
+        <span class="mg-eyebrow" style="color: var(--brand-gold);">La oportunidad</span>
+      </div>
+      <h2 data-reveal style="margin-top: var(--sp-6); color: var(--text-on-dark); font-size: clamp(2rem, 4.2vw, 3.4rem); line-height: var(--lh-snug); max-width: 20ch;">Las cuatro formas de ganar</h2>
+      <p data-reveal style="margin-top: var(--sp-5); max-width: 54ch; font-size: var(--fs-md); line-height: var(--lh-relaxed); color: var(--n-300);">El plan de compensación de Max Global tiene cuatro bonos. Así funciona cada uno.</p>
+
+      <div style="margin-top: var(--sp-12);">
+        <div class="mg-row" data-reveal>
+          <span class="mg-num">01</span>
+          <span style="font-family: var(--font-subtitle); font-weight: 700; font-size: var(--fs-lg); color: var(--text-on-dark);">Patrocinio</span>
+          <span style="font-size: var(--fs-sm); color: var(--n-300); line-height: var(--lh-normal);">Cuando alguien de tu red se afilia</span>
+          <span style="font-size: var(--fs-sm); color: var(--n-300); line-height: var(--lh-normal);">El precio de su pack, hasta 7 niveles</span>
+        </div>
+        <div class="mg-row" data-reveal>
+          <span class="mg-num">02</span>
+          <span style="font-family: var(--font-subtitle); font-weight: 700; font-size: var(--fs-lg); color: var(--text-on-dark);">Residual</span>
+          <span style="font-size: var(--fs-sm); color: var(--n-300); line-height: var(--lh-normal);">Cada mes</span>
+          <span style="font-size: var(--fs-sm); color: var(--n-300); line-height: var(--lh-normal);">Las recompras de tu red, hasta 10 niveles</span>
+        </div>
+        <div class="mg-row" data-reveal>
+          <span class="mg-num">03</span>
+          <span style="font-family: var(--font-subtitle); font-weight: 700; font-size: var(--fs-lg); color: var(--text-on-dark);">Rango</span>
+          <span style="font-size: var(--fs-sm); color: var(--n-300); line-height: var(--lh-normal);">Cada mes que califiques</span>
+          <span style="font-size: var(--fs-sm); color: var(--n-300); line-height: var(--lh-normal);">El volumen de tu grupo</span>
+        </div>
+        <div class="mg-row" data-reveal style="border-bottom: 1px solid rgba(255,255,255,.14);">
+          <span class="mg-num">04</span>
+          <span style="font-family: var(--font-subtitle); font-weight: 700; font-size: var(--fs-lg); color: var(--text-on-dark);">Global</span>
+          <span style="font-size: var(--fs-sm); color: var(--n-300); line-height: var(--lh-normal);">Cada 6 meses</span>
+          <span style="font-size: var(--fs-sm); color: var(--n-300); line-height: var(--lh-normal);">1% del volumen de toda la compañía</span>
+        </div>
+      </div>
+
+      <div data-reveal style="margin-top: var(--sp-12);">
+        <a href="P-03%20Packs.dc.html#comisiones" style="border: none;"><x-import component-from-global-scope="MaxGlobalDesignSystem_db9172.Button" size="lg" hint-size="220px,54px">Ver el plan completo</x-import></a>
+      </div>
+    </div>
+  </section>
+
+  <section style="padding: var(--section-y) 0;">
+    <div class="mg-container mg-close" style="display: grid; grid-template-columns: 1fr auto; gap: var(--sp-10); align-items: center; background: var(--surface-gold); border: 1px solid var(--border-gold); border-radius: var(--r-pack); padding: var(--sp-12);">
+      <div data-reveal>
+        <h2 style="font-size: var(--fs-3xl);">Empieza hoy</h2>
+        <p style="margin-top: var(--sp-4); font-size: var(--fs-md); line-height: var(--lh-relaxed); color: var(--n-600); max-width: 44ch;">Elige tu pack o escríbenos y te explicamos cómo funciona.</p>
+      </div>
+      <div data-reveal style="display: flex; flex-wrap: wrap; gap: var(--sp-3);">
+        <a href="P-03%20Packs.dc.html" style="border: none;"><x-import component-from-global-scope="MaxGlobalDesignSystem_db9172.Button" size="lg" hint-size="170px,54px">Ver los packs</x-import></a>
+        <x-import component-from-global-scope="MaxGlobalDesignSystem_db9172.WhatsAppButton" size="lg" phone="{{ phone }}" message="Hola, quiero información sobre Max Global." hint-size="230px,54px">Hablar por WhatsApp</x-import>
+      </div>
+    </div>
+  </section>
+
+  <dc-import name="SiteFooter" hint-size="100%,420px"></dc-import>
+
+  <x-import component-from-global-scope="MaxGlobalDesignSystem_db9172.WhatsAppButton" floating="{{ true }}" phone="{{ phone }}" message="Hola, quiero información sobre Max Global." hint-size="58px,58px"></x-import>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;phone&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;51999999999&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Contacto&quot;},&quot;refName&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;María T.&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Enlace de referido&quot;},&quot;animate&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Movimiento&quot;}}">
+class Component extends DCLogic {
+  componentDidMount() {
+    if (this.props.animate === false) return;
+    const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (reduce) return;
+    document.documentElement.classList.add("mg-reveal");
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) { e.target.classList.add("mg-in"); io.unobserve(e.target); }
+      });
+    }, { rootMargin: "0px 0px -8% 0px", threshold: 0.05 });
+    this._io = io;
+    const scan = () => document.querySelectorAll("[data-reveal]:not(.mg-in)").forEach(el => io.observe(el));
+    scan();
+    this._t = setTimeout(scan, 400);
+  }
+  componentWillUnmount() {
+    clearTimeout(this._t);
+    if (this._io) this._io.disconnect();
+    document.documentElement.classList.remove("mg-reveal");
+  }
+  renderVals() {
+    return {
+      phone: this.props.phone ?? "51999999999",
+      refName: this.props.refName ?? "",
+    };
+  }
+}
+</script>
+</body>
+</html>

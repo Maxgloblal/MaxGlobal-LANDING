@@ -1,0 +1,35 @@
+/* Max Global — radios, sombras y trazos. */
+:root{
+  --r-xs:4px;--r-sm:8px;--r-md:12px;--r-lg:20px;--r-xl:24px;--r-pill:999px;--r-circle:50%;
+  --r-card:var(--r-md);      /* 12px — tarjetas de producto y bloques */
+  --r-pack:var(--r-lg);     /* 20px — tarjetas de pack */
+  --r-control:var(--r-md);  /* 12px — botones */
+  --r-input:var(--r-md);
+  --r-media:var(--r-md);
+  --r-badge:var(--r-pill);  /* insignias y pastillas de puntos */
+
+  --bw-hair:1px; /* @kind other */
+  --bw-thick:2px; /* @kind other */
+  --border-hair:1px solid var(--border-subtle); /* @kind other */
+  --border-card:1px solid var(--border-subtle); /* @kind other */
+
+  /* Sombras: suaves, cálidas, nunca azuladas */
+  --shadow-none:none;
+  --shadow-xs:0 1px 2px rgba(28,27,25,.05);
+  --shadow-sm:0 2px 6px rgba(28,27,25,.06);
+  --shadow-md:0 8px 24px -8px rgba(26,26,26,.14);
+  --shadow-lg:0 20px 48px -16px rgba(28,27,25,.18);
+  --shadow-lift:0 12px 28px -10px rgba(26,26,26,.16);
+  --shadow-gold:0 10px 28px -12px rgba(160,127,61,.45);
+  --shadow-green:0 10px 28px -12px rgba(16,107,41,.4);
+  --shadow-inset-hair:inset 0 0 0 1px var(--border-subtle);
+
+  --ring-focus:0 0 0 3px rgba(27,167,65,.28);
+  --ring-focus-gold:0 0 0 3px rgba(209,173,104,.4);
+
+  /* Velos y desenfoques */
+  --scrim-dark:linear-gradient(180deg,rgba(28,27,25,0) 0%,rgba(28,27,25,.72) 100%); /* @kind other */
+  --scrim-top:linear-gradient(180deg,rgba(28,27,25,.55) 0%,rgba(28,27,25,0) 100%); /* @kind other */
+  --glass-bg:rgba(255,255,255,.82); /* @kind color */
+  --glass-blur:blur(12px); /* @kind other */
+}
