@@ -8,64 +8,38 @@
 # RESUMEN
 
 ```
-   🔴  Bloquea la publicación         3 cosas   ← todas legales
+   ✅  Legal                          RESUELTO 27/08
    🟡  Datos que faltan de Máximo     4
    🟢  Técnico del despliegue         5
 ```
+
+**Ya no queda nada que programar.** Lo que falta son datos del cliente y el
+despliegue.
 
 **Lo que ya está terminado no vuelve a aparecer en este documento.**
 
 ---
 
-# 🔴 BLOQUEA LA PUBLICACIÓN — LEGAL
+# ✅ LEGAL — RESUELTO EL 27/08
 
-> **Esto no es opcional.** Sin estas tres cosas el sitio no puede estar en
-> internet en Perú.
+**Las tres páginas están construidas y verificadas.**
 
-## 1 · Libro de Reclamaciones virtual — **obligatorio con sanción**
+| Página | Ruta | Estado |
+|---|---|---|
+| Política de Privacidad | `/politica-de-privacidad` | ✅ con RUC, derechos ARCO y cláusula de no cesión |
+| Términos y Condiciones | `/terminos-y-condiciones` | ✅ con cláusula de distribuidor independiente |
+| Libro de Reclamaciones | `/libro-de-reclamaciones` | ✅ módulo completo |
 
-**Ley 32495.** Todo comercio electrónico en Perú debe tenerlo.
+**El Libro de Reclamaciones** distingue Reclamo de Queja con sus definiciones
+legales, contempla apoderado para menores, genera código correlativo
+`MG-LR-YYYYMMDD-XXXX`, muestra el plazo de 15 días hábiles, y ofrece descargar
+copia, enviar por WhatsApp, correo prellenado e imprimir.
 
-**Hoy el enlace del pie no lleva a ninguna parte.**
+**Los enlaces del pie ya no apuntan a anclas vacías**, y la casilla de
+consentimiento del registro enlaza a la política real.
 
-No es una página de texto: **es un módulo completo.**
-
-| Qué necesita | Detalle |
-|---|---|
-| Formulario | Datos del consumidor, del bien o servicio, y el detalle del reclamo |
-| Distinción | **Queja** y **Reclamo** son cosas distintas por ley |
-| Código único | Cada registro genera un código correlativo |
-| Copia al consumidor | Se le envía por correo |
-| Copia a la empresa | Llega al correo de Max Global |
-| Plazo visible | 15 días hábiles para responder |
-| Conservación | 2 años |
-
-**Los textos ya están redactados** en `08-LEGAL/02-TEXTOS-PARA-EL-SITIO`,
-sección 4.
-
-> ⚠️ **Ojo con el envío de correos.** El módulo necesita mandar dos correos por
-> cada reclamo. Eso requiere un servicio de correo transaccional, y **no estaba
-> en la cotización**. La alternativa sin costo es que el formulario abra un
-> correo prellenado o llegue por WhatsApp — menos elegante, pero cumple.
-
-## 2 · Página de Términos y Condiciones
-
-**Hoy el enlace apunta a `#terminos`** — un ancla vacía.
-
-**Base:** Ley 29571. Texto redactado en `08-LEGAL/02-TEXTOS-PARA-EL-SITIO`,
-sección 3.
-
-## 3 · Página de Política de Privacidad
-
-**Hoy el enlace apunta a `#privacidad`** — otra ancla vacía.
-
-**Y esto es más grave de lo que parece:** la casilla de consentimiento del
-formulario de registro dice *"He leído y acepto la Política de Privacidad"*.
-
-**Está haciendo aceptar un documento que no existe.** Eso invalida el
-consentimiento bajo el D.S. 016-2024-JUS.
-
-Texto redactado en `08-LEGAL/02-TEXTOS-PARA-EL-SITIO`, sección 2.
+También se agregó el `.htaccess` para Apache, y se actualizaron `robots.txt` y
+`sitemap.xml`.
 
 ---
 
@@ -131,14 +105,13 @@ la única prueba que refleja al usuario verdadero.
 # EL ORDEN QUE CONVIENE
 
 ```
-   1º   Las 3 páginas legales          ← es lo único que bloquea
-   2º   Pedirle los 4 datos a Máximo
+   1º   Pedirle los 4 datos a Máximo
+   2º   Contratar dominio y hosting
    3º   Recompilar y desplegar
    4º   Probar el enlace en WhatsApp y en un celular real
 ```
 
-**Lo primero es lo único que necesita programación.** El resto son datos y
-despliegue.
+**Nada de esto necesita programación.**
 
 ---
 
