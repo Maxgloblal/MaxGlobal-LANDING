@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { MessageCircle, Sparkles, Leaf, ShieldCheck } from 'lucide-react';
 import { EMPRESA } from '../config';
-import { precioSocio } from '../data/catalogo';
+import { precioSocio, mejorDescuento } from '../data/catalogo';
 
 export default function ProductCard({
   id,
@@ -41,7 +41,10 @@ export default function ProductCard({
 
   const numericPrice = typeof rawPrice === 'string' ? parseInt(rawPrice.replace(/\D/g, ''), 10) || 0 : typeof rawPrice === 'number' ? rawPrice : 0;
   const formattedPrice = typeof rawPrice === 'string' ? rawPrice : `S/. ${numericPrice}`;
-  const partnerPrice = numericPrice > 0 ? precioSocio(numericPrice, 50) : null;
+  
+  // El mejor descuento vigente sale de los packs dinámicamente
+  const maxDiscount = mejorDescuento();
+  const partnerPriceFrom = numericPrice > 0 ? precioSocio(numericPrice, maxDiscount) : null;
 
   const targetPhone = phone || EMPRESA.whatsapp;
   const defaultMsg = waMessage || `Hola, quiero pedir ${displayName} (${formattedPrice}).`;
@@ -234,7 +237,7 @@ export default function ProductCard({
         </p>
       )}
 
-      {/* Precios: Público y Socio */}
+      {/* Precios: Público y Los socios pagan desde */}
       <div
         style={{
           display: 'flex',
@@ -260,11 +263,11 @@ export default function ProductCard({
             {formattedPrice}
           </span>
         </div>
-        {partnerPrice && (
+        {partnerPriceFrom && (
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', marginTop: '2px' }}>
-            <span style={{ fontSize: 'var(--fs-2xs)', color: 'var(--brand-green)', fontWeight: 700 }}>Precio Socio (50%):</span>
+            <span style={{ fontSize: 'var(--fs-2xs)', color: 'var(--brand-green)', fontWeight: 600 }}>Los socios pagan desde:</span>
             <span style={{ fontSize: 'var(--fs-xs)', color: 'var(--brand-green)', fontWeight: 700 }}>
-              S/. {partnerPrice}
+              S/. {partnerPriceFrom}
             </span>
           </div>
         )}

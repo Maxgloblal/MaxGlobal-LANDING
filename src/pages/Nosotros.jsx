@@ -319,7 +319,7 @@ export default function Nosotros() {
               </p>
               <a
                 href="/libro-de-reclamaciones"
-                data-testid="btn-nosotros-libro"
+                data-testid="btn-libro-reclamaciones"
                 style={{
                   display: 'inline-flex',
                   alignItems: 'center',

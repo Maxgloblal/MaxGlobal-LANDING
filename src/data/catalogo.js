@@ -11,4 +11,8 @@ export const getPacks = () => PACKS.filter((p) => p.activo !== false);
 
 export const getPack = (id) => PACKS.find((p) => p.id === id);
 
+// El mejor descuento vigente sale dinámicamente de los packs
+export const mejorDescuento = () =>
+  Math.max(...getPacks().map((p) => p.descuentoRecompra || 0));
+
 export { precioSocio };
