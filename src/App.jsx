@@ -3,6 +3,9 @@ import { BrowserRouter, Routes, Route, useLocation, useSearchParams } from 'reac
 import SiteHeader from './components/SiteHeader';
 import SiteFooter from './components/SiteFooter';
 import WhatsAppFab from './components/WhatsAppFab';
+import CartFab from './components/CartFab';
+import CartDrawer from './components/CartDrawer';
+import { CartProvider } from './context/CartContext';
 import Portada from './pages/Portada';
 import Productos from './pages/Productos';
 import Packs from './pages/Packs';
@@ -61,24 +64,29 @@ function RouteManager() {
 
 export default function App() {
   return (
-    <BrowserRouter>
-      <RefTracker />
-      <RouteManager />
-      <div style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
-        <SiteHeader />
-        <main style={{ flex: 1 }}>
-          <Routes>
-            <Route path="/" element={<Portada />} />
-            <Route path="/productos" element={<Productos />} />
-            <Route path="/packs-de-afiliacion" element={<Packs />} />
-            <Route path="/registro" element={<Registro />} />
-            <Route path="/confirmacion" element={<Confirmacion />} />
-            <Route path="/nosotros" element={<Nosotros />} />
-          </Routes>
-        </main>
-        <SiteFooter />
-        <WhatsAppFab />
-      </div>
-    </BrowserRouter>
+    <CartProvider>
+      <BrowserRouter>
+        <RefTracker />
+        <RouteManager />
+        <div style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
+          <SiteHeader />
+          <main style={{ flex: 1 }}>
+            <Routes>
+              <Route path="/" element={<Portada />} />
+              <Route path="/productos" element={<Productos />} />
+              <Route path="/packs-de-afiliacion" element={<Packs />} />
+              <Route path="/registro" element={<Registro />} />
+              <Route path="/confirmacion" element={<Confirmacion />} />
+              <Route path="/nosotros" element={<Nosotros />} />
+              <Route path="*" element={<Portada />} />
+            </Routes>
+          </main>
+          <SiteFooter />
+          <CartFab />
+          <WhatsAppFab />
+          <CartDrawer />
+        </div>
+      </BrowserRouter>
+    </CartProvider>
   );
 }

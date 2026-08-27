@@ -26,16 +26,15 @@ test.describe('Productos Page (P-02) E2E', () => {
     await expect(page.locator('text=10 pts')).toBeVisible();
   });
 
-  test('clicking Pedir button has WhatsApp URL with product message', async ({ page }) => {
+  test('clicking Agregar button adds product to cart and opens drawer', async ({ page }) => {
     await page.goto('/productos?ref=MG-00417');
 
-    const cafeBtn = page.locator('[data-testid="btn-order-wa-cafe-moringa"]');
+    const cafeBtn = page.locator('[data-testid="btn-add-to-cart-cafe-moringa"]');
     await expect(cafeBtn).toBeVisible();
-    const href = await cafeBtn.getAttribute('href');
+    await cafeBtn.click();
 
-    expect(href).toContain('https://wa.me/');
-    expect(href).toContain(encodeURIComponent('Café con Moringa'));
-    expect(href).toContain(encodeURIComponent('Ref: MG-00417'));
+    await expect(page.locator('[data-testid="cart-drawer"]')).toBeVisible();
+    await expect(page.locator('[data-testid="cart-item-cafe-moringa"]')).toBeVisible();
   });
 
   test('clicking CTA in bottom banner navigates to packs page', async ({ page }) => {

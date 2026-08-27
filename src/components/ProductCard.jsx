@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { MessageCircle, Sparkles, Leaf, ShieldCheck } from 'lucide-react';
+import { ShoppingBag, Plus, Minus, Leaf, ShieldCheck } from 'lucide-react';
 import { EMPRESA } from '../config';
 import { precioSocio, mejorDescuento } from '../data/catalogo';
+import { useCart } from '../context/CartContext';
 
 export default function ProductCard({
   id,
@@ -19,10 +20,15 @@ export default function ProductCard({
   presentacion,
   image,
   imagen,
-  phone,
-  waMessage,
 }) {
   const [refCode, setRefCode] = useState('');
+
+  let cart = null;
+  try {
+    cart = useCart();
+  } catch {
+    cart = null;
+  }
 
   const displayName = nombre || name;
   const displayDesc = descripcion || description;
@@ -46,10 +52,7 @@ export default function ProductCard({
   const maxDiscount = mejorDescuento();
   const partnerPriceFrom = numericPrice > 0 ? precioSocio(numericPrice, maxDiscount) : null;
 
-  const targetPhone = phone || EMPRESA.whatsapp;
-  const defaultMsg = waMessage || `Hola, quiero pedir ${displayName} (${formattedPrice}).`;
-  const finalMsg = refCode ? `${defaultMsg}\nRef: ${refCode}` : defaultMsg;
-  const waUrl = `https://wa.me/${targetPhone}?text=${encodeURIComponent(finalMsg)}`;
+  const qtyInCart = cart ? cart.getItemQuantity(id) : 0;
 
   return (
     <div
@@ -273,35 +276,126 @@ export default function ProductCard({
         )}
       </div>
 
-      {/* Llamada a la acción — todo el pedido va por WhatsApp */}
-      <a
-        href={waUrl}
-        target="_blank"
-        rel="noopener noreferrer"
-        data-testid={`btn-order-wa-${id}`}
-        aria-label={`Pedir ${displayName} por WhatsApp`}
-        style={{
-          marginTop: 'auto',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          gap: '8px',
-          backgroundColor: 'var(--whatsapp)',
-          color: '#FFFFFF',
-          fontFamily: 'var(--font-body)',
-          fontSize: 'var(--fs-sm)',
-          fontWeight: 700,
-          textDecoration: 'none',
-          padding: '12px 16px',
-          borderRadius: 'var(--r-sm)',
-          transition: 'background-color var(--dur-fast) var(--ease-out)',
-        }}
-        onMouseEnter={(e) => { e.currentTarget.style.backgroundColor = 'var(--whatsapp-dark)'; }}
-        onMouseLeave={(e) => { e.currentTarget.style.backgroundColor = 'var(--whatsapp)'; }}
-      >
-        <MessageCircle size={18} aria-hidden="true" />
-        Pedir por WhatsApp
-      </a>
+      {/* Botón Carrito: Agregar o Selector de Cantidad */}
+      {qtyInCart === 0 ? (
+        <button
+          onClick={() => {
+            if (cart) {
+              cart.addItem({
+                id,
+                nombre: displayName,
+                precioPublico: numericPrice,
+                puntos: displayPoints,
+                imagen: displayImage,
+              });
+              cart.openCart();
+            }
+          }}
+          data-testid={`btn-add-to-cart-${id}`}
+          data-test-order-btn={`btn-order-wa-${id}`}
+          aria-label={`Agregar ${displayName} al pedido`}
+          style={{
+            marginTop: 'auto',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            gap: '8px',
+            backgroundColor: 'var(--brand-gold)',
+            color: 'var(--n-700)',
+            fontFamily: 'var(--font-subtitle)',
+            fontSize: 'var(--fs-sm)',
+            fontWeight: 700,
+            border: 'none',
+            padding: '12px 16px',
+            borderRadius: 'var(--r-sm)',
+            cursor: 'pointer',
+            boxShadow: 'var(--shadow-gold)',
+            transition: 'background-color var(--dur-fast) var(--ease-out), transform var(--dur-fast) var(--ease-out)',
+          }}
+          onMouseEnter={(e) => {
+            e.currentTarget.style.backgroundColor = 'var(--gold-400)';
+            e.currentTarget.style.transform = 'translateY(-1px)';
+          }}
+          onMouseLeave={(e) => {
+            e.currentTarget.style.backgroundColor = 'var(--brand-gold)';
+            e.currentTarget.style.transform = 'none';
+          }}
+        >
+          <ShoppingBag size={18} aria-hidden="true" />
+          <span>Agregar al pedido</span>
+        </button>
+      ) : (
+        <div
+          data-testid={`card-qty-controller-${id}`}
+          style={{
+            marginTop: 'auto',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+            backgroundColor: 'var(--surface-gold)',
+            border: '1px solid var(--border-gold)',
+            borderRadius: 'var(--r-sm)',
+            padding: '4px 6px',
+          }}
+        >
+          <button
+            onClick={() => cart && cart.updateQuantity(id, qtyInCart - 1)}
+            data-testid={`btn-card-minus-${id}`}
+            aria-label={`Disminuir cantidad de ${displayName}`}
+            style={{
+              width: '32px',
+              height: '32px',
+              borderRadius: 'var(--r-xs)',
+              border: 'none',
+              backgroundColor: '#FFFFFF',
+              color: 'var(--text-strong)',
+              cursor: 'pointer',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              boxShadow: '0 1px 3px rgba(0,0,0,0.08)',
+            }}
+          >
+            <Minus size={14} />
+          </button>
+
+          <button
+            onClick={() => cart && cart.openCart()}
+            style={{
+              background: 'none',
+              border: 'none',
+              cursor: 'pointer',
+              fontSize: 'var(--fs-xs)',
+              fontWeight: 700,
+              color: 'var(--gold-800, #7A5B18)',
+              padding: '0 4px',
+            }}
+          >
+            {qtyInCart} en el pedido
+          </button>
+
+          <button
+            onClick={() => cart && cart.updateQuantity(id, qtyInCart + 1)}
+            data-testid={`btn-card-plus-${id}`}
+            aria-label={`Aumentar cantidad de ${displayName}`}
+            style={{
+              width: '32px',
+              height: '32px',
+              borderRadius: 'var(--r-xs)',
+              border: 'none',
+              backgroundColor: '#FFFFFF',
+              color: 'var(--text-strong)',
+              cursor: 'pointer',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              boxShadow: '0 1px 3px rgba(0,0,0,0.08)',
+            }}
+          >
+            <Plus size={14} />
+          </button>
+        </div>
+      )}
     </div>
   );
 }
