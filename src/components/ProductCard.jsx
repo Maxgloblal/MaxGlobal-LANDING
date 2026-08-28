@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import { ShoppingBag, Plus, Minus, Leaf, ShieldCheck } from 'lucide-react';
 import { EMPRESA } from '../config';
 import { precioSocio, mejorDescuento } from '../data/catalogo';
@@ -83,65 +84,77 @@ export default function ProductCard({
         e.currentTarget.style.borderColor = 'var(--border-subtle)';
       }}
     >
-      {/* Imagen del Producto (Limpia, Sin Doble Marco) */}
-      <div
+      {/* Imagen del Producto con Enlace al Detalle */}
+      <Link
+        to={`/productos/${id}`}
         style={{
+          textDecoration: 'none',
+          display: 'block',
           width: '100%',
-          height: '210px',
           borderRadius: 'var(--r-md)',
-          backgroundColor: displayImage && !imgError ? '#F8F9FA' : 'var(--surface-gold)',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          textAlign: 'center',
-          marginBottom: 'var(--sp-3)',
           overflow: 'hidden',
-          position: 'relative',
+          marginBottom: 'var(--sp-3)',
         }}
+        aria-label={`Ver detalles de ${displayName}`}
       >
-        {displayImage && !imgError ? (
-          <img
-            src={displayImage}
-            alt={displayName}
-            style={{
-              width: '100%',
-              height: '100%',
-              objectFit: 'cover',
-              display: 'block',
-              borderRadius: 'var(--r-md)',
-            }}
-            onError={() => setImgError(true)}
-          />
-        ) : (
-          <div
-            style={{
-              display: 'flex',
-              flexDirection: 'column',
-              alignItems: 'center',
-              justifyContent: 'center',
-              gap: '6px',
-              width: '100%',
-              height: '100%',
-              padding: 'var(--sp-3)',
-            }}
-          >
-            <Leaf size={32} color="var(--brand-gold)" />
-            <span
+        <div
+          style={{
+            width: '100%',
+            height: '210px',
+            borderRadius: 'var(--r-md)',
+            backgroundColor: displayImage && !imgError ? '#F8F9FA' : 'var(--surface-gold)',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            textAlign: 'center',
+            overflow: 'hidden',
+            position: 'relative',
+          }}
+        >
+          {displayImage && !imgError ? (
+            <img
+              src={displayImage}
+              alt={displayName}
               style={{
-                fontFamily: 'var(--font-body)',
-                fontSize: 'var(--fs-3xs)',
-                letterSpacing: 'var(--ls-wide)',
-                textTransform: 'uppercase',
-                color: 'var(--gold-700)',
-                lineHeight: 'var(--lh-normal)',
-                fontWeight: 700,
+                width: '100%',
+                height: '100%',
+                objectFit: 'cover',
+                display: 'block',
+                borderRadius: 'var(--r-md)',
+              }}
+              onError={() => setImgError(true)}
+            />
+          ) : (
+            <div
+              style={{
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                justifyContent: 'center',
+                gap: '6px',
+                width: '100%',
+                height: '100%',
+                padding: 'var(--sp-3)',
               }}
             >
-              100% Natural<br />Max Global
-            </span>
-          </div>
-        )}
-      </div>
+              <Leaf size={32} color="var(--brand-gold)" />
+              <span
+                style={{
+                  fontFamily: 'var(--font-body)',
+                  fontSize: 'var(--fs-3xs)',
+                  letterSpacing: 'var(--ls-wide)',
+                  textTransform: 'uppercase',
+                  color: 'var(--gold-700)',
+                  lineHeight: 'var(--lh-normal)',
+                  fontWeight: 700,
+                }}
+              >
+                100% Natural<br />Max Global
+              </span>
+            </div>
+          )}
+        </div>
+      </Link>
 
       {/* Categoría */}
       {displayCategory && (
@@ -173,7 +186,22 @@ export default function ProductCard({
             lineHeight: 'var(--lh-snug)',
           }}
         >
-          {displayName}
+          <Link
+            to={`/productos/${id}`}
+            style={{
+              color: 'inherit',
+              textDecoration: 'none',
+              transition: 'color var(--dur-fast) var(--ease-out)',
+            }}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.color = 'var(--brand-gold)';
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.color = 'inherit';
+            }}
+          >
+            {displayName}
+          </Link>
         </h3>
         {displayPoints !== undefined && (
           <span

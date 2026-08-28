@@ -17,7 +17,19 @@ test.describe('Productos Page (P-02) E2E', () => {
     }
   });
 
-  test('clicking Agregar button adds product to cart and opens drawer', async ({ page }) => {
+  test('clicking product image or name navigates to /productos/:id', async ({ page }) => {
+    await page.goto('/productos');
+
+    const firstProd = PRODUCTOS[0];
+    const productLink = page.locator(`a[href="/productos/${firstProd.id}"]`).first();
+    await expect(productLink).toBeVisible();
+    await productLink.click();
+
+    await expect(page).toHaveURL(new RegExp(`/productos/${firstProd.id}`));
+    await expect(page.locator('[data-testid="detail-product-name"]')).toHaveText(firstProd.nombre);
+  });
+
+  test('clicking Agregar button adds product to cart and opens drawer without navigating', async ({ page }) => {
     await page.goto('/productos?ref=MG-00417');
 
     const firstProd = PRODUCTOS[0];
@@ -25,6 +37,8 @@ test.describe('Productos Page (P-02) E2E', () => {
     await expect(addBtn).toBeVisible();
     await addBtn.click();
 
+    // Still on /productos
+    await expect(page).toHaveURL(/.*productos/);
     await expect(page.locator('[data-testid="cart-drawer"]')).toBeVisible();
     await expect(page.locator(`[data-testid="cart-item-${firstProd.id}"]`)).toBeVisible();
   });

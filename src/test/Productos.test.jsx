@@ -30,6 +30,18 @@ describe('Productos Page (P-02)', () => {
     });
   });
 
+  it('links product card image and title to /productos/:id', () => {
+    render(
+      <MemoryRouter>
+        <Productos />
+      </MemoryRouter>
+    );
+
+    const firstProd = PRODUCTOS[0];
+    const productLinks = screen.getAllByRole('link', { name: new RegExp(firstProd.nombre, 'i') });
+    expect(productLinks.some((l) => l.getAttribute('href') === `/productos/${firstProd.id}`)).toBe(true);
+  });
+
   it('renders prices and points correctly for each product in catalog', () => {
     render(
       <MemoryRouter>
