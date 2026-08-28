@@ -83,19 +83,17 @@ export default function ProductCard({
         e.currentTarget.style.borderColor = 'var(--border-subtle)';
       }}
     >
-      {/* Imagen / Placeholder con Sello de Calidad */}
+      {/* Imagen del Producto (Limpia, Sin Doble Marco) */}
       <div
         style={{
           width: '100%',
-          height: '180px',
+          height: '210px',
           borderRadius: 'var(--r-md)',
-          backgroundColor: 'var(--surface-gold)',
-          border: '1px solid var(--border-gold)',
+          backgroundColor: displayImage && !imgError ? '#F8F9FA' : 'var(--surface-gold)',
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
           textAlign: 'center',
-          padding: 'var(--sp-3)',
           marginBottom: 'var(--sp-3)',
           overflow: 'hidden',
           position: 'relative',
@@ -105,7 +103,13 @@ export default function ProductCard({
           <img
             src={displayImage}
             alt={displayName}
-            style={{ width: '100%', height: '100%', objectFit: 'contain' }}
+            style={{
+              width: '100%',
+              height: '100%',
+              objectFit: 'cover',
+              display: 'block',
+              borderRadius: 'var(--r-md)',
+            }}
             onError={() => setImgError(true)}
           />
         ) : (
@@ -114,10 +118,14 @@ export default function ProductCard({
               display: 'flex',
               flexDirection: 'column',
               alignItems: 'center',
+              justifyContent: 'center',
               gap: '6px',
+              width: '100%',
+              height: '100%',
+              padding: 'var(--sp-3)',
             }}
           >
-            <Leaf size={28} color="var(--brand-gold)" />
+            <Leaf size={32} color="var(--brand-gold)" />
             <span
               style={{
                 fontFamily: 'var(--font-body)',
@@ -133,29 +141,6 @@ export default function ProductCard({
             </span>
           </div>
         )}
-
-        {/* Badge 100% Natural */}
-        <div
-          style={{
-            position: 'absolute',
-            top: '8px',
-            right: '8px',
-            backgroundColor: 'rgba(255, 255, 255, 0.92)',
-            backdropFilter: 'blur(4px)',
-            borderRadius: 'var(--r-pill)',
-            padding: '2px 8px',
-            display: 'flex',
-            alignItems: 'center',
-            gap: '4px',
-            fontSize: '9px',
-            fontWeight: 700,
-            color: 'var(--brand-green)',
-            border: '1px solid var(--border-green)',
-          }}
-        >
-          <ShieldCheck size={12} />
-          <span>ORIGINAL</span>
-        </div>
       </div>
 
       {/* Categoría */}
