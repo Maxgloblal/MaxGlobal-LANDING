@@ -1,7 +1,7 @@
 # LO QUE FALTA PARA PUBLICAR LA LANDING
 
 **Fecha:** 27 de agosto de 2026
-**Estado:** las 6 páginas están construidas y funcionando
+**Estado:** 14 páginas construidas y funcionando (6 principales + 8 de producto)
 
 ---
 
@@ -144,7 +144,7 @@ punto del recorrido.
 | Enlaces vacíos o `href="#"` | Ninguno |
 | Carrito vacío tiene su estado | ✅ *"Tu carrito está vacío"* |
 | Los botones flotantes no se tapan | ✅ WhatsApp abajo, carrito 90px arriba |
-| Sitemap incluye las 6 páginas indexables | ✅ |
+| Sitemap incluye las 14 páginas indexables | ✅ |
 | Confirmación muestra las 2 cuentas bancarias | ✅ BCP y BBVA |
 
 ---
@@ -209,7 +209,9 @@ la única prueba que refleja al usuario verdadero.
 
 | Área | Estado |
 |---|---|
-| Las 6 páginas | ✅ construidas y navegables |
+| Las 6 páginas principales | ✅ construidas y navegables |
+| **8 páginas de producto** | ✅ `/productos/:id` con JSON-LD y canónica |
+| Página 404 | ✅ con noindex |
 | Carrito con varios productos | ✅ persiste entre páginas |
 | Mensaje de WhatsApp | ✅ lista, total público, puntos y código de socio |
 | Precios | ✅ *"Los socios pagan desde"*, calculado desde los packs |
