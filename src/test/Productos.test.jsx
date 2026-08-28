@@ -1,6 +1,7 @@
 import React from 'react';
 import { describe, it, expect } from 'vitest';
 import { render, screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import { MemoryRouter } from 'react-router-dom';
 import Productos from '../pages/Productos';
 import { PRODUCTOS } from '../config';
@@ -28,6 +29,60 @@ describe('Productos Page (P-02)', () => {
     PRODUCTOS.forEach((prod) => {
       expect(screen.getByRole('heading', { name: prod.nombre })).toBeInTheDocument();
     });
+    expect(screen.getByTestId('catalog-count')).toHaveTextContent(`${PRODUCTOS.length} productos`);
+  });
+
+  it('filters products by search term ignoring accents and case', async () => {
+    const user = userEvent.setup();
+    render(
+      <MemoryRouter>
+        <Productos />
+      </MemoryRouter>
+    );
+
+    const input = screen.getByTestId('input-buscar-productos');
+    await user.type(input, 'colageno'); // Without accent
+
+    expect(screen.getByRole('heading', { name: /colágeno aeterna/i })).toBeInTheDocument();
+    expect(screen.queryByRole('heading', { name: /coffee capuccino/i })).toBeNull();
+    expect(screen.getByTestId('catalog-count')).toHaveTextContent(`1 de ${PRODUCTOS.length} productos`);
+  });
+
+  it('filters products by category chip', async () => {
+    const user = userEvent.setup();
+    render(
+      <MemoryRouter>
+        <Productos />
+      </MemoryRouter>
+    );
+
+    const saludChip = screen.getByTestId('chip-cat-salud-y-nutrición');
+    await user.click(saludChip);
+
+    const saludProds = PRODUCTOS.filter((p) => p.categoria === 'Salud y Nutrición');
+    expect(screen.getByTestId('catalog-count')).toHaveTextContent(`${saludProds.length} de ${PRODUCTOS.length} productos`);
+  });
+
+  it('shows empty state when no product matches search', async () => {
+    const user = userEvent.setup();
+    render(
+      <MemoryRouter>
+        <Productos />
+      </MemoryRouter>
+    );
+
+    const input = screen.getByTestId('input-buscar-productos');
+    await user.type(input, 'termino-totalmente-inexistente');
+
+    expect(screen.getByTestId('catalog-empty-state')).toBeInTheDocument();
+    expect(screen.getByRole('heading', { name: /no encontramos productos/i })).toBeInTheDocument();
+
+    // Click clear button
+    const clearBtn = screen.getByTestId('btn-empty-clear');
+    await user.click(clearBtn);
+
+    expect(screen.queryByTestId('catalog-empty-state')).toBeNull();
+    expect(screen.getByTestId('catalog-count')).toHaveTextContent(`${PRODUCTOS.length} productos`);
   });
 
   it('links product card image and title to /productos/:id', () => {
