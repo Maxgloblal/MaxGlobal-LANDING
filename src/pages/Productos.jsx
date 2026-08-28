@@ -1,6 +1,6 @@
 import React from 'react';
 import { useSearchParams, Link } from 'react-router-dom';
-import { Search, X, SlidersHorizontal, PackageSearch } from 'lucide-react';
+import { Search, X, SlidersHorizontal, Filter, PackageSearch } from 'lucide-react';
 import ProductCard from '../components/ProductCard';
 import { getProductos } from '../data/catalogo';
 
@@ -104,7 +104,7 @@ export default function Productos() {
         </div>
       </section>
 
-      {/* 2. Barra de Filtros, Buscador y Categorías */}
+      {/* 2. Barra de Filtros y Desplegables de Marca */}
       <section className="mg-catalog-filters-section" style={{ paddingBottom: 'var(--sp-8)' }}>
         <div className="mg-container">
           <div
@@ -112,237 +112,249 @@ export default function Productos() {
               backgroundColor: '#FFFFFF',
               border: '1px solid var(--border-subtle)',
               borderRadius: 'var(--r-card)',
-              padding: 'var(--sp-5)',
-              boxShadow: 'var(--shadow-xs)',
+              padding: 'clamp(14px, 3vw, var(--sp-6))',
+              boxShadow: '0 8px 24px rgba(0, 0, 0, 0.04)',
               display: 'flex',
               flexDirection: 'column',
               gap: 'var(--sp-4)',
             }}
           >
-            {/* Fila Superior: Buscador + Selector de Orden */}
+            {/* Fila 1: Buscador */}
             <div
               style={{
+                position: 'relative',
+                width: '100%',
                 display: 'flex',
-                flexWrap: 'wrap',
-                gap: 'var(--sp-4)',
                 alignItems: 'center',
-                justifyContent: 'space-between',
               }}
             >
-              {/* Buscador con Input */}
-              <div
+              <Search
+                size={18}
                 style={{
-                  position: 'relative',
-                  flex: '1 1 280px',
-                  display: 'flex',
-                  alignItems: 'center',
+                  position: 'absolute',
+                  left: '16px',
+                  color: 'var(--brand-gold)',
+                  pointerEvents: 'none',
                 }}
-              >
-                <Search
-                  size={18}
+              />
+              <input
+                type="text"
+                placeholder="Buscar por nombre o ingrediente..."
+                value={searchTerm}
+                onChange={(e) => updateFilters({ buscar: e.target.value })}
+                data-testid="input-buscar-productos"
+                style={{
+                  width: '100%',
+                  padding: '14px 42px 14px 46px',
+                  borderRadius: 'var(--r-pill)',
+                  border: '1.5px solid var(--border-subtle)',
+                  backgroundColor: 'var(--surface-page)',
+                  fontSize: 'var(--fs-sm)',
+                  fontFamily: 'var(--font-body)',
+                  color: 'var(--text-strong)',
+                  outline: 'none',
+                  transition: 'border-color var(--dur-fast) var(--ease-out), box-shadow var(--dur-fast) var(--ease-out)',
+                }}
+                onFocus={(e) => {
+                  e.currentTarget.style.borderColor = 'var(--brand-gold)';
+                  e.currentTarget.style.boxShadow = '0 0 0 3px rgba(209, 173, 104, 0.18)';
+                }}
+                onBlur={(e) => {
+                  e.currentTarget.style.borderColor = 'var(--border-subtle)';
+                  e.currentTarget.style.boxShadow = 'none';
+                }}
+              />
+              {searchTerm && (
+                <button
+                  onClick={() => updateFilters({ buscar: '' })}
+                  data-testid="btn-limpiar-busqueda"
+                  aria-label="Limpiar búsqueda"
                   style={{
                     position: 'absolute',
-                    left: '14px',
+                    right: '14px',
+                    background: 'none',
+                    border: 'none',
                     color: 'var(--text-muted)',
-                    pointerEvents: 'none',
+                    cursor: 'pointer',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    padding: '4px',
                   }}
-                />
-                <input
-                  type="text"
-                  placeholder="Buscar por nombre o ingrediente..."
-                  value={searchTerm}
-                  onChange={(e) => updateFilters({ buscar: e.target.value })}
-                  data-testid="input-buscar-productos"
+                >
+                  <X size={16} />
+                </button>
+              )}
+            </div>
+
+            {/* Fila 2: Desplegables Elegantes con ADN Max Global */}
+            <div className="mg-filter-controls-row">
+              {/* Desplegable de Categoría */}
+              <div className="mg-select-group">
+                <label
+                  htmlFor="select-categoria"
                   style={{
-                    width: '100%',
-                    padding: '12px 38px 12px 42px',
-                    borderRadius: 'var(--r-pill)',
-                    border: '1px solid var(--border-subtle)',
-                    backgroundColor: 'var(--surface-page)',
-                    fontSize: 'var(--fs-sm)',
-                    fontFamily: 'var(--font-body)',
-                    color: 'var(--text-strong)',
-                    outline: 'none',
-                    transition: 'border-color var(--dur-fast) var(--ease-out)',
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    gap: '6px',
+                    fontSize: 'var(--fs-2xs)',
+                    textTransform: 'uppercase',
+                    letterSpacing: 'var(--ls-wide)',
+                    color: 'var(--text-muted)',
+                    fontWeight: 700,
+                    marginBottom: '4px',
                   }}
-                  onFocus={(e) => {
-                    e.currentTarget.style.borderColor = 'var(--brand-gold)';
-                  }}
-                  onBlur={(e) => {
-                    e.currentTarget.style.borderColor = 'var(--border-subtle)';
-                  }}
-                />
-                {searchTerm && (
-                  <button
-                    onClick={() => updateFilters({ buscar: '' })}
-                    data-testid="btn-limpiar-busqueda"
-                    aria-label="Limpiar búsqueda"
-                    style={{
-                      position: 'absolute',
-                      right: '12px',
-                      background: 'none',
-                      border: 'none',
-                      color: 'var(--text-muted)',
-                      cursor: 'pointer',
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      padding: '4px',
-                    }}
+                >
+                  <Filter size={13} color="var(--brand-gold)" />
+                  <span>Categoría</span>
+                </label>
+                <div style={{ position: 'relative' }}>
+                  <select
+                    id="select-categoria"
+                    value={selectedCategory}
+                    onChange={(e) => updateFilters({ categoria: e.target.value })}
+                    data-testid="select-categoria-productos"
+                    className="mg-custom-select"
                   >
-                    <X size={16} />
-                  </button>
-                )}
+                    <option value="">Todas las categorías ({allProducts.length})</option>
+                    {categories.map((cat) => {
+                      const count = allProducts.filter((p) => p.categoria === cat).length;
+                      return (
+                        <option key={cat} value={cat}>
+                          {cat} ({count})
+                        </option>
+                      );
+                    })}
+                  </select>
+                </div>
               </div>
 
-              {/* Selector de Orden */}
-              <div
-                style={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: '8px',
-                  flex: '0 0 auto',
-                }}
-              >
-                <SlidersHorizontal size={16} color="var(--text-muted)" />
+              {/* Desplegable de Orden */}
+              <div className="mg-select-group">
                 <label
                   htmlFor="select-orden"
                   style={{
-                    fontSize: 'var(--fs-xs)',
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    gap: '6px',
+                    fontSize: 'var(--fs-2xs)',
+                    textTransform: 'uppercase',
+                    letterSpacing: 'var(--ls-wide)',
                     color: 'var(--text-muted)',
-                    fontWeight: 600,
+                    fontWeight: 700,
+                    marginBottom: '4px',
                   }}
                 >
-                  Ordenar por:
+                  <SlidersHorizontal size={13} color="var(--brand-gold)" />
+                  <span>Ordenar por</span>
                 </label>
-                <select
-                  id="select-orden"
-                  value={sortBy}
-                  onChange={(e) => updateFilters({ orden: e.target.value })}
-                  data-testid="select-orden-productos"
-                  style={{
-                    padding: '10px 14px',
-                    borderRadius: 'var(--r-sm)',
-                    border: '1px solid var(--border-subtle)',
-                    backgroundColor: 'var(--surface-page)',
-                    fontSize: 'var(--fs-sm)',
-                    fontFamily: 'var(--font-body)',
-                    color: 'var(--text-strong)',
-                    cursor: 'pointer',
-                    outline: 'none',
-                  }}
-                >
-                  <option value="nombre">Nombre (A-Z)</option>
-                  <option value="precio-asc">Precio: menor a mayor</option>
-                  <option value="precio-desc">Precio: mayor a menor</option>
-                  <option value="puntos-desc">Puntos: mayor a menor</option>
-                </select>
+                <div style={{ position: 'relative' }}>
+                  <select
+                    id="select-orden"
+                    value={sortBy}
+                    onChange={(e) => updateFilters({ orden: e.target.value })}
+                    data-testid="select-orden-productos"
+                    className="mg-custom-select"
+                  >
+                    <option value="nombre">Nombre (A-Z)</option>
+                    <option value="precio-asc">Precio: menor a mayor</option>
+                    <option value="precio-desc">Precio: mayor a menor</option>
+                    <option value="puntos-desc">Puntos: mayor a menor</option>
+                  </select>
+                </div>
               </div>
             </div>
 
-            {/* Fila Inferior: Chips de Categorías (Wrap Natural sin Scroll Horizontal) */}
+            {/* Badges de Filtros Activos + Contador */}
             <div
-              className="mg-categories-wrap"
               style={{
                 display: 'flex',
                 flexWrap: 'wrap',
-                gap: '8px',
-                alignItems: 'center',
-              }}
-            >
-              {/* Chip Todos */}
-              <button
-                onClick={() => updateFilters({ categoria: '' })}
-                data-testid="chip-cat-todos"
-                style={{
-                  padding: '8px 16px',
-                  borderRadius: 'var(--r-pill)',
-                  border: selectedCategory === '' ? '1px solid var(--brand-gold)' : '1px solid var(--border-subtle)',
-                  backgroundColor: selectedCategory === '' ? 'var(--brand-gold)' : 'var(--surface-page)',
-                  color: selectedCategory === '' ? 'var(--n-700)' : 'var(--text-body)',
-                  fontFamily: 'var(--font-subtitle)',
-                  fontWeight: 700,
-                  fontSize: 'var(--fs-xs)',
-                  whiteSpace: 'nowrap',
-                  cursor: 'pointer',
-                  transition: 'var(--t-control)',
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: '6px',
-                }}
-              >
-                <span>Todos</span>
-                <span
-                  style={{
-                    backgroundColor: selectedCategory === '' ? 'rgba(0,0,0,0.12)' : 'var(--border-subtle)',
-                    padding: '2px 6px',
-                    borderRadius: 'var(--r-pill)',
-                    fontSize: '10px',
-                  }}
-                >
-                  {allProducts.length}
-                </span>
-              </button>
-
-              {/* Chips por Categoría */}
-              {categories.map((cat) => {
-                const count = allProducts.filter((p) => p.categoria === cat).length;
-                const isSelected = selectedCategory === cat;
-                return (
-                  <button
-                    key={cat}
-                    onClick={() => updateFilters({ categoria: isSelected ? '' : cat })}
-                    data-testid={`chip-cat-${cat.toLowerCase().replace(/\s+/g, '-')}`}
-                    style={{
-                      padding: '8px 16px',
-                      borderRadius: 'var(--r-pill)',
-                      border: isSelected ? '1px solid var(--brand-gold)' : '1px solid var(--border-subtle)',
-                      backgroundColor: isSelected ? 'var(--brand-gold)' : 'var(--surface-page)',
-                      color: isSelected ? 'var(--n-700)' : 'var(--text-body)',
-                      fontFamily: 'var(--font-subtitle)',
-                      fontWeight: 700,
-                      fontSize: 'var(--fs-xs)',
-                      whiteSpace: 'nowrap',
-                      cursor: 'pointer',
-                      transition: 'var(--t-control)',
-                      display: 'flex',
-                      alignItems: 'center',
-                      gap: '6px',
-                    }}
-                  >
-                    <span>{cat}</span>
-                    <span
-                      style={{
-                        backgroundColor: isSelected ? 'rgba(0,0,0,0.12)' : 'var(--border-subtle)',
-                        padding: '2px 6px',
-                        borderRadius: 'var(--r-pill)',
-                        fontSize: '10px',
-                      }}
-                    >
-                      {count}
-                    </span>
-                  </button>
-                );
-              })}
-            </div>
-
-            {/* Contador de Resultados */}
-            <div
-              style={{
-                display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'space-between',
+                gap: 'var(--sp-2)',
                 fontSize: 'var(--fs-xs)',
                 color: 'var(--text-muted)',
-                paddingTop: 'var(--sp-2)',
+                paddingTop: 'var(--sp-3)',
                 borderTop: '1px solid var(--border-subtle)',
               }}
             >
-              <span data-testid="catalog-count">
-                {isFiltered
-                  ? `${sorted.length} de ${allProducts.length} productos`
-                  : `${allProducts.length} productos`}
-              </span>
+              <div style={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: '8px' }}>
+                <span data-testid="catalog-count" style={{ fontWeight: 600, color: 'var(--text-strong)' }}>
+                  {isFiltered
+                    ? `${sorted.length} de ${allProducts.length} productos`
+                    : `${allProducts.length} productos`}
+                </span>
+
+                {/* Badge de Categoría Activa */}
+                {selectedCategory && (
+                  <span
+                    style={{
+                      display: 'inline-flex',
+                      alignItems: 'center',
+                      gap: '4px',
+                      backgroundColor: 'var(--surface-gold)',
+                      color: 'var(--gold-700)',
+                      border: '1px solid var(--border-gold)',
+                      borderRadius: 'var(--r-pill)',
+                      padding: '2px 10px',
+                      fontSize: 'var(--fs-2xs)',
+                      fontWeight: 700,
+                    }}
+                  >
+                    <span>{selectedCategory}</span>
+                    <button
+                      onClick={() => updateFilters({ categoria: '' })}
+                      style={{
+                        background: 'none',
+                        border: 'none',
+                        color: 'inherit',
+                        cursor: 'pointer',
+                        padding: 0,
+                        display: 'flex',
+                      }}
+                      aria-label="Quitar filtro de categoría"
+                    >
+                      <X size={12} />
+                    </button>
+                  </span>
+                )}
+
+                {/* Badge de Búsqueda Activa */}
+                {searchTerm.trim() && (
+                  <span
+                    style={{
+                      display: 'inline-flex',
+                      alignItems: 'center',
+                      gap: '4px',
+                      backgroundColor: 'var(--surface-sunken)',
+                      color: 'var(--text-body)',
+                      border: '1px solid var(--border-subtle)',
+                      borderRadius: 'var(--r-pill)',
+                      padding: '2px 10px',
+                      fontSize: 'var(--fs-2xs)',
+                      fontWeight: 600,
+                    }}
+                  >
+                    <span>«{searchTerm.trim()}»</span>
+                    <button
+                      onClick={() => updateFilters({ buscar: '' })}
+                      style={{
+                        background: 'none',
+                        border: 'none',
+                        color: 'inherit',
+                        cursor: 'pointer',
+                        padding: 0,
+                        display: 'flex',
+                      }}
+                      aria-label="Quitar filtro de búsqueda"
+                    >
+                      <X size={12} />
+                    </button>
+                  </span>
+                )}
+              </div>
+
               {isFiltered && (
                 <button
                   onClick={handleClearFilters}
@@ -487,12 +499,36 @@ export default function Productos() {
       </section>
 
       <style>{`
-        .mg-categories-scroll::-webkit-scrollbar {
-          height: 4px;
+        .mg-filter-controls-row {
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          gap: var(--sp-4);
+          align-items: end;
         }
-        .mg-categories-scroll::-webkit-scrollbar-thumb {
-          background-color: var(--border-subtle);
-          borderRadius: 4px;
+        .mg-select-group {
+          display: flex;
+          flex-direction: column;
+        }
+        .mg-custom-select {
+          width: 100%;
+          padding: 12px 36px 12px 14px;
+          border-radius: var(--r-sm);
+          border: 1.5px solid var(--border-subtle);
+          background-color: var(--surface-page);
+          font-size: var(--fs-sm);
+          font-family: var(--font-body);
+          color: var(--text-strong);
+          cursor: pointer;
+          outline: none;
+          appearance: none;
+          background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23d1ad68' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+          background-repeat: no-repeat;
+          background-position: right 12px center;
+          transition: border-color var(--dur-fast) var(--ease-out), box-shadow var(--dur-fast) var(--ease-out);
+        }
+        .mg-custom-select:focus {
+          border-color: var(--brand-gold);
+          box-shadow: 0 0 0 3px rgba(209, 173, 104, 0.18);
         }
         @media (max-width: 768px) {
           .mg-catalog-filters-section {
@@ -501,6 +537,17 @@ export default function Productos() {
             z-index: 20;
             background-color: var(--surface-page);
             padding-top: var(--sp-2);
+          }
+        }
+        @media (max-width: 480px) {
+          .mg-filter-controls-row {
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+          }
+          .mg-custom-select {
+            padding: 10px 28px 10px 10px;
+            font-size: var(--fs-xs);
+            background-position: right 8px center;
           }
         }
         @media (max-width: 600px) {
