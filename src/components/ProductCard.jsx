@@ -100,7 +100,7 @@ export default function ProductCard({
         <div
           style={{
             width: '100%',
-            height: '210px',
+            aspectRatio: '1 / 1',
             borderRadius: 'var(--r-md)',
             backgroundColor: displayImage && !imgError ? '#F8F9FA' : 'var(--surface-gold)',
             display: 'flex',

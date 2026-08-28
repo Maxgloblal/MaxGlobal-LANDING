@@ -240,15 +240,14 @@ export default function Productos() {
               </div>
             </div>
 
-            {/* Fila Inferior: Chips de Categorías (Scroll Horizontal en Móvil) */}
+            {/* Fila Inferior: Chips de Categorías (Wrap Natural sin Scroll Horizontal) */}
             <div
-              className="mg-categories-scroll"
+              className="mg-categories-wrap"
               style={{
                 display: 'flex',
+                flexWrap: 'wrap',
                 gap: '8px',
-                overflowX: 'auto',
-                paddingBottom: '4px',
-                WebkitOverflowScrolling: 'touch',
+                alignItems: 'center',
               }}
             >
               {/* Chip Todos */}

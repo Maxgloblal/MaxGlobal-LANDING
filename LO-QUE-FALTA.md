@@ -8,15 +8,22 @@
 # RESUMEN
 
 ```
-   ✅  Programación                   TERMINADA 27/08
-   ✅  Legal · fotos · presentaciones RESUELTO
-   🟢  Solo queda desplegar
+   ✅  Programación        TERMINADA
+   ✅  Legal · productos   RESUELTO
+   ✅  Móvil · catálogo    RESUELTO 27/08
+   🟢  Solo queda DESPLEGAR
 ```
 
-**La Fase 1 está cerrada.** No queda nada que programar.
+**No queda nada que programar.**
 
-**Ya no queda nada que programar.** Lo que falta son datos del cliente y el
-despliegue.
+| Área | Estado |
+|---|---|
+| 14 páginas + 404 | ✅ |
+| Móvil a 390px | ✅ verificado |
+| Buscador, categorías y orden | ✅ |
+| Carrito y WhatsApp | ✅ |
+| Legal completo | ✅ |
+| SEO y datos estructurados | ✅ |
 
 **Lo que ya está terminado no vuelve a aparecer en este documento.**
 
