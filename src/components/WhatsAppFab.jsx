@@ -23,6 +23,7 @@ export default function WhatsAppFab({ message }) {
         target="_blank"
         rel="noopener noreferrer"
         aria-label="Contactar por WhatsApp"
+        data-testid="fab-whatsapp"
         className="mg-fab"
         style={{
           position: 'fixed',
