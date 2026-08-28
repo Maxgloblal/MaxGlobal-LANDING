@@ -188,78 +188,78 @@ export const PACKS = [
 export const PRODUCTOS = [
   {
     id: 'cafe-moringa',
-    nombre: 'Café con Moringa',
-    descripcion: 'Café instantáneo con moringa. Para reemplazar tu café de la mañana por uno que además aporta nutrientes.',
+    nombre: 'Coffee Capuccino',
+    descripcion: 'Café capuccino instantáneo con moringa y ganoderma. Para reemplazar tu café de la mañana.',
     precioPublico: 150,
     puntos: 18,
     categoria: 'Salud y Nutrición',
-    presentacion: 'Caja 30 sobres', // ⚠️ SIN CONFIRMAR por el cliente
+    presentacion: 'Caja 20 sobres de 18 g',
     imagen: '/images/productos/cafe-moringa.webp',
     activo: true,
   },
   {
     id: 'colageno-hidrolizado',
-    nombre: 'Colágeno Hidrolizado',
-    descripcion: 'Colágeno hidrolizado en polvo. Se disuelve en agua o en tu bebida de la mañana.',
+    nombre: 'Colágeno Aeterna',
+    descripcion: 'Colágeno hidrolizado en polvo con extracto de arándano, extracto de uva, acerola y vitaminas del complejo B. Sabor frutos rojos.',
     precioPublico: 150,
     puntos: 18,
     categoria: 'Salud y Nutrición',
-    presentacion: 'Pote 500g', // ⚠️ SIN CONFIRMAR por el cliente
+    presentacion: 'Pote 150 g',
     imagen: '/images/productos/colageno-hidrolizado.webp',
     activo: true,
   },
   {
     id: 'aceite-moringa',
     nombre: 'Aceite de Moringa',
-    descripcion: 'Aceite de moringa de uso tópico, para piel y cabello.',
+    descripcion: 'Aceite de moringa 100% natural, de uso tópico. Nutre, regenera y rejuvenece.',
     precioPublico: 120,
     puntos: 14,
     categoria: 'Cuidado Personal',
-    presentacion: 'Frasco gotero 30ml', // ⚠️ SIN CONFIRMAR por el cliente
+    presentacion: 'Frasco gotero 50 ml',
     imagen: '/images/productos/aceite-moringa.webp',
     activo: true,
   },
   {
     id: 'esplendor',
-    nombre: 'Esplendor', // ⚠️ SIN CONFIRMAR qué es este producto
-    descripcion: 'Producto de la línea Esplendor.', // ⚠️ pendiente de descripción real
+    nombre: 'Esplendor — Lágrimas Humectantes',
+    descripcion: 'Gotas humectantes homeopáticas para los ojos, de la marca LAL. Se aplica una gota tres veces al día.',
     precioPublico: 120,
     puntos: 14,
     categoria: 'Cuidado Personal', // ⚠️ SIN CONFIRMAR
-    presentacion: null, // ⚠️ SIN CONFIRMAR
+    presentacion: 'Frasco gotero 15 ml',
     imagen: '/images/productos/esplendor.webp',
     activo: true,
   },
   {
     id: 'aceite-oregano',
     nombre: 'Aceite de Orégano',
-    descripcion: 'Aceite esencial de orégano. Uso tradicional en gotas.',
+    descripcion: 'Aceite esencial de orégano 100% esencial.',
     precioPublico: 60,
     puntos: 8,
     categoria: 'Salud y Nutrición',
-    presentacion: 'Frasco gotero 15ml', // ⚠️ SIN CONFIRMAR por el cliente
+    presentacion: 'Frasco gotero 10 ml',
     imagen: '/images/productos/aceite-oregano.webp',
     activo: true,
   },
   {
     id: 'capsulas-moringa',
     nombre: 'Cápsulas de Moringa',
-    descripcion: 'Moringa en cápsulas, para quien prefiere no preparar bebidas.',
+    descripcion: 'Harina de hojas de moringa seleccionadas en cápsulas, sin amargor. 100% natural.',
     precioPublico: 60,
     puntos: 8,
     categoria: 'Salud y Nutrición',
-    presentacion: 'Frasco 100 cápsulas', // ⚠️ SIN CONFIRMAR por el cliente
+    presentacion: 'Frasco 100 cápsulas',
     imagen: '/images/productos/capsulas-moringa.webp',
     activo: true,
   },
   {
     id: 'harina-moringa',
-    nombre: 'Harina de Moringa',
-    descripcion: 'Harina de hoja de moringa para agregar a comidas y batidos.',
+    nombre: 'Moringa en Polvo',
+    descripcion: 'Hojas de moringa molidas, para agregar a comidas y batidos.',
     precioPublico: 50,
     puntos: 6,
     categoria: 'Salud y Nutrición',
-    presentacion: 'Bolsa 250g', // ⚠️ SIN CONFIRMAR por el cliente
+    presentacion: 'Bolsa 200 g',
     imagen: '/images/productos/harina-moringa.webp',
     activo: true,
   },
@@ -270,7 +270,7 @@ export const PRODUCTOS = [
     precioPublico: 70,
     puntos: 10,
     categoria: 'Perfumería',
-    presentacion: 'Frasco 50ml', // ⚠️ SIN CONFIRMAR por el cliente
+    presentacion: null, // sin dato: no hay foto ni ficha del producto
     imagen: '/images/productos/perfume-dalba.webp',
     activo: true,
   },

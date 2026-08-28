@@ -9,7 +9,7 @@
 
 ```
    ✅  Legal                          RESUELTO 27/08
-   🟡  Datos que faltan de Máximo     4
+   🟡  Datos que faltan de Máximo     1
    🟢  Técnico del despliegue         5
 ```
 
@@ -49,14 +49,129 @@ También se agregó el `.htaccess` para Apache, y se actualizaron `robots.txt` y
 
 | # | Qué | Por qué importa |
 |---|---|---|
-| 1 | **Las 8 presentaciones de producto** | Hoy dicen "Caja 30 sobres", "Pote 500g"… **ninguna la dio él**. Si el cliente pide una caja de 30 y llega otra cosa, es información engañosa |
-| 2 | **Qué es "Esplendor"** | Solo sabemos precio y puntos. La descripción actual es un marcador |
-| 3 | **Registro sanitario** | La portada dice *"Productos con registro sanitario"*. **Si no lo tienen vigente, hay que quitar la frase** |
-| 4 | **Misión, visión y valores** | La página Nosotros usa un borrador propuesto, marcado como tal en el código |
+| ~~1~~ | ~~Las 8 presentaciones~~ | ✅ **RESUELTO 27/08.** Leídas de las etiquetas de las fotos oficiales |
+| ~~2~~ | ~~Qué es Esplendor~~ | ✅ **RESUELTO.** Es LAL Esplendor, lágrimas humectantes en gotas, 15 ml |
+| ~~3~~ | ~~Registro sanitario~~ | ✅ **RESUELTO.** Frase retirada por indicación de Jack |
+| ~~4~~ | ~~Misión, visión y valores~~ | ✅ **YA ESTABAN** en el deck pág. 2. Aplicadas el 27/08 |
+| **5** | **Presentación del Perfume Dalba** | 📌 Único dato que falta. No hay foto ni ficha |
 
 > **El punto 3 es responsabilidad mía**: yo escribí esa frase en el documento de
 > copy. Es una afirmación de cumplimiento ante DIGESA y hay que confirmarla o
 > sacarla.
+
+---
+
+---
+
+# MENSAJE PARA MÁXIMO — copiar tal cual
+
+```
+Máximo, la web ya está lista. Solo me faltan 3 datos tuyos
+para publicarla:
+
+1. LAS PRESENTACIONES DE CADA PRODUCTO
+   Necesito saber cómo viene cada uno para no poner algo
+   equivocado en la web. Por ejemplo:
+
+   Café con Moringa ....... ¿caja de cuántos sobres?
+   Colágeno ............... ¿pote de cuántos gramos?
+   Aceite de Moringa ...... ¿frasco de cuántos ml?
+   Aceite de Orégano ...... ¿de cuántos ml?
+   Cápsulas de Moringa .... ¿cuántas cápsulas trae?
+   Harina de Moringa ...... ¿bolsa de cuántos gramos?
+   Perfume Dalba .......... ¿de cuántos ml?
+
+2. QUÉ ES EXACTAMENTE "ESPLENDOR"
+   De ese solo tengo el precio (S/. 120) y los puntos (14),
+   pero no sé qué es ni para qué sirve.
+
+3. REGISTRO SANITARIO
+   En la web dice "Productos con registro sanitario".
+   ¿Todos lo tienen vigente? Si alguno no, lo saco del texto
+   para evitarte un problema con INDECOPI.
+
+Con esos 3 datos actualizamos los textos y publicamos.
+
+(La misión y visión ya las tomé de tu deck institucional,
+están puestas tal cual en la sección Nosotros.)
+```
+
+## Por qué ese mensaje pide lo que pide
+
+**El punto 1 no es un capricho.** Hoy la web dice "Caja 30 sobres", "Pote 500g" y
+cinco más que **nadie confirmó**. Si un cliente pide la caja de 30 y le llega
+otra cosa, eso es información engañosa bajo el Código del Consumidor.
+
+**El punto 3 protege a Máximo, no a nosotros.** Afirmar registro sanitario sin
+tenerlo vigente es exactamente lo que INDECOPI sanciona.
+
+---
+
+---
+
+# 🔍 AUDITORÍA FUNCIONAL — 27/08, 19:00
+
+*Se revisó el recorrido completo del usuario, no solo el código.*
+
+## ✅ El flujo funciona de punta a punta
+
+```
+   Alguien entra por  maxglobaloficial.com/?ref=MG-00417
+            ↓
+   El código se guarda en sessionStorage
+            ↓
+   Navega, agrega productos al carrito — el código sobrevive
+            ↓
+   Va a Registro: el campo patrocinador YA VIENE LLENO
+            ↓
+   Envía → se arma el mensaje de WhatsApp con sus datos y el pack
+            ↓
+   Confirmación: ve las 2 cuentas bancarias y el botón de WhatsApp
+```
+
+**Verificado en el código, paso por paso.** El `?ref=` no se pierde en ningún
+punto del recorrido.
+
+## ✅ Lo que se revisó y está bien
+
+| Verificación | Resultado |
+|---|---|
+| Marcadores `TODO` o `Lorem` sin resolver | Ninguno |
+| Un solo `H1` por página | ✅ *(el Libro tiene 2 pero son pantallas alternas)* |
+| Todas las imágenes con `alt` | ✅ |
+| Enlaces vacíos o `href="#"` | Ninguno |
+| Carrito vacío tiene su estado | ✅ *"Tu carrito está vacío"* |
+| Los botones flotantes no se tapan | ✅ WhatsApp abajo, carrito 90px arriba |
+| Sitemap incluye las 6 páginas indexables | ✅ |
+| Confirmación muestra las 2 cuentas bancarias | ✅ BCP y BBVA |
+
+---
+
+# 🟢 DOS COSAS MENORES QUE SÍ CONVIENE ARREGLAR
+
+## 1 · El `dist/` está desactualizado
+
+```
+   dist   27/08  18:12
+   src    27/08  18:57     ← la misión y visión no están compiladas
+```
+
+**Solución:** `npm run build`
+
+## 2 · Las URLs inexistentes devuelven la portada con estado 200
+
+```jsx
+<Route path="*" element={<Portada />} />
+```
+
+Si alguien entra a `maxglobaloficial.com/cualquier-cosa`, ve la portada y el
+servidor responde **200 OK** en vez de 404.
+
+**Por qué importa:** Google puede indexar URLs fantasma como si fueran páginas
+reales. Es contenido duplicado de la portada.
+
+**Es un detalle**, no bloquea publicar. Pero conviene una página 404 propia con
+un enlace de vuelta al inicio.
 
 ---
 
@@ -105,7 +220,7 @@ la única prueba que refleja al usuario verdadero.
 # EL ORDEN QUE CONVIENE
 
 ```
-   1º   Pedirle los 4 datos a Máximo
+   1º   Pedirle los 3 datos a Máximo
    2º   Contratar dominio y hosting
    3º   Recompilar y desplegar
    4º   Probar el enlace en WhatsApp y en un celular real

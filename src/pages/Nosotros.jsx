@@ -33,8 +33,74 @@ export default function Nosotros() {
               color: 'var(--text-body)',
             }}
           >
-            Empresa peruana de venta directa de productos naturales, superalimentos y bienestar.
+            Transformar vidas en Latinoamérica a través de productos naturales de alta calidad y un modelo de negocio que impulsa el crecimiento personal, financiero y empresarial de las familias.
           </p>
+        </div>
+      </section>
+
+      {/* 2. Misión y Visión — TEXTO OFICIAL del deck institucional
+           Fuente: 99-FUENTES-ORIGINALES/MAX GLOBAL Corporation (4).pdf, pág. 2
+           NO modificar sin autorización del cliente. */}
+      <section style={{ paddingBottom: 'var(--sp-12)' }}>
+        <div
+          className="mg-container mg-nos-grid"
+          style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 'var(--sp-8)', alignItems: 'stretch' }}
+        >
+          <div
+            style={{
+              border: '1px solid var(--border-subtle)',
+              borderRadius: 'var(--r-card)',
+              padding: 'var(--sp-8)',
+              backgroundColor: 'var(--surface-card)',
+              boxShadow: 'var(--shadow-xs)',
+            }}
+          >
+            <span className="mg-eyebrow" style={{ color: 'var(--brand-gold-dark, var(--gold-600))' }}>
+              Misión
+            </span>
+            <p
+              style={{
+                marginTop: 'var(--sp-4)',
+                fontFamily: 'var(--font-body)',
+                fontSize: 'var(--fs-md)',
+                lineHeight: 'var(--lh-relaxed)',
+                color: 'var(--text-body)',
+              }}
+            >
+              Nuestra misión es transformar vidas en Latinoamérica a través de productos
+              naturales de alta calidad y un modelo de negocio que impulsa el crecimiento
+              personal, financiero y empresarial de las familias mediante franquicias y
+              centros de bienestar.
+            </p>
+          </div>
+
+          <div
+            style={{
+              border: '1px solid var(--border-subtle)',
+              borderRadius: 'var(--r-card)',
+              padding: 'var(--sp-8)',
+              backgroundColor: 'var(--surface-card)',
+              boxShadow: 'var(--shadow-xs)',
+            }}
+          >
+            <span className="mg-eyebrow" style={{ color: 'var(--brand-green)' }}>
+              Visión
+            </span>
+            <p
+              style={{
+                marginTop: 'var(--sp-4)',
+                fontFamily: 'var(--font-body)',
+                fontSize: 'var(--fs-md)',
+                lineHeight: 'var(--lh-relaxed)',
+                color: 'var(--text-body)',
+              }}
+            >
+              Ser la empresa líder en bienestar integral y emprendimiento de Latinoamérica,
+              reconocida por la excelencia de nuestros productos, el impacto positivo en el
+              desarrollo financiero de las personas y una sólida red de franquicias que
+              transformen miles de familias.
+            </p>
+          </div>
         </div>
       </section>
 

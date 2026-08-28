@@ -276,7 +276,7 @@ export default function Portada() {
               </div>
               <div>
                 <strong style={{ display: 'block', fontSize: 'var(--fs-sm)', color: 'var(--text-strong)' }}>
-                  Productos con registro sanitario
+                  Productos 100% naturales
                 </strong>
               </div>
             </div>
