@@ -214,15 +214,27 @@ html, body {
   width: fit-content;
 }
 
-/* 8. Grid de 4 Productos: 4 columnas en PC, 2x2 en Móvil (sin scroll horizontal) */
+/* 8. Grid de Productos Estándar E-Commerce: 4 columnas en PC, 3 en Tablet, 2 en Tablet pequeña, 1 en Móvil */
+.mg-products-grid,
 .mg-products-grid-preview,
 .mg-products-2x2 {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: var(--sp-6);
+  align-items: stretch;
 }
 
-@media (max-width: 992px) {
+@media (max-width: 1100px) {
+  .mg-products-grid,
+  .mg-products-grid-preview,
+  .mg-products-2x2 {
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--sp-5);
+  }
+}
+
+@media (max-width: 768px) {
+  .mg-products-grid,
   .mg-products-grid-preview,
   .mg-products-2x2 {
     grid-template-columns: repeat(2, 1fr);
@@ -230,11 +242,12 @@ html, body {
   }
 }
 
-@media (max-width: 540px) {
+@media (max-width: 480px) {
+  .mg-products-grid,
   .mg-products-grid-preview,
   .mg-products-2x2 {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 12px;
+    grid-template-columns: 1fr;
+    gap: var(--sp-4);
   }
 }
 

@@ -454,13 +454,7 @@ export default function ProductoDetalle() {
               Productos relacionados
             </h2>
 
-            <div
-              style={{
-                display: 'grid',
-                gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))',
-                gap: 'var(--sp-6)',
-              }}
-            >
+            <div className="mg-products-grid">
               {relacionados.map((rel) => (
                 <ProductCard
                   key={rel.id}

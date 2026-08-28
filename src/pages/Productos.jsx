@@ -370,14 +370,7 @@ export default function Productos() {
       <section style={{ paddingBottom: 'var(--section-y)' }}>
         <div className="mg-container">
           {sorted.length > 0 ? (
-            <div
-              data-testid="catalog-grid"
-              style={{
-                display: 'grid',
-                gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))',
-                gap: 'var(--sp-6)',
-              }}
-            >
+            <div data-testid="catalog-grid" className="mg-products-grid">
               {sorted.map((prod) => (
                 <ProductCard
                   key={prod.id}
