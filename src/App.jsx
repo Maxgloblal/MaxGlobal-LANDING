@@ -31,7 +31,7 @@ function RefTracker() {
   return null;
 }
 
-// Actualiza el título del documento, metatags de robots (noindex en 404, registro y confirmación) y restablece el scroll
+// Actualiza el título del documento, metatags de robots, canónica, descripción y JSON-LD de producto
 function RouteManager() {
   const { pathname } = useLocation();
 
@@ -52,36 +52,102 @@ function RouteManager() {
 
     let title = titles[pathname];
     let isKnownRoute = Boolean(title);
+    let currentProd = null;
 
     // Manejo de ruta dinámica de detalle de producto
     if (pathname.startsWith('/productos/') && pathname !== '/productos') {
       const prodId = pathname.replace('/productos/', '');
       const prod = getProducto(prodId);
       if (prod) {
-        title = `${prod.nombre} — Catálogo Oficial | Max Global`;
+        title = `${prod.nombre} | Max Global Corporation`;
+        currentProd = prod;
         isKnownRoute = true;
       }
     }
 
     document.title = title || '404 — Página no encontrada | Max Global Corporation';
 
-    // Control de indexación SEO: No indexar formularios, confirmación, libro de reclamaciones ni páginas 404
+    // 1. Control de indexación SEO
     let robotsMeta = document.querySelector('meta[name="robots"]');
+    if (!robotsMeta) {
+      robotsMeta = document.createElement('meta');
+      robotsMeta.setAttribute('name', 'robots');
+      document.head.appendChild(robotsMeta);
+    }
+
     if (
       pathname === '/registro' ||
       pathname === '/confirmacion' ||
       pathname === '/libro-de-reclamaciones' ||
       !isKnownRoute
     ) {
-      if (!robotsMeta) {
-        robotsMeta = document.createElement('meta');
-        robotsMeta.setAttribute('name', 'robots');
-        document.head.appendChild(robotsMeta);
-      }
       robotsMeta.setAttribute('content', 'noindex, nofollow');
     } else {
-      if (robotsMeta) {
-        robotsMeta.setAttribute('content', 'index, follow');
+      robotsMeta.setAttribute('content', 'index, follow');
+    }
+
+    // 2. Control de URL Canónica (siempre limpia)
+    let canonicalLink = document.querySelector('link[rel="canonical"]');
+    if (!canonicalLink) {
+      canonicalLink = document.createElement('link');
+      canonicalLink.setAttribute('rel', 'canonical');
+      document.head.appendChild(canonicalLink);
+    }
+    const cleanPath = pathname.replace(/\/$/, '') || '/';
+    canonicalLink.setAttribute('href', `https://maxglobaloficial.com${cleanPath}`);
+
+    // 3. Meta Descripción Dinámica
+    let descMeta = document.querySelector('meta[name="description"]');
+    if (!descMeta) {
+      descMeta = document.createElement('meta');
+      descMeta.setAttribute('name', 'description');
+      document.head.appendChild(descMeta);
+    }
+
+    if (currentProd) {
+      const prodDesc = `${currentProd.descripcion}${currentProd.presentacion ? ` ${currentProd.presentacion}.` : ''} S/. ${currentProd.precioPublico}. Envíos a todo el Perú.`;
+      descMeta.setAttribute('content', prodDesc);
+    } else {
+      descMeta.setAttribute(
+        'content',
+        'Productos naturales de alta calidad con moringa, café y colágeno hidrolizado. Conoce nuestros packs de afiliación, 50% de descuento para socios y comisiones de venta directa en todo el Perú.'
+      );
+    }
+
+    // 4. Datos Estructurados Schema.org Product (Solo en detalle de producto)
+    let schemaScript = document.getElementById('schema-product');
+    if (currentProd) {
+      const schemaData = {
+        '@context': 'https://schema.org',
+        '@type': 'Product',
+        name: currentProd.nombre,
+        description: currentProd.descripcion,
+        image: currentProd.imagen
+          ? `https://maxglobaloficial.com${currentProd.imagen}`
+          : undefined,
+        brand: {
+          '@type': 'Brand',
+          name: 'Max Global Corporation',
+        },
+        offers: {
+          '@type': 'Offer',
+          url: `https://maxglobaloficial.com/productos/${currentProd.id}`,
+          price: `${currentProd.precioPublico}.00`,
+          priceCurrency: 'PEN',
+          availability: 'https://schema.org/InStock',
+        },
+      };
+
+      if (!schemaScript) {
+        schemaScript = document.createElement('script');
+        schemaScript.id = 'schema-product';
+        schemaScript.type = 'application/ld+json';
+        document.head.appendChild(schemaScript);
+      }
+      schemaScript.textContent = JSON.stringify(schemaData);
+    } else {
+      if (schemaScript) {
+        schemaScript.remove();
       }
     }
   }, [pathname]);

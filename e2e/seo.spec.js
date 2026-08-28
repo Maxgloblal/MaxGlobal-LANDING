@@ -1,4 +1,5 @@
 import { test, expect } from '@playwright/test';
+import { PRODUCTOS } from '../src/config.js';
 
 test.describe('SEO, Metatags & Canonical URL (P-07) E2E', () => {
   test('should have canonical link pointing to base URL without params', async ({ page }) => {
@@ -27,7 +28,7 @@ test.describe('SEO, Metatags & Canonical URL (P-07) E2E', () => {
     await expect(favicon).toHaveAttribute('href', /favicon/);
   });
 
-  test('should update document title dynamically across routes', async ({ page }) => {
+  test('should update document title dynamically across routes including product details', async ({ page }) => {
     await page.goto('/');
     await expect(page).toHaveTitle(/Max Global Corporation — Salud, Bienestar y Emprendimiento/);
 
@@ -45,6 +46,41 @@ test.describe('SEO, Metatags & Canonical URL (P-07) E2E', () => {
 
     await page.goto('/nosotros');
     await expect(page).toHaveTitle(/Sobre Nosotros/);
+
+    // Product detail route
+    const firstProd = PRODUCTOS[0];
+    await page.goto(`/productos/${firstProd.id}`);
+    await expect(page).toHaveTitle(new RegExp(firstProd.nombre));
+  });
+
+  test('should set unique SEO metadata, canonical and Product JSON-LD schema on product pages', async ({ page }) => {
+    const prod = PRODUCTOS[0];
+    await page.goto(`/productos/${prod.id}?ref=MG-00417`);
+
+    // Title
+    await expect(page).toHaveTitle(`${prod.nombre} | Max Global Corporation`);
+
+    // Canonical without query params
+    const canonical = page.locator('link[rel="canonical"]');
+    await expect(canonical).toHaveAttribute('href', `https://maxglobaloficial.com/productos/${prod.id}`);
+
+    // Meta description
+    const desc = page.locator('meta[name="description"]');
+    const descContent = await desc.getAttribute('content');
+    expect(descContent).toContain(`S/. ${prod.precioPublico}`);
+
+    // Schema.org Product JSON-LD
+    const jsonLdContent = await page.locator('#schema-product').textContent();
+    expect(jsonLdContent).not.toBeNull();
+    const schema = JSON.parse(jsonLdContent);
+    expect(schema['@type']).toBe('Product');
+    expect(schema.name).toBe(prod.nombre);
+    expect(schema.offers.price).toBe(`${prod.precioPublico}.00`);
+    expect(schema.offers.priceCurrency).toBe('PEN');
+    expect(schema.offers.availability).toBe('https://schema.org/InStock');
+    expect(schema.aggregateRating).toBeUndefined();
+    expect(schema.review).toBeUndefined();
+    expect(schema.priceValidUntil).toBeUndefined();
   });
 
   test('should set noindex, nofollow on registro, confirmacion and libro-de-reclamaciones routes and index, follow on public routes', async ({ page }) => {
@@ -71,6 +107,10 @@ test.describe('SEO, Metatags & Canonical URL (P-07) E2E', () => {
 
     // Productos: index, follow
     await page.goto('/productos');
+    await expect(robots).toHaveAttribute('content', 'index, follow');
+
+    // Detalle de producto: index, follow
+    await page.goto(`/productos/${PRODUCTOS[0].id}`);
     await expect(robots).toHaveAttribute('content', 'index, follow');
   });
 });
