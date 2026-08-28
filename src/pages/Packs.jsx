@@ -249,7 +249,7 @@ export default function Packs() {
             >
               <span className="mg-eyebrow" style={{ color: 'var(--text-muted)' }}>Bono residual</span>
               <h3 style={{ marginTop: 'var(--sp-3)' }}>Cuando tu red recompra cada mes</h3>
-              <div style={{ marginTop: 'var(--sp-6)', display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0 var(--sp-8)' }}>
+              <div className="mg-residual-levels" style={{ marginTop: 'var(--sp-6)' }}>
                 <div>
                   <div className="mg-lvl"><span>Nivel 1</span><b>40%</b></div>
                   <div className="mg-lvl"><span>Nivel 2</span><b>20%</b></div>
@@ -394,6 +394,11 @@ export default function Packs() {
           font-size: var(--fs-lg);
           color: var(--text-strong);
         }
+        .mg-residual-levels {
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          gap: 0 var(--sp-8);
+        }
         @media (max-width: 900px) {
           .mg-packs-grid {
             grid-template-columns: 1fr !important;
@@ -401,6 +406,12 @@ export default function Packs() {
           }
           .mg-table-hint {
             display: block !important;
+          }
+        }
+        @media (max-width: 640px) {
+          .mg-residual-levels {
+            grid-template-columns: 1fr !important;
+            gap: 0 !important;
           }
         }
         @media (max-width: 600px) {

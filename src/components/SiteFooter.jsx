@@ -24,6 +24,7 @@ export default function SiteFooter() {
     >
       <div className="mg-container">
         <div
+          className="mg-footer-grid"
           style={{
             display: 'grid',
             gridTemplateColumns: 'repeat(auto-fit, minmax(190px, 1fr))',
@@ -141,6 +142,15 @@ export default function SiteFooter() {
           </p>
         </div>
       </div>
+
+      <style>{`
+        @media (max-width: 640px) {
+          .mg-footer-grid {
+            grid-template-columns: 1fr !important;
+            gap: var(--sp-6) !important;
+          }
+        }
+      `}</style>
     </footer>
   );
 }

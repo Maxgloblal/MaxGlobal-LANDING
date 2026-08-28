@@ -129,15 +129,7 @@ export default function Registro() {
 
       {/* 2. Formulario y Aside */}
       <section style={{ paddingBottom: 'var(--section-y)' }}>
-        <div
-          className="mg-container mg-reg-grid"
-          style={{
-            display: 'grid',
-            gridTemplateColumns: '1.5fr 1fr',
-            gap: 'var(--sp-12)',
-            alignItems: 'start',
-          }}
-        >
+        <div className="mg-container mg-reg-grid">
           {/* Formulario */}
           <form
             onSubmit={handleSubmit}
@@ -150,14 +142,7 @@ export default function Registro() {
               boxShadow: 'var(--shadow-xs)',
             }}
           >
-            <div
-              className="mg-form-grid"
-              style={{
-                display: 'grid',
-                gridTemplateColumns: '1fr 1fr',
-                gap: 'var(--sp-5)',
-              }}
-            >
+            <div className="mg-form-grid">
               {/* Nombres y Apellidos */}
               <div style={{ gridColumn: '1 / -1' }}>
                 <label style={labelStyle}>
@@ -540,7 +525,18 @@ export default function Registro() {
       </section>
 
       <style>{`
-        @media (max-width: 900px) {
+        .mg-reg-grid {
+          display: grid;
+          grid-template-columns: 1.5fr 1fr;
+          gap: var(--sp-12);
+          align-items: start;
+        }
+        .mg-form-grid {
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          gap: var(--sp-5);
+        }
+        @media (max-width: 768px) {
           .mg-form-grid {
             grid-template-columns: 1fr !important;
           }

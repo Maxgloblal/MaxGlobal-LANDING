@@ -423,6 +423,15 @@ export default function Nosotros() {
           </div>
         </div>
       </section>
+
+      <style>{`
+        @media (max-width: 768px) {
+          .mg-nos-grid {
+            grid-template-columns: 1fr !important;
+            gap: var(--sp-6) !important;
+          }
+        }
+      `}</style>
     </div>
   );
 }

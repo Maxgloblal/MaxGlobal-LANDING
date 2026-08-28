@@ -106,16 +106,10 @@ export default function ProductoDetalle() {
       {/* 2. Ficha del Producto */}
       <section style={{ padding: 'var(--section-y) 0' }}>
         <div className="mg-container">
-          <div
-            style={{
-              display: 'grid',
-              gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))',
-              gap: 'clamp(24px, 5vw, 56px)',
-              alignItems: 'start',
-            }}
-          >
+          <div className="mg-detail-grid">
             {/* Columna Izquierda: Imagen Grande */}
             <div
+              className="mg-detail-img-box"
               style={{
                 borderRadius: 'var(--r-card)',
                 backgroundColor: producto.imagen && !imgError ? '#F8F9FA' : 'var(--surface-gold)',
@@ -484,6 +478,30 @@ export default function ProductoDetalle() {
           </div>
         </section>
       )}
+
+      <style>{`
+        .mg-detail-grid {
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          gap: clamp(24px, 5vw, 56px);
+          align-items: start;
+        }
+        @media (max-width: 768px) {
+          .mg-detail-grid {
+            grid-template-columns: 1fr !important;
+            gap: var(--sp-6) !important;
+          }
+          .mg-detail-img-box {
+            min-height: 280px !important;
+            max-height: 360px !important;
+          }
+          [data-testid="detail-btn-add-cart"],
+          [data-testid="detail-btn-whatsapp"] {
+            width: 100% !important;
+            flex: 1 1 100% !important;
+          }
+        }
+      `}</style>
     </div>
   );
 }

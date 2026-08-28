@@ -59,15 +59,7 @@ export default function Confirmacion() {
 
       {/* 2. Cuentas e Instrucciones */}
       <section style={{ paddingBottom: 'var(--section-y)' }}>
-        <div
-          className="mg-container mg-conf-grid"
-          style={{
-            display: 'grid',
-            gridTemplateColumns: '1.3fr 1fr',
-            gap: 'var(--sp-8)',
-            alignItems: 'start',
-          }}
-        >
+        <div className="mg-container mg-conf-grid">
           {/* Tarjeta de Pago */}
           <div
             style={{
@@ -288,6 +280,12 @@ export default function Confirmacion() {
       </section>
 
       <style>{`
+        .mg-conf-grid {
+          display: grid;
+          grid-template-columns: 1.3fr 1fr;
+          gap: var(--sp-8);
+          align-items: start;
+        }
         .mg-dato {
           display: flex;
           justify-content: space-between;
@@ -304,7 +302,7 @@ export default function Confirmacion() {
           color: var(--text-strong);
           font-weight: 700;
         }
-        @media (max-width: 900px) {
+        @media (max-width: 768px) {
           .mg-conf-grid {
             grid-template-columns: 1fr !important;
             gap: var(--sp-6) !important;

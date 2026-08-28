@@ -443,7 +443,7 @@ export default function LibroReclamaciones() {
                 />
               </div>
 
-              <div style={{ display: 'grid', gridTemplateColumns: '100px 1fr', gap: '8px' }}>
+              <div className="mg-doc-grid" style={{ display: 'grid', gridTemplateColumns: '100px 1fr', gap: '8px' }}>
                 <div>
                   <label className="mg-label">Tipo Doc *</label>
                   <select
@@ -652,6 +652,7 @@ export default function LibroReclamaciones() {
 
             <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--sp-4)' }}>
               <div
+                className="mg-reclamacion-type-grid"
                 style={{
                   display: 'grid',
                   gridTemplateColumns: '1fr 1fr',
@@ -787,6 +788,21 @@ export default function LibroReclamaciones() {
           </button>
         </form>
       </main>
+
+      <style>{`
+        @media (max-width: 768px) {
+          .mg-reclamacion-type-grid {
+            grid-template-columns: 1fr !important;
+          }
+          .mg-doc-grid {
+            grid-template-columns: 1fr !important;
+          }
+          [data-testid="btn-submit-lr"] {
+            width: 100% !important;
+            justify-content: center !important;
+          }
+        }
+      `}</style>
     </div>
   );
 }
