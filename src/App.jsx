@@ -15,6 +15,7 @@ import Nosotros from './pages/Nosotros';
 import PoliticaPrivacidad from './pages/PoliticaPrivacidad';
 import TerminosCondiciones from './pages/TerminosCondiciones';
 import LibroReclamaciones from './pages/LibroReclamaciones';
+import NoEncontrado from './pages/NoEncontrado';
 
 // Captura y persiste el código de referido (?ref=MG-XXXXX) en sessionStorage
 function RefTracker() {
@@ -28,7 +29,7 @@ function RefTracker() {
   return null;
 }
 
-// Actualiza el título del documento, metatags de robots (noindex en registro y confirmación) y restablece el scroll
+// Actualiza el título del documento, metatags de robots (noindex en 404, registro y confirmación) y restablece el scroll
 function RouteManager() {
   const { pathname } = useLocation();
 
@@ -47,11 +48,17 @@ function RouteManager() {
       '/libro-de-reclamaciones': 'Libro de Reclamaciones | Max Global Corporation',
     };
 
-    document.title = titles[pathname] || 'Max Global Corporation';
+    const isKnownRoute = Boolean(titles[pathname]);
+    document.title = titles[pathname] || '404 — Página no encontrada | Max Global Corporation';
 
-    // Control de indexación SEO: No indexar formularios ni pantallas de confirmación ni libro de reclamaciones
+    // Control de indexación SEO: No indexar formularios, confirmación, libro de reclamaciones ni páginas 404
     let robotsMeta = document.querySelector('meta[name="robots"]');
-    if (pathname === '/registro' || pathname === '/confirmacion' || pathname === '/libro-de-reclamaciones') {
+    if (
+      pathname === '/registro' ||
+      pathname === '/confirmacion' ||
+      pathname === '/libro-de-reclamaciones' ||
+      !isKnownRoute
+    ) {
       if (!robotsMeta) {
         robotsMeta = document.createElement('meta');
         robotsMeta.setAttribute('name', 'robots');
@@ -87,7 +94,7 @@ export default function App() {
               <Route path="/terminos-y-condiciones" element={<TerminosCondiciones />} />
               <Route path="/politica-de-privacidad" element={<PoliticaPrivacidad />} />
               <Route path="/libro-de-reclamaciones" element={<LibroReclamaciones />} />
-              <Route path="*" element={<Portada />} />
+              <Route path="*" element={<NoEncontrado />} />
             </Routes>
           </main>
           <SiteFooter />

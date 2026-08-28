@@ -40,4 +40,18 @@ describe('App Routing and Referral Handling', () => {
     expect(robots).not.toBeNull();
     expect(robots.getAttribute('content')).toBe('noindex, nofollow');
   });
+
+  it('renders 404 NoEncontrado page on invalid route with noindex', () => {
+    window.history.pushState({}, '', '/ruta-inexistente-123');
+    render(<App />);
+
+    expect(screen.getByText('404')).toBeInTheDocument();
+    expect(screen.getByRole('heading', { name: /esta página no existe/i })).toBeInTheDocument();
+    expect(screen.getByTestId('btn-404-home')).toBeInTheDocument();
+    expect(screen.getByTestId('btn-404-productos')).toBeInTheDocument();
+
+    const robots = document.querySelector('meta[name="robots"]');
+    expect(robots).not.toBeNull();
+    expect(robots.getAttribute('content')).toBe('noindex, nofollow');
+  });
 });

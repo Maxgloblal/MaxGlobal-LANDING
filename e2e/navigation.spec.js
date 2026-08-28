@@ -51,4 +51,17 @@ test.describe('Landing Site Navigation and Layout', () => {
     const storedRef = await page.evaluate(() => sessionStorage.getItem('mg_ref'));
     expect(storedRef).toBe('MG-00417');
   });
+
+  test('should display 404 page for unknown URLs with noindex and navigation back', async ({ page }) => {
+    await page.goto('/url-fantasma-no-existe');
+    await expect(page.locator('text=404')).toBeVisible();
+    await expect(page.locator('h1')).toContainText('Esta página no existe');
+
+    const robots = page.locator('meta[name="robots"]');
+    await expect(robots).toHaveAttribute('content', 'noindex, nofollow');
+
+    // Click Ir al inicio
+    await page.click('[data-testid="btn-404-home"]');
+    await expect(page).toHaveURL(/\/$/);
+  });
 });
