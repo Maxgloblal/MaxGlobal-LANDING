@@ -8,6 +8,7 @@ import CartDrawer from './components/CartDrawer';
 import { CartProvider } from './context/CartContext';
 import Portada from './pages/Portada';
 import Productos from './pages/Productos';
+import ProductoDetalle from './pages/ProductoDetalle';
 import Packs from './pages/Packs';
 import Registro from './pages/Registro';
 import Confirmacion from './pages/Confirmacion';
@@ -16,6 +17,7 @@ import PoliticaPrivacidad from './pages/PoliticaPrivacidad';
 import TerminosCondiciones from './pages/TerminosCondiciones';
 import LibroReclamaciones from './pages/LibroReclamaciones';
 import NoEncontrado from './pages/NoEncontrado';
+import { getProducto } from './data/catalogo';
 
 // Captura y persiste el código de referido (?ref=MG-XXXXX) en sessionStorage
 function RefTracker() {
@@ -48,8 +50,20 @@ function RouteManager() {
       '/libro-de-reclamaciones': 'Libro de Reclamaciones | Max Global Corporation',
     };
 
-    const isKnownRoute = Boolean(titles[pathname]);
-    document.title = titles[pathname] || '404 — Página no encontrada | Max Global Corporation';
+    let title = titles[pathname];
+    let isKnownRoute = Boolean(title);
+
+    // Manejo de ruta dinámica de detalle de producto
+    if (pathname.startsWith('/productos/') && pathname !== '/productos') {
+      const prodId = pathname.replace('/productos/', '');
+      const prod = getProducto(prodId);
+      if (prod) {
+        title = `${prod.nombre} — Catálogo Oficial | Max Global`;
+        isKnownRoute = true;
+      }
+    }
+
+    document.title = title || '404 — Página no encontrada | Max Global Corporation';
 
     // Control de indexación SEO: No indexar formularios, confirmación, libro de reclamaciones ni páginas 404
     let robotsMeta = document.querySelector('meta[name="robots"]');
@@ -87,6 +101,7 @@ export default function App() {
             <Routes>
               <Route path="/" element={<Portada />} />
               <Route path="/productos" element={<Productos />} />
+              <Route path="/productos/:id" element={<ProductoDetalle />} />
               <Route path="/packs-de-afiliacion" element={<Packs />} />
               <Route path="/registro" element={<Registro />} />
               <Route path="/confirmacion" element={<Confirmacion />} />
