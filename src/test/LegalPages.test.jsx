@@ -7,6 +7,7 @@ import PoliticaPrivacidad from '../pages/PoliticaPrivacidad';
 import TerminosCondiciones from '../pages/TerminosCondiciones';
 import LibroReclamaciones from '../pages/LibroReclamaciones';
 import SiteFooter from '../components/SiteFooter';
+import { PRODUCTOS } from '../config';
 
 describe('Legal Pages and Compliance (Ley 32495, Ley 29571, Ley 29733)', () => {
   beforeEach(() => {
@@ -41,8 +42,9 @@ describe('Legal Pages and Compliance (Ley 32495, Ley 29571, Ley 29733)', () => {
 
   it('renders LibroReclamaciones form, handles submission and generates correlative tracking code', async () => {
     const user = userEvent.setup();
+    const sampleProduct = PRODUCTOS[0];
 
-    render(
+    const { container } = render(
       <MemoryRouter>
         <LibroReclamaciones />
       </MemoryRouter>
@@ -59,7 +61,10 @@ describe('Legal Pages and Compliance (Ley 32495, Ley 29571, Ley 29733)', () => {
     await user.type(screen.getByPlaceholderText('Av./Jr./Calle, N°, Urb.'), 'Av. Larco 123');
     await user.type(screen.getByPlaceholderText('Ej: Lima'), 'Lima');
     await user.type(screen.getByPlaceholderText('Ej: Lima / Miraflores'), 'Lima / Miraflores');
-    await user.type(screen.getByPlaceholderText(/Café con Moringa/i), 'Café con Moringa');
+    
+    const descBienInput = container.querySelector('input[name="descripcionBien"]');
+    await user.type(descBienInput, sampleProduct.nombre);
+
     await user.type(screen.getByPlaceholderText(/Describe claramente los hechos/i), 'Detalle del reclamo sobre entrega');
     await user.type(screen.getByPlaceholderText(/¿Cuál es la solución que solicitas/i), 'Entrega inmediata del producto');
 

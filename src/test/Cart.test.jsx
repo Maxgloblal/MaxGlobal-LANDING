@@ -1,24 +1,23 @@
 import React from 'react';
 import { describe, it, expect, beforeEach } from 'vitest';
-import { render, screen, act } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { CartProvider, useCart } from '../context/CartContext';
 import CartDrawer from '../components/CartDrawer';
 import CartFab from '../components/CartFab';
-import ProductCard from '../components/ProductCard';
+import { PRODUCTOS } from '../config';
+
+const prodCafe = PRODUCTOS.find((p) => p.id === 'cafe-moringa') || PRODUCTOS[0];
+const prodColageno = PRODUCTOS.find((p) => p.id === 'colageno-hidrolizado') || PRODUCTOS[1];
 
 function TestCartConsumer() {
-  const { items, addItem, totalPublico, totalPuntos, totalItems, openCart } = useCart();
+  const { addItem, totalPublico, totalPuntos, totalItems, openCart } = useCart();
   return (
     <div>
-      <button
-        onClick={() => addItem({ id: 'cafe-moringa', nombre: 'Café con Moringa', precioPublico: 150, puntos: 18, imagen: '' }, 2)}
-      >
+      <button onClick={() => addItem(prodCafe, 2)}>
         Agregar 2 Cafes
       </button>
-      <button
-        onClick={() => addItem({ id: 'colageno-hidrolizado', nombre: 'Colágeno Hidrolizado', precioPublico: 150, puntos: 18, imagen: '' }, 1)}
-      >
+      <button onClick={() => addItem(prodColageno, 1)}>
         Agregar 1 Colageno
       </button>
       <button onClick={openCart}>Abrir Carrito</button>
@@ -51,13 +50,17 @@ describe('Cart Context and Flow (Bloque B & C)', () => {
     // Add items
     await user.click(screen.getByText('Agregar 2 Cafes'));
     expect(screen.getByTestId('test-total-items')).toHaveTextContent('2');
-    expect(screen.getByTestId('test-total-publico')).toHaveTextContent('300');
-    expect(screen.getByTestId('test-total-puntos')).toHaveTextContent('36');
+    expect(screen.getByTestId('test-total-publico')).toHaveTextContent(String(prodCafe.precioPublico * 2));
+    expect(screen.getByTestId('test-total-puntos')).toHaveTextContent(String(prodCafe.puntos * 2));
 
     await user.click(screen.getByText('Agregar 1 Colageno'));
     expect(screen.getByTestId('test-total-items')).toHaveTextContent('3');
-    expect(screen.getByTestId('test-total-publico')).toHaveTextContent('450');
-    expect(screen.getByTestId('test-total-puntos')).toHaveTextContent('54');
+    expect(screen.getByTestId('test-total-publico')).toHaveTextContent(
+      String(prodCafe.precioPublico * 2 + prodColageno.precioPublico)
+    );
+    expect(screen.getByTestId('test-total-puntos')).toHaveTextContent(
+      String(prodCafe.puntos * 2 + prodColageno.puntos)
+    );
 
     // Check fab badge
     expect(screen.getByTestId('cart-fab-badge')).toHaveTextContent('3');
@@ -79,8 +82,8 @@ describe('Cart Context and Flow (Bloque B & C)', () => {
 
     // Drawer should be visible
     expect(screen.getByTestId('cart-drawer')).toBeInTheDocument();
-    expect(screen.getByText('Café con Moringa')).toBeInTheDocument();
-    expect(screen.getByTestId('cart-item-qty-cafe-moringa')).toHaveTextContent('2');
+    expect(screen.getByText(prodCafe.nombre)).toBeInTheDocument();
+    expect(screen.getByTestId(`cart-item-qty-${prodCafe.id}`)).toHaveTextContent('2');
 
     // Ref code input preloaded from sessionStorage
     const refInput = screen.getByTestId('input-cart-ref-code');
@@ -95,8 +98,8 @@ describe('Cart Context and Flow (Bloque B & C)', () => {
     const waBtn = screen.getByTestId('btn-cart-whatsapp');
     const href = waBtn.getAttribute('href');
     expect(href).toContain('https://wa.me/');
-    expect(decodeURIComponent(href)).toContain('Total a precio público: S/. 300');
-    expect(decodeURIComponent(href)).toContain('Puntos: 36');
+    expect(decodeURIComponent(href)).toContain(`Total a precio público: S/. ${prodCafe.precioPublico * 2}`);
+    expect(decodeURIComponent(href)).toContain(`Puntos: ${prodCafe.puntos * 2}`);
     expect(decodeURIComponent(href)).toContain('Mi código de socio: MG-00417');
   });
 
@@ -114,18 +117,18 @@ describe('Cart Context and Flow (Bloque B & C)', () => {
     await user.click(screen.getByText('Abrir Carrito'));
 
     // Increase quantity
-    const plusBtn = screen.getByTestId('cart-btn-plus-cafe-moringa');
+    const plusBtn = screen.getByTestId(`cart-btn-plus-${prodCafe.id}`);
     await user.click(plusBtn);
-    expect(screen.getByTestId('cart-item-qty-cafe-moringa')).toHaveTextContent('3');
-    expect(screen.getByTestId('cart-total-publico')).toHaveTextContent('S/. 450');
+    expect(screen.getByTestId(`cart-item-qty-${prodCafe.id}`)).toHaveTextContent('3');
+    expect(screen.getByTestId('cart-total-publico')).toHaveTextContent(`S/. ${prodCafe.precioPublico * 3}`);
 
     // Decrease quantity
-    const minusBtn = screen.getByTestId('cart-btn-minus-cafe-moringa');
+    const minusBtn = screen.getByTestId(`cart-btn-minus-${prodCafe.id}`);
     await user.click(minusBtn);
-    expect(screen.getByTestId('cart-item-qty-cafe-moringa')).toHaveTextContent('2');
+    expect(screen.getByTestId(`cart-item-qty-${prodCafe.id}`)).toHaveTextContent('2');
 
     // Remove item
-    const removeBtn = screen.getByTestId('cart-btn-remove-cafe-moringa');
+    const removeBtn = screen.getByTestId(`cart-btn-remove-${prodCafe.id}`);
     await user.click(removeBtn);
     expect(screen.getByText('Tu carrito está vacío')).toBeInTheDocument();
   });

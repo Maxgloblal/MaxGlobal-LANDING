@@ -1,4 +1,5 @@
 import { test, expect } from '@playwright/test';
+import { PRODUCTOS } from '../src/config.js';
 
 test.describe('Legal Pages, Compliance & Libro de Reclamaciones E2E', () => {
   test('should navigate to Terminos y Condiciones and display all legal clauses', async ({ page }) => {
@@ -19,6 +20,8 @@ test.describe('Legal Pages, Compliance & Libro de Reclamaciones E2E', () => {
     await page.goto('/libro-de-reclamaciones');
     await expect(page.locator('h1')).toContainText('Libro de Reclamaciones Virtual');
 
+    const sampleProd = PRODUCTOS[0];
+
     // Fill form
     await page.fill('input[name="nombres"]', 'Carlos Mendoza');
     await page.fill('input[name="numeroDoc"]', '87654321');
@@ -27,7 +30,7 @@ test.describe('Legal Pages, Compliance & Libro de Reclamaciones E2E', () => {
     await page.fill('input[name="domicilio"]', 'Av. Javier Prado Este 450');
     await page.fill('input[name="departamento"]', 'Lima');
     await page.fill('input[name="provincia"]', 'Lima / San Isidro');
-    await page.fill('input[name="descripcionBien"]', 'Café con Moringa - Caja 30 sobres');
+    await page.fill('input[name="descripcionBien"]', `${sampleProd.nombre} - ${sampleProd.presentacion || ''}`);
     await page.fill('textarea[name="detalle"]', 'Producto no entregado en el plazo acordado');
     await page.fill('textarea[name="pedido"]', 'Reenvío prioritario del pedido');
 

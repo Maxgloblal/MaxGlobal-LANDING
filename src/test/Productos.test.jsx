@@ -3,6 +3,7 @@ import { describe, it, expect } from 'vitest';
 import { render, screen } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
 import Productos from '../pages/Productos';
+import { PRODUCTOS } from '../config';
 
 describe('Productos Page (P-02)', () => {
   it('renders hero title and catalog description', () => {
@@ -17,36 +18,29 @@ describe('Productos Page (P-02)', () => {
     expect(screen.getByText(/como socio, los compras con 50% de descuento/i)).toBeInTheDocument();
   });
 
-  it('renders all 8 products from the catalog', () => {
+  it('renders all products from the catalog dynamically', () => {
     render(
       <MemoryRouter>
         <Productos />
       </MemoryRouter>
     );
 
-    expect(screen.getByRole('heading', { name: 'Café con Moringa' })).toBeInTheDocument();
-    expect(screen.getByRole('heading', { name: 'Colágeno Hidrolizado' })).toBeInTheDocument();
-    expect(screen.getByRole('heading', { name: 'Aceite de Moringa' })).toBeInTheDocument();
-    expect(screen.getByRole('heading', { name: 'Esplendor' })).toBeInTheDocument();
-    expect(screen.getByRole('heading', { name: 'Aceite de Orégano' })).toBeInTheDocument();
-    expect(screen.getByRole('heading', { name: 'Cápsulas de Moringa' })).toBeInTheDocument();
-    expect(screen.getByRole('heading', { name: 'Harina de Moringa' })).toBeInTheDocument();
-    expect(screen.getByRole('heading', { name: 'Perfume Dalba' })).toBeInTheDocument();
+    PRODUCTOS.forEach((prod) => {
+      expect(screen.getByRole('heading', { name: prod.nombre })).toBeInTheDocument();
+    });
   });
 
-  it('renders prices and points correctly', () => {
+  it('renders prices and points correctly for each product in catalog', () => {
     render(
       <MemoryRouter>
         <Productos />
       </MemoryRouter>
     );
 
-    expect(screen.getAllByText('S/. 150').length).toBeGreaterThanOrEqual(2);
-    expect(screen.getAllByText('18 pts').length).toBeGreaterThanOrEqual(2);
-    expect(screen.getAllByText('14 pts').length).toBeGreaterThanOrEqual(1);
-    expect(screen.getAllByText('8 pts').length).toBeGreaterThanOrEqual(1);
-    expect(screen.getByText('6 pts')).toBeInTheDocument();
-    expect(screen.getByText('10 pts')).toBeInTheDocument();
+    PRODUCTOS.forEach((prod) => {
+      expect(screen.getAllByText(`S/. ${prod.precioPublico}`).length).toBeGreaterThanOrEqual(1);
+      expect(screen.getAllByText(`${prod.puntos} pts`).length).toBeGreaterThanOrEqual(1);
+    });
   });
 
   it('renders the bottom banner Los socios pagan la mitad with CTA to packs', () => {

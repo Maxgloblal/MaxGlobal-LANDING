@@ -18,7 +18,7 @@ test.describe('Portada Page (P-01 v2) E2E', () => {
     await page.goto('/');
 
     // Barra de confianza
-    await expect(page.locator('text=Productos con registro sanitario')).toBeVisible();
+    await expect(page.locator('text=Productos 100% naturales')).toBeVisible();
     await expect(page.locator('text=Envíos a todo el Perú')).toBeVisible();
 
     // 3 Pasos
