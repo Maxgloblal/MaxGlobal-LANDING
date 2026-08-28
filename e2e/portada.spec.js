@@ -46,6 +46,22 @@ test.describe('Portada Page (P-01 v2) E2E', () => {
     await expect(page.getByRole('heading', { name: 'Empieza hoy' })).toBeVisible();
   });
 
+  test('should display four compensation bonuses properly on mobile viewport (390px)', async ({ page }) => {
+    await page.setViewportSize({ width: 390, height: 844 });
+    await page.goto('/');
+
+    await expect(page.locator('text=Las cuatro formas de ganar')).toBeVisible();
+
+    const bonuses = ['Patrocinio', 'Residual', 'Rango', 'Global'];
+    for (const b of bonuses) {
+      await expect(page.locator(`.mg-row:has-text("${b}")`)).toBeVisible();
+    }
+
+    // Verify labels Cuándo and Sobre qué are visible on mobile
+    await expect(page.locator('.mg-row-label:has-text("Cuándo")').first()).toBeVisible();
+    await expect(page.locator('.mg-row-label:has-text("Sobre qué")').first()).toBeVisible();
+  });
+
   test('clicking hero CTAs navigates to packs or opens whatsapp', async ({ page }) => {
     await page.goto('/');
 

@@ -541,55 +541,63 @@ export default function Portada() {
 
           <div style={{ marginTop: 'var(--sp-10)' }}>
             <div className="mg-row">
-              <span className="mg-num">01</span>
-              <span style={{ fontFamily: 'var(--font-subtitle)', fontWeight: 700, fontSize: 'var(--fs-lg)', color: 'var(--text-on-dark)' }}>
-                Patrocinio
-              </span>
-              <span style={{ fontSize: 'var(--fs-sm)', color: 'var(--n-300)', lineHeight: 'var(--lh-normal)' }}>
-                Cuando alguien de tu red se afilia
-              </span>
-              <span style={{ fontSize: 'var(--fs-sm)', color: 'var(--n-300)', lineHeight: 'var(--lh-normal)' }}>
-                El precio de su pack, hasta 7 niveles
-              </span>
+              <div className="mg-row-header">
+                <span className="mg-num">01</span>
+                <span className="mg-row-title">Patrocinio</span>
+              </div>
+              <div className="mg-row-cell">
+                <span className="mg-row-label">Cuándo</span>
+                <span className="mg-row-text">Cuando alguien de tu red se afilia</span>
+              </div>
+              <div className="mg-row-cell">
+                <span className="mg-row-label">Sobre qué</span>
+                <span className="mg-row-text">El precio de su pack, hasta 7 niveles</span>
+              </div>
             </div>
 
             <div className="mg-row">
-              <span className="mg-num">02</span>
-              <span style={{ fontFamily: 'var(--font-subtitle)', fontWeight: 700, fontSize: 'var(--fs-lg)', color: 'var(--text-on-dark)' }}>
-                Residual
-              </span>
-              <span style={{ fontSize: 'var(--fs-sm)', color: 'var(--n-300)', lineHeight: 'var(--lh-normal)' }}>
-                Cada mes
-              </span>
-              <span style={{ fontSize: 'var(--fs-sm)', color: 'var(--n-300)', lineHeight: 'var(--lh-normal)' }}>
-                Las recompras de tu red, hasta 10 niveles
-              </span>
+              <div className="mg-row-header">
+                <span className="mg-num">02</span>
+                <span className="mg-row-title">Residual</span>
+              </div>
+              <div className="mg-row-cell">
+                <span className="mg-row-label">Cuándo</span>
+                <span className="mg-row-text">Cada mes</span>
+              </div>
+              <div className="mg-row-cell">
+                <span className="mg-row-label">Sobre qué</span>
+                <span className="mg-row-text">Las recompras de tu red, hasta 10 niveles</span>
+              </div>
             </div>
 
             <div className="mg-row">
-              <span className="mg-num">03</span>
-              <span style={{ fontFamily: 'var(--font-subtitle)', fontWeight: 700, fontSize: 'var(--fs-lg)', color: 'var(--text-on-dark)' }}>
-                Rango
-              </span>
-              <span style={{ fontSize: 'var(--fs-sm)', color: 'var(--n-300)', lineHeight: 'var(--lh-normal)' }}>
-                Cada mes que califiques
-              </span>
-              <span style={{ fontSize: 'var(--fs-sm)', color: 'var(--n-300)', lineHeight: 'var(--lh-normal)' }}>
-                El volumen de tu grupo
-              </span>
+              <div className="mg-row-header">
+                <span className="mg-num">03</span>
+                <span className="mg-row-title">Rango</span>
+              </div>
+              <div className="mg-row-cell">
+                <span className="mg-row-label">Cuándo</span>
+                <span className="mg-row-text">Cada mes que califiques</span>
+              </div>
+              <div className="mg-row-cell">
+                <span className="mg-row-label">Sobre qué</span>
+                <span className="mg-row-text">El volumen de tu grupo</span>
+              </div>
             </div>
 
             <div className="mg-row" style={{ borderBottom: '1px solid rgba(255,255,255,.14)' }}>
-              <span className="mg-num">04</span>
-              <span style={{ fontFamily: 'var(--font-subtitle)', fontWeight: 700, fontSize: 'var(--fs-lg)', color: 'var(--text-on-dark)' }}>
-                Global
-              </span>
-              <span style={{ fontSize: 'var(--fs-sm)', color: 'var(--n-300)', lineHeight: 'var(--lh-normal)' }}>
-                Cada 6 meses
-              </span>
-              <span style={{ fontSize: 'var(--fs-sm)', color: 'var(--n-300)', lineHeight: 'var(--lh-normal)' }}>
-                1% del volumen de toda la compañía
-              </span>
+              <div className="mg-row-header">
+                <span className="mg-num">04</span>
+                <span className="mg-row-title">Global</span>
+              </div>
+              <div className="mg-row-cell">
+                <span className="mg-row-label">Cuándo</span>
+                <span className="mg-row-text">Cada 6 meses</span>
+              </div>
+              <div className="mg-row-cell">
+                <span className="mg-row-label">Sobre qué</span>
+                <span className="mg-row-text">1% del volumen de toda la compañía</span>
+              </div>
             </div>
           </div>
 
@@ -777,19 +785,43 @@ export default function Portada() {
           align-items: stretch;
         }
 
-        /* 4 Formas de Ganar Filas */
+        /* 4 Formas de Ganar Filas (Desktop) */
         .mg-row {
           display: grid;
-          grid-template-columns: 48px 180px 1fr 1fr;
+          grid-template-columns: 240px 1fr 1fr;
           gap: var(--sp-6);
           align-items: center;
           padding: var(--sp-6) 0;
           border-top: 1px solid rgba(255, 255, 255, 0.12);
         }
+        .mg-row-header {
+          display: flex;
+          align-items: center;
+          gap: var(--sp-4);
+        }
         .mg-num {
           font-family: var(--font-display);
           font-size: var(--fs-2xl);
           color: var(--brand-gold);
+        }
+        .mg-row-title {
+          font-family: var(--font-subtitle);
+          font-weight: 700;
+          font-size: var(--fs-lg);
+          color: var(--text-on-dark);
+        }
+        .mg-row-cell {
+          display: flex;
+          flex-direction: column;
+          gap: 2px;
+        }
+        .mg-row-label {
+          display: none;
+        }
+        .mg-row-text {
+          font-size: var(--fs-sm);
+          color: var(--n-300);
+          line-height: var(--lh-normal);
         }
 
         /* Mobile Adjustments */
@@ -832,8 +864,36 @@ export default function Portada() {
           }
 
           .mg-row {
-            grid-template-columns: 36px 1fr;
-            gap: var(--sp-2);
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            gap: var(--sp-4);
+            padding: var(--sp-5) 0;
+            border-top: 1px solid rgba(255, 255, 255, 0.14);
+          }
+          .mg-row-header {
+            display: flex;
+            align-items: center;
+            gap: var(--sp-3);
+          }
+          .mg-row-label {
+            display: block;
+            font-size: var(--fs-3xs);
+            text-transform: uppercase;
+            letter-spacing: var(--ls-wide);
+            color: var(--brand-gold);
+            font-weight: 700;
+          }
+          .mg-row-cell {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+          }
+          .mg-row-text {
+            font-size: var(--fs-sm);
+            color: var(--text-on-dark);
+            line-height: var(--lh-relaxed);
           }
           .mg-close {
             grid-template-columns: 1fr !important;
