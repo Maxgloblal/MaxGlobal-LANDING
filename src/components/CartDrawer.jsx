@@ -227,10 +227,22 @@ export default function CartDrawer() {
                       src={item.imagen}
                       alt={item.nombre}
                       style={{ width: '100%', height: '100%', objectFit: 'contain' }}
+                      onError={(e) => {
+                        e.currentTarget.style.display = 'none';
+                        const fallback = e.currentTarget.nextElementSibling;
+                        if (fallback) fallback.style.display = 'flex';
+                      }}
                     />
-                  ) : (
+                  ) : null}
+                  <div
+                    style={{
+                      display: item.imagen ? 'none' : 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                    }}
+                  >
                     <ShoppingBag size={18} color="var(--brand-gold)" />
-                  )}
+                  </div>
                 </div>
 
                 {/* Info y Precio */}

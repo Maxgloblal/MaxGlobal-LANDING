@@ -474,11 +474,13 @@ export default function Portada() {
               <ProductCard
                 key={prod.id}
                 id={prod.id}
-                name={prod.name}
-                price={prod.price}
-                points={prod.points}
-                category={prod.category}
-                presentation={prod.presentation}
+                name={prod.nombre || prod.name}
+                description={prod.descripcion || prod.description}
+                price={prod.precioPublico || prod.price}
+                points={prod.puntos || prod.points}
+                category={prod.categoria || prod.category}
+                presentation={prod.presentacion || prod.presentation}
+                image={prod.imagen || prod.image}
               />
             ))}
           </div>

@@ -22,6 +22,7 @@ export default function ProductCard({
   imagen,
 }) {
   const [refCode, setRefCode] = useState('');
+  const [imgError, setImgError] = useState(false);
 
   let cart = null;
   try {
@@ -100,42 +101,38 @@ export default function ProductCard({
           position: 'relative',
         }}
       >
-        {displayImage ? (
+        {displayImage && !imgError ? (
           <img
             src={displayImage}
             alt={displayName}
             style={{ width: '100%', height: '100%', objectFit: 'contain' }}
-            onError={(e) => {
-              // Si la imagen falla al cargar, mostrar el placeholder neutro
-              e.currentTarget.style.display = 'none';
-            }}
+            onError={() => setImgError(true)}
           />
-        ) : null}
-
-        {/* Placeholder neutro cuando no hay imagen o falla */}
-        <div
-          style={{
-            display: displayImage ? 'none' : 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-            gap: '6px',
-          }}
-        >
-          <Leaf size={28} color="var(--brand-gold)" />
-          <span
+        ) : (
+          <div
             style={{
-              fontFamily: 'var(--font-body)',
-              fontSize: 'var(--fs-3xs)',
-              letterSpacing: 'var(--ls-wide)',
-              textTransform: 'uppercase',
-              color: 'var(--gold-700)',
-              lineHeight: 'var(--lh-normal)',
-              fontWeight: 700,
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+              gap: '6px',
             }}
           >
-            100% Natural<br />Max Global
-          </span>
-        </div>
+            <Leaf size={28} color="var(--brand-gold)" />
+            <span
+              style={{
+                fontFamily: 'var(--font-body)',
+                fontSize: 'var(--fs-3xs)',
+                letterSpacing: 'var(--ls-wide)',
+                textTransform: 'uppercase',
+                color: 'var(--gold-700)',
+                lineHeight: 'var(--lh-normal)',
+                fontWeight: 700,
+              }}
+            >
+              100% Natural<br />Max Global
+            </span>
+          </div>
+        )}
 
         {/* Badge 100% Natural */}
         <div
