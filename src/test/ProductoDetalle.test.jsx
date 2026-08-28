@@ -76,6 +76,22 @@ describe('ProductoDetalle Page (/productos/:id)', () => {
     expect(decoded).toContain(`Mi código de socio: MG-00417`);
   });
 
+  it('correctly handles Perfume Dalba (omits presentation, shows neutral placeholder, retains full cart/whatsapp behavior)', () => {
+    const dalba = PRODUCTOS.find((p) => p.id === 'perfume-dalba');
+    renderDetail(dalba.id);
+
+    expect(screen.getByTestId('detail-product-name')).toHaveTextContent(dalba.nombre);
+    expect(screen.queryByTestId('detail-presentation')).toBeNull();
+
+    // Price & points
+    expect(screen.getByTestId('detail-price-publico')).toHaveTextContent(`S/. ${dalba.precioPublico}`);
+    expect(screen.getByTestId('detail-points')).toHaveTextContent(`${dalba.puntos} pts`);
+
+    // Action buttons work
+    expect(screen.getByTestId('detail-btn-add-cart')).toBeInTheDocument();
+    expect(screen.getByTestId('detail-btn-whatsapp')).toBeInTheDocument();
+  });
+
   it('renders NoEncontrado (404) when product ID does not exist', () => {
     renderDetail('producto-fantasma-inexistente');
 

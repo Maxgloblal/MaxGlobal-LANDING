@@ -14,6 +14,7 @@
 | **2026-08-27** | [`INF-2026-08-27-03`](./2026-08-27_TAREA-03_CARRITO-Y-PRECIOS-DE-SOCIO.md) | **Tarea 03: Carrito de Compras en Memoria, Precios de Socio Dinámicos y Mensaje de WhatsApp** | ✅ Concluido |
 | **2026-08-27** | [`INF-2026-08-27-04`](./2026-08-27_TAREA-04_PAGINAS-LEGALES.md) | **Tarea 04: Páginas Legales (Leyes N° 32495, 29571 y 29733), Descarga de Reclamos, Robots y Sitemap** | ✅ Concluido |
 | **2026-08-27** | [`INF-2026-08-27-05`](./2026-08-27_TAREA-05_CIERRE-FASE-1.md) | **Tarea 05: Cierre de la Landing y Fase 1 (Fotos Reales, Tests Dinámicos, Fallbacks, 404 y Build Final)** | ✅ Concluido |
+| **2026-08-27** | [`INF-2026-08-27-06`](./2026-08-27_TAREA-06_PAGINAS-POR-PRODUCTO.md) | **Tarea 06: Páginas Propias por Producto (/productos/:id), SEO JSON-LD y Sitemap de 14 URLs** | ✅ Concluido |
 
 ---
 
