@@ -8,10 +8,12 @@
 # RESUMEN
 
 ```
-   ✅  Legal                          RESUELTO 27/08
-   🟡  Datos que faltan de Máximo     1
-   🟢  Técnico del despliegue         5
+   ✅  Programación                   TERMINADA 27/08
+   ✅  Legal · fotos · presentaciones RESUELTO
+   🟢  Solo queda desplegar
 ```
+
+**La Fase 1 está cerrada.** No queda nada que programar.
 
 **Ya no queda nada que programar.** Lo que falta son datos del cliente y el
 despliegue.
@@ -158,7 +160,14 @@ punto del recorrido.
 
 **Solución:** `npm run build`
 
-## 2 · Las URLs inexistentes devuelven la portada con estado 200
+## ~~2 · Las URLs inexistentes devuelven la portada~~ ✅ RESUELTO
+
+Se construyó la página 404 con `noindex, nofollow`. El `RouteManager` comprueba
+`!isKnownRoute`, así que cualquier URL inventada queda fuera del índice.
+
+<details><summary>Texto original</summary>
+
+### Las URLs inexistentes devolvían la portada con estado 200
 
 ```jsx
 <Route path="*" element={<Portada />} />
