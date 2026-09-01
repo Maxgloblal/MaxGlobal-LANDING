@@ -8,13 +8,11 @@
 # RESUMEN
 
 ```
-   ✅  Programación        TERMINADA
    ✅  Legal · productos   RESUELTO
    ✅  Móvil · catálogo    RESUELTO 27/08
-   🟢  Solo queda DESPLEGAR
+   🔴  SEO · vista previa  PENDIENTE  ← ver SEO-Y-DOMINIO.md
+   🟡  Falta el dominio real confirmado
 ```
-
-**No queda nada que programar.**
 
 | Área | Estado |
 |---|---|
@@ -23,7 +21,21 @@
 | Buscador, categorías y orden | ✅ |
 | Carrito y WhatsApp | ✅ |
 | Legal completo | ✅ |
-| SEO y datos estructurados | ✅ |
+| Datos estructurados JSON-LD | ✅ |
+| **Vista previa al compartir** | 🔴 **muestra la portada en las 14 páginas** |
+| **Canónica en el HTML inicial** | 🔴 **la pone JavaScript, el robot no la ve** |
+| **Dominio en una sola variable** | 🔴 **escrito a mano en 26 sitios** |
+
+> ## 🔴 EL PENDIENTE REAL
+>
+> **Compartir un producto por WhatsApp muestra la tarjeta de la portada.**
+>
+> El sitio es una SPA: las 14 rutas devuelven el mismo `index.html`, con las
+> etiquetas `og:` fijas de la portada. Y el robot de WhatsApp **no ejecuta
+> JavaScript**, así que nunca ve las que pone React.
+>
+> **Se resuelve con prerenderizado al compilar.** No hay que reescribir el
+> sitio. Todo el análisis y el plan están en **`SEO-Y-DOMINIO.md`**.
 
 **Lo que ya está terminado no vuelve a aparecer en este documento.**
 
@@ -238,13 +250,18 @@ la única prueba que refleja al usuario verdadero.
 # EL ORDEN QUE CONVIENE
 
 ```
-   1º   Pedirle los 3 datos a Máximo
-   2º   Contratar dominio y hosting
-   3º   Recompilar y desplegar
-   4º   Probar el enlace en WhatsApp y en un celular real
+   1º   CONFIRMAR EL DOMINIO           ← bloquea todo lo demás
+   2º   TAREA-08 · prerenderizado      ← lo único que queda de programación
+   3º   Pedirle a Máximo la presentación del Dalba
+   4º   Contratar hosting
+   5º   Recompilar y desplegar
+   6º   Probar CADA enlace en WhatsApp antes de compartirlo con nadie
+   7º   Google Search Console + sitemap
 ```
 
-**Nada de esto necesita programación.**
+> **El paso 6 no es opcional.** WhatsApp cachea la tarjeta de un enlace por
+> mucho tiempo. El primer enlace que Máximo mande al grupo es el que queda
+> pegado — si sale mal, se arrastra.
 
 ---
 
