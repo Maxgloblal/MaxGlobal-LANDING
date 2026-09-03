@@ -77,83 +77,57 @@ export default function Confirmacion() {
               Cuando el asesor confirme tu pedido, deposita en las cuentas oficiales de la empresa:
             </p>
 
-            {/* Datos Bancarios BCP */}
-            <div
-              style={{
-                marginTop: 'var(--sp-6)',
-                backgroundColor: 'var(--surface-sunken)',
-                border: '1px solid var(--border-subtle)',
-                borderRadius: 'var(--r-card)',
-                padding: 'var(--sp-6)',
-              }}
-            >
+            {/* Cuentas Bancarias Oficiales */}
+            {EMPRESA.cuentasBancarias.map((cuenta, idx) => (
               <div
+                key={cuenta.cuenta}
                 style={{
-                  fontFamily: 'var(--font-subtitle)',
-                  fontWeight: 700,
-                  fontSize: 'var(--fs-sm)',
-                  color: 'var(--brand-gold)',
-                  marginBottom: 'var(--sp-3)',
+                  marginTop: idx === 0 ? 'var(--sp-6)' : 'var(--sp-4)',
+                  backgroundColor: 'var(--surface-sunken)',
+                  border: '1px solid var(--border-subtle)',
+                  borderRadius: 'var(--r-card)',
+                  padding: 'var(--sp-6)',
                 }}
               >
-                Cuenta Principal (BCP)
+                <div
+                  style={{
+                    fontFamily: 'var(--font-subtitle)',
+                    fontWeight: 700,
+                    fontSize: 'var(--fs-sm)',
+                    color: 'var(--brand-gold)',
+                    marginBottom: 'var(--sp-3)',
+                  }}
+                >
+                  {idx === 0
+                    ? `Cuenta Principal (${cuenta.banco.split(' ')[0]})`
+                    : idx === 1
+                    ? `Cuenta Alternativa (${cuenta.banco.split(' ')[0]})`
+                    : `Cuenta (${cuenta.banco.split(' ')[0]})`}
+                </div>
+                <div className="mg-dato">
+                  <span>Banco</span>
+                  <span>{cuenta.banco}</span>
+                </div>
+                <div className="mg-dato">
+                  <span>Número de Cuenta</span>
+                  <span style={{ userSelect: 'all' }}>{cuenta.cuenta}</span>
+                </div>
+                <div className="mg-dato">
+                  <span>CCI (Interbancario)</span>
+                  <span style={{ userSelect: 'all' }}>{cuenta.cci}</span>
+                </div>
+                <div className="mg-dato" style={idx === 0 ? undefined : { borderBottom: 'none' }}>
+                  <span>Titular</span>
+                  <span>{cuenta.titular}</span>
+                </div>
+                {idx === 0 && (
+                  <div className="mg-dato" style={{ borderBottom: 'none' }}>
+                    <span>RUC</span>
+                    <span>{EMPRESA.ruc}</span>
+                  </div>
+                )}
               </div>
-              <div className="mg-dato">
-                <span>Banco</span>
-                <span>BCP Soles</span>
-              </div>
-              <div className="mg-dato">
-                <span>Número de Cuenta</span>
-                <span style={{ userSelect: 'all' }}>1947426439033</span>
-              </div>
-              <div className="mg-dato">
-                <span>CCI (Interbancario)</span>
-                <span style={{ userSelect: 'all' }}>00219400742643903392</span>
-              </div>
-              <div className="mg-dato">
-                <span>Titular</span>
-                <span>Max Global Corporation S.A</span>
-              </div>
-              <div className="mg-dato" style={{ borderBottom: 'none' }}>
-                <span>RUC</span>
-                <span>20615864014</span>
-              </div>
-            </div>
-
-            {/* Datos Bancarios BBVA */}
-            <div
-              style={{
-                marginTop: 'var(--sp-4)',
-                backgroundColor: 'var(--surface-sunken)',
-                border: '1px solid var(--border-subtle)',
-                borderRadius: 'var(--r-card)',
-                padding: 'var(--sp-6)',
-              }}
-            >
-              <div
-                style={{
-                  fontFamily: 'var(--font-subtitle)',
-                  fontWeight: 700,
-                  fontSize: 'var(--fs-sm)',
-                  color: 'var(--brand-gold)',
-                  marginBottom: 'var(--sp-3)',
-                }}
-              >
-                Cuenta Alternativa (BBVA)
-              </div>
-              <div className="mg-dato">
-                <span>Banco</span>
-                <span>BBVA Soles</span>
-              </div>
-              <div className="mg-dato">
-                <span>Número de Cuenta</span>
-                <span style={{ userSelect: 'all' }}>0011-0150-0200867749</span>
-              </div>
-              <div className="mg-dato" style={{ borderBottom: 'none' }}>
-                <span>CCI (Interbancario)</span>
-                <span style={{ userSelect: 'all' }}>011-150-000200867749-00</span>
-              </div>
-            </div>
+            ))}
 
             <p style={{ marginTop: 'var(--sp-5)', fontSize: 'var(--fs-sm)', lineHeight: 'var(--lh-relaxed)', color: 'var(--text-body)' }}>
               Guarda tu voucher o comprobante y mándalo por WhatsApp.

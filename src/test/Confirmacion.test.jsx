@@ -3,6 +3,7 @@ import { describe, it, expect } from 'vitest';
 import { render, screen } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
 import Confirmacion from '../pages/Confirmacion';
+import { EMPRESA } from '../config';
 
 describe('Confirmacion Page (P-05)', () => {
   it('renders confirmation header and green badge', () => {
@@ -23,14 +24,13 @@ describe('Confirmacion Page (P-05)', () => {
       </MemoryRouter>
     );
 
-    expect(screen.getByText('BCP Soles')).toBeInTheDocument();
-    expect(screen.getByText('1947426439033')).toBeInTheDocument();
-    expect(screen.getByText('00219400742643903392')).toBeInTheDocument();
-    expect(screen.getByText('BBVA Soles')).toBeInTheDocument();
-    expect(screen.getByText('0011-0150-0200867749')).toBeInTheDocument();
-    expect(screen.getByText('011-150-000200867749-00')).toBeInTheDocument();
-    expect(screen.getByText('Max Global Corporation S.A')).toBeInTheDocument();
-    expect(screen.getByText('20615864014')).toBeInTheDocument();
+    for (const c of EMPRESA.cuentasBancarias) {
+      expect(screen.getByText(c.banco)).toBeInTheDocument();
+      expect(screen.getByText(c.cuenta)).toBeInTheDocument();
+      expect(screen.getByText(c.cci)).toBeInTheDocument();
+    }
+    expect(screen.getAllByText(EMPRESA.razonSocial).length).toBeGreaterThanOrEqual(1);
+    expect(screen.getByText(EMPRESA.ruc)).toBeInTheDocument();
   });
 
   it('renders the 4 next steps', () => {
