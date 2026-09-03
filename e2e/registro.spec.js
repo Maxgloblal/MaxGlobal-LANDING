@@ -1,4 +1,5 @@
 import { test, expect } from '@playwright/test';
+import { EMPRESA } from '../src/config.js';
 
 test.describe('Registro and Confirmacion Flow (P-04 & P-05) E2E', () => {
   test('should display registration form with pack preselected and handle form submission', async ({ page }) => {
@@ -37,16 +38,17 @@ test.describe('Registro and Confirmacion Flow (P-04 & P-05) E2E', () => {
     await expect(page.locator('h1')).toContainText('Ya recibimos tus datos');
     await expect(page.locator('text=Registro recibido')).toBeVisible();
 
-    // Validar cuentas bancarias oficiales y RUC
-    await expect(page.locator('text=1947426439033')).toBeVisible();
-    await expect(page.locator('text=00219400742643903392')).toBeVisible();
-    await expect(page.locator('text=0011-0150-0200867749')).toBeVisible();
-    await expect(page.locator('text=20615864014').first()).toBeVisible();
+    // Validar cuentas bancarias oficiales y RUC contra la fuente única
+    for (const c of EMPRESA.cuentasBancarias) {
+      await expect(page.locator(`text=${c.cuenta}`)).toBeVisible();
+      await expect(page.locator(`text=${c.cci}`)).toBeVisible();
+    }
+    await expect(page.locator(`text=${EMPRESA.ruc}`).first()).toBeVisible();
 
     // Validar botón de enviar voucher por WhatsApp
     const voucherBtn = page.locator('[data-testid="btn-enviar-voucher"]');
     await expect(voucherBtn).toBeVisible();
     const href = await voucherBtn.getAttribute('href');
-    expect(href).toContain('https://wa.me/51993516053');
+    expect(href).toContain(`https://wa.me/${EMPRESA.whatsapp}`);
   });
 });
