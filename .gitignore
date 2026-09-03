@@ -4,3 +4,6 @@ test-results
 playwright-report
 .tempmediaStorage
 *.log
+00-INSTRUCCIONES/
+01-AUDITORIAS/
+DOCUMENTACION-ANTIGRAVITY/
