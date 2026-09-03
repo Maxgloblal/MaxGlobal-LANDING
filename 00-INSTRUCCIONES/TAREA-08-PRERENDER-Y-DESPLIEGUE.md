@@ -4,10 +4,12 @@
 **Escrita:** 28 de agosto de 2026
 **Cierra la Fase 1.**
 
-> **Esto no depende del dominio.** Netlify da un subdominio gratis al desplegar.
+> **Esto no depende del dominio.** Vercel da un subdominio gratis al desplegar.
 > Se sube hoy, se le muestra a Máximo hoy, y el día que
 > `maxglobaloficial.com` esté listo se conecta en cinco minutos sin tocar
 > una línea de código.
+>
+> **Deploy: Vercel** (no Netlify). `vercel.json` ya existe. Sin `_redirects`.
 
 ---
 
@@ -103,7 +105,7 @@ inservible. Escapa `& < > "` antes de insertar.
 const DOMINIO = process.env.SITE_URL || 'https://maxglobaloficial.com';
 ```
 
-Así el día que se despliegue en `max-global.netlify.app` se pasa por variable
+Así el día que se despliegue en el subdominio de Vercel se pasa por variable
 de entorno y no se toca el código.
 
 ## Conéctalo al build
@@ -158,25 +160,36 @@ Prerenderizar no puede romper la navegación del lado del cliente.
    Una ruta inventada /asdf                    → muestra el 404 de la app
 ```
 
-`dist/_redirects` ya existe. Revisa que la regla de SPA **no pise** los HTML
-prerenderizados: Netlify sirve primero el archivo real si existe, pero
-confírmalo con Playwright a 390px y en escritorio.
+Vercel sirve primero el archivo real si existe. Pero confírma que las rutas
+prerenderizadas carguen correctamente con Playwright a 390px y en escritorio.
+(No hay `dist/_redirects` — el repo usa `vercel.json`.)
 
 **Commit.**
 
 ---
 
-# BLOQUE 4 · DESPLEGAR
+# BLOQUE 4 · DESPLEGAR EN VERCEL
 
-## Netlify, con el subdominio gratis
+## Vercel, con el subdominio gratis
 
+`vercel.json` ya existe en la raíz con la regla de SPA routing. No hay `_redirects` — el repo está limpio.
+
+Jack sube directamente desde la interfaz de Vercel (no Antigravity):
 ```
-   Build command      npm run build
-   Publish directory  dist
-   Variable           SITE_URL = https://<lo-que-asigne>.netlify.app
+   Framework preset:   Vite
+   Build command:      npm run build
+   Output directory:   dist
+   Variable de entorno: SITE_URL = https://<lo-que-asigne>.vercel.app
 ```
 
 **No esperes el dominio.** Se despliega con el subdominio y listo.
+
+Si lo despliega Antigravity por CLI:
+```bash
+npx vercel --prod
+# cuando pregunte el output directory: dist
+# cuando pregunte el build command: npm run build
+```
 
 ## Después del despliegue, la prueba de verdad
 
