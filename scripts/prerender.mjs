@@ -85,7 +85,8 @@ const RUTAS_PRODUCTOS = PRODUCTOS.filter((p) => p.activo).map((p) => {
     title: `${p.nombre} — Max Global`,
     description: desc,
     ogImage: `${DOMINIO}${p.imagen}`,
-    ogUrl: `${DOMINIO}/productos/${p.id}`
+    ogUrl: `${DOMINIO}/productos/${p.id}`,
+    producto: p
   };
 });
 
@@ -155,6 +156,38 @@ function prerender() {
       /<meta\s+name=["']twitter:image["']\s+content=["'][^"']*["']\s*\/?>/i,
       `<meta name="twitter:image" content="${escapeHtml(item.ogImage)}" />`
     );
+
+    // 6. Inyectar Schema Product únicamente en fichas de producto
+    if (item.producto) {
+      const p = item.producto;
+      const productSchema = {
+        '@context': 'https://schema.org',
+        '@type': 'Product',
+        'name': p.nombre,
+        'description': p.descripcion || '',
+        'image': `${DOMINIO}${p.imagen}`,
+        'sku': p.id,
+        'category': p.categoria,
+        'brand': {
+          '@type': 'Brand',
+          'name': 'Max Global Corporation'
+        },
+        'offers': {
+          '@type': 'Offer',
+          'url': `${DOMINIO}/productos/${p.id}`,
+          'priceCurrency': 'PEN',
+          'price': Number(p.precioPublico).toFixed(2),
+          'availability': 'https://schema.org/InStock',
+          'seller': {
+            '@type': 'Organization',
+            'name': 'Max Global Corporation'
+          }
+        }
+      };
+
+      const schemaBlock = `\n    <!-- Schema Product -->\n    <script type="application/ld+json">\n    ${JSON.stringify(productSchema, null, 2).split('\n').join('\n    ')}\n    </script>\n  </head>`;
+      html = html.replace('</head>', schemaBlock);
+    }
 
     // Crear directorio de destino
     const targetDir = path.join(DIST_DIR, item.ruta.replace(/^\//, ''));
