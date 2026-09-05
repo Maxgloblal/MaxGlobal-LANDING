@@ -52,7 +52,7 @@ export default function Confirmacion() {
               color: 'var(--text-body)',
             }}
           >
-            Un asesor te va a escribir por WhatsApp para confirmar tu pedido y el costo del envío a tu dirección.
+            Recibimos tu solicitud. Un asesor te va a contactar por WhatsApp para coordinar el pago y activar tu cuenta.
           </p>
         </div>
       </section>

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useSearchParams, useNavigate, Link } from 'react-router-dom';
-import { MessageCircle } from 'lucide-react';
-import { EMPRESA, DEPARTAMENTOS } from '../config';
+import { MessageCircle, AlertCircle } from 'lucide-react';
+import { EMPRESA, DEPARTAMENTOS, URL_REGISTRO_EDGE_FUNCTION } from '../config';
 import { getPacks, getPack } from '../data/catalogo';
 
 export default function Registro() {
@@ -25,6 +25,8 @@ export default function Registro() {
 
   const [consent, setConsent] = useState(false);
   const [marketing, setMarketing] = useState(false);
+  const [enviando, setEnviando] = useState(false);
+  const [errorEnvio, setErrorEnvio] = useState(null);
 
   useEffect(() => {
     const storedRef = sessionStorage.getItem('mg_ref');
@@ -42,27 +44,72 @@ export default function Registro() {
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!consent) return;
+    if (!consent || enviando) return;
 
-    // Guardamos los datos de registro en sessionStorage para la pantalla de confirmación
-    sessionStorage.setItem('mg_registro', JSON.stringify(formData));
+    setEnviando(true);
+    setErrorEnvio(null);
 
-    // Si se especificó patrocinador, aseguramos su persistencia
-    if (formData.patrocinador) {
-      sessionStorage.setItem('mg_ref', formData.patrocinador);
+    // Separar nombres y apellidos si es necesario
+    const partesNombre = (formData.nombre || '').trim().split(/\s+/);
+    let nombresVal = formData.nombre;
+    let apellidosVal = '-';
+    if (partesNombre.length > 1) {
+      nombresVal = partesNombre.slice(0, -1).join(' ');
+      apellidosVal = partesNombre[partesNombre.length - 1];
     }
+
+    const payload = {
+      nombres: nombresVal,
+      apellidos: apellidosVal,
+      documento: formData.dni ? formData.dni.trim() : null,
+      telefono: formData.telefono ? formData.telefono.trim() : '',
+      email: formData.email ? formData.email.trim() : '',
+      departamento: formData.departamento || null,
+      provincia: formData.provincia || null,
+      direccion: formData.direccion || null,
+      pack_codigo: formData.pack,
+      ref_codigo: formData.patrocinador ? formData.patrocinador.trim() : null,
+      origen: 'landing'
+    };
 
     // Armamos mensaje para enviar a WhatsApp
     const selectedPackObj = getPack(formData.pack) || packs[2] || { nombre: 'Pack Gold', precio: 1200 };
     const waMsg = `Hola, completé mi registro de afiliación:\n- Nombre: ${formData.nombre}\n- DNI: ${formData.dni}\n- Teléfono: ${formData.telefono}\n- Departamento: ${formData.departamento}, ${formData.provincia}\n- Pack: ${selectedPackObj.nombre} (S/. ${selectedPackObj.precio})\n${formData.patrocinador ? `Ref: ${formData.patrocinador}` : ''}`;
-    
-    // Guardamos el mensaje en sessionStorage para la pantalla de confirmación
-    sessionStorage.setItem('mg_wa_msg', waMsg);
 
-    // Navegamos a confirmación
-    navigate('/confirmacion');
+    try {
+      const resp = await fetch(URL_REGISTRO_EDGE_FUNCTION, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      });
+
+      const resJson = await resp.json().catch(() => ({}));
+
+      if (!resp.ok) {
+        throw new Error(resJson.error || `Error ${resp.status} al enviar la solicitud.`);
+      }
+
+      // Guardamos los datos de registro en sessionStorage para la pantalla de confirmación
+      sessionStorage.setItem('mg_registro', JSON.stringify(formData));
+
+      // Si se especificó patrocinador, aseguramos su persistencia
+      if (formData.patrocinador) {
+        sessionStorage.setItem('mg_ref', formData.patrocinador);
+      }
+
+      // Guardamos el mensaje en sessionStorage para la pantalla de confirmación
+      sessionStorage.setItem('mg_wa_msg', waMsg);
+
+      // Navegamos a confirmación
+      navigate('/confirmacion');
+    } catch (err) {
+      console.error('Error al enviar formulario de afiliación:', err);
+      setErrorEnvio(err.message || 'Hubo un problema de conexión. Puedes completar tu afiliación directamente por WhatsApp.');
+    } finally {
+      setEnviando(false);
+    }
   };
 
   const waDudasUrl = `https://wa.me/${EMPRESA.whatsapp}?text=${encodeURIComponent('Hola, quiero afiliarme y tengo dudas sobre el pack.')}`;
@@ -383,6 +430,53 @@ export default function Registro() {
               </label>
             </div>
 
+            {/* Error de envío y salida por WhatsApp de respaldo */}
+            {errorEnvio && (
+              <div
+                style={{
+                  marginTop: 'var(--sp-6)',
+                  padding: 'var(--sp-4) var(--sp-5)',
+                  backgroundColor: 'rgba(239, 68, 68, 0.08)',
+                  border: '1px solid rgba(239, 68, 68, 0.3)',
+                  borderRadius: 'var(--r-card)',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  gap: 'var(--sp-3)',
+                }}
+              >
+                <div style={{ display: 'flex', alignItems: 'center', gap: '8px', color: '#DC2626' }}>
+                  <AlertCircle size={18} />
+                  <span style={{ fontSize: 'var(--fs-sm)', fontWeight: 600 }}>{errorEnvio}</span>
+                </div>
+                <p style={{ fontSize: 'var(--fs-xs)', color: 'var(--text-body)', margin: 0 }}>
+                  No te preocupes: puedes enviar tus datos directamente a nuestro WhatsApp oficial para que un asesor te atienda de inmediato:
+                </p>
+                <a
+                  href={`https://wa.me/${EMPRESA.whatsapp}?text=${encodeURIComponent(`Hola, completé mi registro de afiliación:\n- Nombre: ${formData.nombre}\n- DNI: ${formData.dni}\n- Teléfono: ${formData.telefono}\n- Departamento: ${formData.departamento}, ${formData.provincia}\n- Pack: ${formData.pack}\n${formData.patrocinador ? `Ref: ${formData.patrocinador}` : ''}`)}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  style={{
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    gap: '8px',
+                    backgroundColor: 'var(--whatsapp)',
+                    color: '#FFFFFF',
+                    padding: '10px 18px',
+                    borderRadius: 'var(--r-pill)',
+                    fontFamily: 'var(--font-subtitle)',
+                    fontWeight: 700,
+                    fontSize: 'var(--fs-sm)',
+                    textDecoration: 'none',
+                    width: 'fit-content',
+                  }}
+                >
+                  <MessageCircle size={16} color="#FFFFFF" />
+                  <span>Enviar datos por WhatsApp</span>
+                </a>
+              </div>
+            )}
+
             {/* Botón Submit */}
             <div
               style={{
@@ -395,7 +489,7 @@ export default function Registro() {
             >
               <button
                 type="submit"
-                disabled={!consent}
+                disabled={!consent || enviando}
                 data-testid="btn-submit-registro"
                 style={{
                   padding: '14px 28px',
@@ -403,15 +497,15 @@ export default function Registro() {
                   fontFamily: 'var(--font-subtitle)',
                   fontSize: 'var(--fs-md)',
                   fontWeight: 700,
-                  backgroundColor: consent ? 'var(--brand-gold)' : 'var(--n-200)',
-                  color: consent ? 'var(--n-700)' : 'var(--text-muted)',
+                  backgroundColor: (consent && !enviando) ? 'var(--brand-gold)' : 'var(--n-200)',
+                  color: (consent && !enviando) ? 'var(--n-700)' : 'var(--text-muted)',
                   border: 'none',
-                  cursor: consent ? 'pointer' : 'not-allowed',
+                  cursor: (consent && !enviando) ? 'pointer' : 'not-allowed',
                   transition: 'var(--t-control)',
-                  boxShadow: consent ? 'var(--shadow-gold)' : 'none',
+                  boxShadow: (consent && !enviando) ? 'var(--shadow-gold)' : 'none',
                 }}
               >
-                Enviar y hablar con un asesor
+                {enviando ? 'Enviando...' : 'Enviar y hablar con un asesor'}
               </button>
 
               {!consent && (

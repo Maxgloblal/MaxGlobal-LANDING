@@ -38,6 +38,9 @@ export const EMPRESA = {
   },
 };
 
+// Endpoint oficial de la Edge Function para recepción de solicitudes públicas de afiliación
+export const URL_REGISTRO_EDGE_FUNCTION = 'https://utlohnidkuvxqppmoevj.supabase.co/functions/v1/registro-afiliacion';
+
 export const DEPARTAMENTOS = [
   'Amazonas', 'Áncash', 'Apurímac', 'Arequipa', 'Ayacucho',
   'Cajamarca', 'Callao', 'Cusco', 'Huancavelica', 'Huánuco',
