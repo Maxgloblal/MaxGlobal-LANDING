@@ -29,9 +29,9 @@ export default function Registro() {
   const [errorEnvio, setErrorEnvio] = useState(null);
 
   useEffect(() => {
-    const storedRef = sessionStorage.getItem('mg_ref');
-    if (storedRef) {
-      setFormData((prev) => ({ ...prev, patrocinador: storedRef }));
+    const refParam = searchParams.get('ref') || sessionStorage.getItem('mg_ref');
+    if (refParam) {
+      setFormData((prev) => ({ ...prev, patrocinador: refParam }));
     }
     const packParam = searchParams.get('pack');
     if (packParam) {
