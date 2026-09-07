@@ -4,8 +4,8 @@
   "version": "1.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite",
-    "build": "vite build && node scripts/prerender.mjs",
+    "dev": "node scripts/generar-catalogo.mjs && vite",
+    "build": "node scripts/generar-catalogo.mjs && vite build && node scripts/prerender.mjs && node scripts/generar-sitemap.mjs",
     "preview": "vite preview",
     "test": "vitest run",
     "test:watch": "vitest",
