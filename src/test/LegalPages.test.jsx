@@ -7,7 +7,7 @@ import PoliticaPrivacidad from '../pages/PoliticaPrivacidad';
 import TerminosCondiciones from '../pages/TerminosCondiciones';
 import LibroReclamaciones from '../pages/LibroReclamaciones';
 import SiteFooter from '../components/SiteFooter';
-import { PRODUCTOS } from '../config';
+import PRODUCTOS from '../data/productos-generado.json';
 
 describe('Legal Pages and Compliance (Ley 32495, Ley 29571, Ley 29733)', () => {
   beforeEach(() => {

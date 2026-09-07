@@ -5,7 +5,7 @@ import userEvent from '@testing-library/user-event';
 import { CartProvider, useCart } from '../context/CartContext';
 import CartDrawer from '../components/CartDrawer';
 import CartFab from '../components/CartFab';
-import { PRODUCTOS } from '../config';
+import PRODUCTOS from '../data/productos-generado.json';
 
 const prodCafe = PRODUCTOS.find((p) => p.id === 'cafe-moringa') || PRODUCTOS[0];
 const prodColageno = PRODUCTOS.find((p) => p.id === 'colageno-hidrolizado') || PRODUCTOS[1];
