@@ -3,7 +3,8 @@
  * Todas las páginas leen de aquí, centralizando la lectura y preparando
  * el terreno para la futura integración con Supabase en la Fase 2.
  */
-import { PRODUCTOS, PACKS, precioSocio } from '../config';
+import PRODUCTOS from './productos-generado.json';
+import { PACKS, precioSocio } from '../config';
 
 export const getProductos = () => PRODUCTOS.filter((p) => p.activo !== false);
 

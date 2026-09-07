@@ -4,7 +4,7 @@ import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { MemoryRouter } from 'react-router-dom';
 import Productos from '../pages/Productos';
-import { PRODUCTOS } from '../config';
+import PRODUCTOS from '../data/productos-generado.json';
 
 describe('Productos Page (P-02)', () => {
   it('renders hero title and catalog description', () => {

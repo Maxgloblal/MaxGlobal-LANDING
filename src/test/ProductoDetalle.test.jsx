@@ -5,7 +5,7 @@ import userEvent from '@testing-library/user-event';
 import { MemoryRouter, Routes, Route } from 'react-router-dom';
 import ProductoDetalle from '../pages/ProductoDetalle';
 import { CartProvider } from '../context/CartContext';
-import { PRODUCTOS } from '../config';
+import PRODUCTOS from '../data/productos-generado.json';
 import { mejorDescuento, precioSocio } from '../data/catalogo';
 
 const sampleProd = PRODUCTOS[0]; // Coffee Capuccino
@@ -81,7 +81,11 @@ describe('ProductoDetalle Page (/productos/:id)', () => {
     renderDetail(dalba.id);
 
     expect(screen.getByTestId('detail-product-name')).toHaveTextContent(dalba.nombre);
-    expect(screen.queryByTestId('detail-presentation')).toBeNull();
+    if (dalba.presentacion) {
+      expect(screen.getByTestId('detail-presentation')).toHaveTextContent(dalba.presentacion);
+    } else {
+      expect(screen.queryByTestId('detail-presentation')).toBeNull();
+    }
 
     // Price & points
     expect(screen.getByTestId('detail-price-publico')).toHaveTextContent(`S/. ${dalba.precioPublico}`);
