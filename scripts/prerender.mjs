@@ -1,13 +1,24 @@
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
-import { PRODUCTOS } from '../src/config.js';
-
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const DIST_DIR = path.resolve(__dirname, '../dist');
 
 const DOMINIO = (process.env.SITE_URL || 'https://maxglobaloficial.com').replace(/\/$/, '');
+
+const PRODUCTOS_PATH = path.resolve(__dirname, '../src/data/productos-generado.json');
+const PRODUCTOS = fs.existsSync(PRODUCTOS_PATH)
+  ? JSON.parse(fs.readFileSync(PRODUCTOS_PATH, 'utf8'))
+  : [];
+
+function resolverImagen(img) {
+  if (!img) return `${DOMINIO}/images/og-image.jpg`;
+  if (img.startsWith('http://') || img.startsWith('https://')) {
+    return img;
+  }
+  return `${DOMINIO}${img.startsWith('/') ? '' : '/'}${img}`;
+}
 
 function escapeHtml(str) {
   if (!str) return '';
@@ -84,7 +95,7 @@ const RUTAS_PRODUCTOS = PRODUCTOS.filter((p) => p.activo).map((p) => {
     ruta: `/productos/${p.id}`,
     title: `${p.nombre} — Max Global`,
     description: desc,
-    ogImage: `${DOMINIO}${p.imagen}`,
+    ogImage: resolverImagen(p.imagen),
     ogUrl: `${DOMINIO}/productos/${p.id}`,
     producto: p
   };
@@ -165,7 +176,7 @@ function prerender() {
         '@type': 'Product',
         'name': p.nombre,
         'description': p.descripcion || '',
-        'image': `${DOMINIO}${p.imagen}`,
+        'image': resolverImagen(p.imagen),
         'sku': p.id,
         'category': p.categoria,
         'brand': {
