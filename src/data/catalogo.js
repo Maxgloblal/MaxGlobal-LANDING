@@ -30,4 +30,18 @@ export const getPack = (id) => PACKS.find((p) => p.id === id);
 export const mejorDescuento = () =>
   Math.max(...getPacks().map((p) => p.descuentoRecompra || 0));
 
+/**
+ * Calcula el valor comercial en producto de un pack según su precio y descuentoEnPack.
+ * Regla de negocio:
+ *   · si descuentoEnPack es null o 0  →  devuelve null (ej. Kit Emprendedor)
+ *   · si no  →  precio / (1 − descuentoEnPack/100), redondeado al sol entero
+ */
+export const valorEnProducto = (pack) => {
+  const p = typeof pack === 'string' ? getPack(pack) : pack;
+  if (!p || p.descuentoEnPack == null || p.descuentoEnPack === 0) {
+    return null;
+  }
+  return Math.round(p.precio / (1 - p.descuentoEnPack / 100));
+};
+
 export { precioSocio };
