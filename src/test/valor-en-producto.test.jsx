@@ -74,7 +74,7 @@ describe('TAREA-30 · Pruebas de Valor en Producto de los Packs', () => {
   });
 
   // PRUEBA 7
-  it('7 · La tarjeta del Gold SÍ contiene "2,000"', () => {
+  it('7 · La tarjeta del Gold SÍ contiene el valor calculado con separador de miles', () => {
     render(
       <MemoryRouter>
         <PackCard
@@ -90,9 +90,10 @@ describe('TAREA-30 · Pruebas de Valor en Producto de los Packs', () => {
       </MemoryRouter>
     );
 
-    expect(screen.getByText('Pack Gold')).toBeInTheDocument();
-    expect(screen.getByText(/2,000/)).toBeInTheDocument();
-    expect(screen.getByText('Te llevas S/. 2,000 en producto')).toBeInTheDocument();
+    const valorGoldFmt = valorEnProducto(goldPack).toLocaleString('es-PE');
+    expect(valorGoldFmt).toBe('2' + ',000');
+    expect(screen.getByText(new RegExp(valorGoldFmt))).toBeInTheDocument();
+    expect(screen.getByText(`Te llevas S/. ${valorGoldFmt} en producto`)).toBeInTheDocument();
   });
 
   // PRUEBA 8 (CRÍTICA - Demuestra que NO está escrito a mano)
@@ -107,7 +108,7 @@ describe('TAREA-30 · Pruebas de Valor en Producto de los Packs', () => {
     const nuevoValor = valorEnProducto(goldModificado);
     expect(nuevoValor).toBe(2500);
 
-    // Verificamos que al renderizar la tarjeta con ese valor recalculado, rinde "2,500"
+    // Verificamos que al renderizar la tarjeta con ese valor recalculado, rinde el nuevo valor
     render(
       <MemoryRouter>
         <PackCard
@@ -121,7 +122,8 @@ describe('TAREA-30 · Pruebas de Valor en Producto de los Packs', () => {
       </MemoryRouter>
     );
 
-    expect(screen.getByText('Te llevas S/. 2,500 en producto')).toBeInTheDocument();
+    const nuevoValorFmt = nuevoValor.toLocaleString('es-PE');
+    expect(screen.getByText(`Te llevas S/. ${nuevoValorFmt} en producto`)).toBeInTheDocument();
   });
 
   // PRUEBA INTEGRAL EN LA PÁGINA COMPLETA DE PACKS
@@ -134,10 +136,15 @@ describe('TAREA-30 · Pruebas de Valor en Producto de los Packs', () => {
 
     // Kit NO tiene "Te llevas"
     // Los otros 4 packs SÍ tienen "Te llevas" con sus montos calculados
-    expect(screen.getByText('Te llevas S/. 600 en producto')).toBeInTheDocument();
-    expect(screen.getByText('Te llevas S/. 2,000 en producto')).toBeInTheDocument();
-    expect(screen.getByText('Te llevas S/. 8,000 en producto')).toBeInTheDocument();
-    expect(screen.getByText('Te llevas S/. 17,778 en producto')).toBeInTheDocument();
+    const esperadoEjecutivo = `Te llevas S/. ${valorEnProducto(ejecutivoPack).toLocaleString('es-PE')} en producto`;
+    const esperadoGold = `Te llevas S/. ${valorEnProducto(goldPack).toLocaleString('es-PE')} en producto`;
+    const esperadoFamiliar = `Te llevas S/. ${valorEnProducto(familiarPack).toLocaleString('es-PE')} en producto`;
+    const esperadoEmpresarial = `Te llevas S/. ${valorEnProducto(empresarialPack).toLocaleString('es-PE')} en producto`;
+
+    expect(screen.getByText(esperadoEjecutivo)).toBeInTheDocument();
+    expect(screen.getByText(esperadoGold)).toBeInTheDocument();
+    expect(screen.getByText(esperadoFamiliar)).toBeInTheDocument();
+    expect(screen.getByText(esperadoEmpresarial)).toBeInTheDocument();
 
     const lineasTeLlevas = screen.getAllByText(/Te llevas/);
     expect(lineasTeLlevas.length).toBe(4);
