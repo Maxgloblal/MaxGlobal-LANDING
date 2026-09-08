@@ -1,6 +1,7 @@
 import React from 'react';
 import { Check } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
+import { valorEnProducto as calcularValor } from '../data/catalogo';
 
 export default function PackCard({
   id,
@@ -11,6 +12,8 @@ export default function PackCard({
   cta = 'Elegir Pack',
   featured = false,
   ribbon = '',
+  valorEnProducto: valorEnProductoProp,
+  pack,
   onSelect,
 }) {
   const navigate = useNavigate();
@@ -22,6 +25,15 @@ export default function PackCard({
       navigate(`/registro?pack=${encodeURIComponent(id || '')}`);
     }
   };
+
+  const valor =
+    valorEnProductoProp !== undefined
+      ? valorEnProductoProp
+      : pack
+      ? calcularValor(pack)
+      : id
+      ? calcularValor(id)
+      : null;
 
   return (
     <div
@@ -93,6 +105,18 @@ export default function PackCard({
         >
           {price}
         </div>
+        {valor != null && (
+          <div
+            style={{
+              fontSize: 'var(--fs-xs)',
+              fontWeight: 700,
+              color: 'var(--text-strong)',
+              marginBottom: 'var(--sp-2)',
+            }}
+          >
+            Te llevas S/. {valor.toLocaleString('es-PE')} en producto
+          </div>
+        )}
         <p
           style={{
             fontSize: 'var(--fs-xs)',

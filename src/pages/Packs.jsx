@@ -3,7 +3,7 @@ import { MessageCircle } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import PackCard from '../components/PackCard';
 import { EMPRESA } from '../config';
-import { getPacks } from '../data/catalogo';
+import { getPacks, valorEnProducto } from '../data/catalogo';
 
 export default function Packs() {
   const navigate = useNavigate();
@@ -68,12 +68,13 @@ export default function Packs() {
                 key={pack.id}
                 id={pack.id}
                 name={pack.nombre}
-                price={pack.price || `S/. ${pack.precio.toLocaleString()}`}
+                price={pack.price || `S/. ${pack.precio.toLocaleString('es-PE')}`}
                 lead={pack.lead}
                 cta={pack.cta}
                 featured={pack.destacado}
                 ribbon={pack.ribbon || pack.etiqueta}
                 features={pack.beneficios || pack.features}
+                valorEnProducto={valorEnProducto(pack)}
                 onSelect={handleSelectPack}
               />
             ))}
