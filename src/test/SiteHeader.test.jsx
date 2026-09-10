@@ -57,4 +57,30 @@ describe('SiteHeader Component', () => {
 
     expect(screen.getByText('Te recomendó: MG-00417')).toBeInTheDocument();
   });
+
+  it('renders Afíliate button in header linking to /registro', () => {
+    render(
+      <MemoryRouter>
+        <SiteHeader />
+      </MemoryRouter>
+    );
+
+    const btn = screen.getByTestId('head-registro');
+    expect(btn).toBeInTheDocument();
+    expect(btn).toHaveTextContent('Afíliate');
+    expect(btn).toHaveAttribute('href', '/registro');
+  });
+
+  it('renders Afíliate button visible without opening mobile burger menu', () => {
+    render(
+      <MemoryRouter>
+        <SiteHeader />
+      </MemoryRouter>
+    );
+
+    const btn = screen.getByTestId('head-registro');
+    expect(btn).toBeInTheDocument();
+    // El drawer del menu movil no esta abierto
+    expect(screen.queryByTestId('mobile-menu')).not.toBeInTheDocument();
+  });
 });
