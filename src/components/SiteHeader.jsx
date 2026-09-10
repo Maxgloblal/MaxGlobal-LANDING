@@ -1,20 +1,37 @@
 import React, { useState, useEffect } from 'react';
-import { Link, NavLink } from 'react-router-dom';
+import { Link, NavLink, useSearchParams } from 'react-router-dom';
 import { MessageCircle, Menu, X } from 'lucide-react';
 import { EMPRESA } from '../config';
 
 export default function SiteHeader({ active, refName }) {
   const [mobileOpen, setMobileOpen] = useState(false);
-  const [referral, setReferral] = useState(refName || '');
+  const [searchParams] = useSearchParams();
+  const [referral, setReferral] = useState(() => {
+    if (refName) return refName;
+    if (typeof window !== 'undefined') {
+      const urlRef = new URLSearchParams(window.location.search).get('ref');
+      if (urlRef) return urlRef;
+      return sessionStorage.getItem('mg_ref') || '';
+    }
+    return '';
+  });
 
   useEffect(() => {
-    if (!referral) {
+    if (refName) {
+      setReferral(refName);
+      return;
+    }
+    const urlRef = searchParams.get('ref');
+    if (urlRef) {
+      sessionStorage.setItem('mg_ref', urlRef);
+      setReferral(urlRef);
+    } else {
       const storedRef = sessionStorage.getItem('mg_ref');
       if (storedRef) {
         setReferral(storedRef);
       }
     }
-  }, [referral]);
+  }, [searchParams, refName]);
 
   const refLabel = referral ? `Te recomendó: ${referral}` : '';
   const waMsg = referral

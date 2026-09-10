@@ -44,12 +44,12 @@ export default function LibroReclamaciones() {
       return;
     }
 
-    // Generar correlativo provisional (Fase 1 en navegador / localStorage)
+    // Generar correlativo provisional (Fase 1 en navegador / sessionStorage)
     // NOTA DE ARQUITECTURA: En Fase 2 el correlativo y almacenamiento centralizado provendrán de backend/Supabase.
     const now = new Date();
     const yyyymmdd = now.toISOString().slice(0, 10).replace(/-/g, '');
-    const storedCount = parseInt(localStorage.getItem('mg_lr_count') || '0', 10) + 1;
-    localStorage.setItem('mg_lr_count', String(storedCount));
+    const storedCount = parseInt(sessionStorage.getItem('mg_lr_count') || '0', 10) + 1;
+    sessionStorage.setItem('mg_lr_count', String(storedCount));
     const generatedCode = `MG-LR-${yyyymmdd}-${String(storedCount).padStart(4, '0')}`;
 
     const dateFormatted = now.toLocaleString('es-PE', {

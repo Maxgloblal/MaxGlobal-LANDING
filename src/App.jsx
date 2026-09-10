@@ -22,12 +22,15 @@ import { getProducto } from './data/catalogo';
 // Captura y persiste el código de referido (?ref=MG-XXXXX) en sessionStorage
 function RefTracker() {
   const [searchParams] = useSearchParams();
+  const ref = searchParams.get('ref');
+  if (ref && typeof window !== 'undefined') {
+    sessionStorage.setItem('mg_ref', ref);
+  }
   useEffect(() => {
-    const ref = searchParams.get('ref');
     if (ref) {
       sessionStorage.setItem('mg_ref', ref);
     }
-  }, [searchParams]);
+  }, [ref]);
   return null;
 }
 

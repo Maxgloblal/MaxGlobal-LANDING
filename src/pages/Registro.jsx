@@ -11,6 +11,8 @@ export default function Registro() {
 
   // Preselección de pack si viene por URL (?pack=gold)
   const initialPack = searchParams.get('pack') || 'gold';
+  const initialPatrocinador = searchParams.get('ref') || (typeof window !== 'undefined' ? sessionStorage.getItem('mg_ref') : '') || '';
+
   const [formData, setFormData] = useState({
     nombre: '',
     dni: '',
@@ -20,7 +22,7 @@ export default function Registro() {
     provincia: '',
     direccion: '',
     pack: initialPack,
-    patrocinador: '',
+    patrocinador: initialPatrocinador,
   });
 
   const [consent, setConsent] = useState(false);
@@ -29,9 +31,15 @@ export default function Registro() {
   const [errorEnvio, setErrorEnvio] = useState(null);
 
   useEffect(() => {
-    const refParam = searchParams.get('ref') || sessionStorage.getItem('mg_ref');
-    if (refParam) {
-      setFormData((prev) => ({ ...prev, patrocinador: refParam }));
+    const urlRef = searchParams.get('ref');
+    if (urlRef) {
+      sessionStorage.setItem('mg_ref', urlRef);
+      setFormData((prev) => ({ ...prev, patrocinador: urlRef }));
+    } else {
+      const storedRef = sessionStorage.getItem('mg_ref');
+      if (storedRef) {
+        setFormData((prev) => ({ ...prev, patrocinador: storedRef }));
+      }
     }
     const packParam = searchParams.get('pack');
     if (packParam) {
