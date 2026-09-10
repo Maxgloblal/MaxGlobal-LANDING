@@ -142,61 +142,73 @@ export default function SiteHeader({ active, refName }) {
           </span>
         )}
 
-        {/* Botón WhatsApp Escritorio */}
+        {/* Acciones Derecha (WhatsApp + Afíliate + Burger Móvil) */}
         <div
-          className="mg-head-wa"
+          className="mg-head-actions"
           style={{
             marginLeft: 'auto',
             display: 'flex',
             alignItems: 'center',
+            gap: 'var(--sp-3)',
           }}
         >
-          <a
-            href={waUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            data-testid="head-whatsapp"
+          {/* Botón WhatsApp Escritorio */}
+          <div className="mg-head-wa">
+            <a
+              href={waUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              data-testid="head-whatsapp"
+              style={{
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: '8px',
+                backgroundColor: 'var(--whatsapp)',
+                color: '#FFFFFF',
+                padding: '10px 20px',
+                borderRadius: 'var(--r-pill)',
+                fontSize: 'var(--fs-sm)',
+                fontFamily: 'var(--font-subtitle)',
+                fontWeight: 700,
+                textDecoration: 'none',
+                transition: 'var(--t-control)',
+              }}
+            >
+              <MessageCircle size={18} color="#FFFFFF" />
+              <span>Hablar por WhatsApp</span>
+            </a>
+          </div>
+
+          {/* Botón Afíliate (Visible en escritorio y móvil sin abrir el menú) */}
+          <Link
+            to="/registro"
+            data-testid="head-registro"
+            className="mg-head-afiliate"
+          >
+            Afíliate
+          </Link>
+
+          {/* Botón Menú Hamburguesa (Móvil) */}
+          <button
+            className="mg-head-burger"
+            data-testid="nav-burger"
+            onClick={() => setMobileOpen(!mobileOpen)}
+            aria-label={mobileOpen ? 'Cerrar menú' : 'Abrir menú'}
             style={{
-              display: 'inline-flex',
+              display: 'none',
+              background: 'none',
+              border: 'none',
+              cursor: 'pointer',
+              padding: '8px',
+              borderRadius: 'var(--r-sm)',
+              color: 'var(--text-strong)',
               alignItems: 'center',
-              gap: '8px',
-              backgroundColor: 'var(--whatsapp)',
-              color: '#FFFFFF',
-              padding: '10px 20px',
-              borderRadius: 'var(--r-pill)',
-              fontSize: 'var(--fs-sm)',
-              fontFamily: 'var(--font-subtitle)',
-              fontWeight: 700,
-              textDecoration: 'none',
-              transition: 'var(--t-control)',
+              justifyContent: 'center',
             }}
           >
-            <MessageCircle size={18} color="#FFFFFF" />
-            <span>Hablar por WhatsApp</span>
-          </a>
+            {mobileOpen ? <X size={26} /> : <Menu size={26} />}
+          </button>
         </div>
-
-        {/* Botón Menú Hamburguesa (Móvil) */}
-        <button
-          className="mg-head-burger"
-          data-testid="nav-burger"
-          onClick={() => setMobileOpen(!mobileOpen)}
-          aria-label={mobileOpen ? 'Cerrar menú' : 'Abrir menú'}
-          style={{
-            display: 'none',
-            marginLeft: 'auto',
-            background: 'none',
-            border: 'none',
-            cursor: 'pointer',
-            padding: '10px',
-            borderRadius: 'var(--r-sm)',
-            color: 'var(--text-strong)',
-            alignItems: 'center',
-            justifyContent: 'center',
-          }}
-        >
-          {mobileOpen ? <X size={26} /> : <Menu size={26} />}
-        </button>
       </div>
 
       {/* Menú Desplegable Móvil */}
@@ -256,6 +268,20 @@ export default function SiteHeader({ active, refName }) {
             Sobre Nosotros
           </NavLink>
 
+          <NavLink
+            to="/registro"
+            data-testid="mobile-nav-registro"
+            onClick={() => setMobileOpen(false)}
+            style={{
+              ...mobileNavLinkStyle({ isActive: false }),
+              backgroundColor: 'var(--surface-gold)',
+              color: 'var(--gold-700)',
+              fontWeight: 700,
+            }}
+          >
+            Afíliate
+          </NavLink>
+
           <a
             href={waUrl}
             target="_blank"
@@ -290,6 +316,26 @@ export default function SiteHeader({ active, refName }) {
           from { opacity: 0; transform: translateY(-8px); }
           to { opacity: 1; transform: translateY(0); }
         }
+        .mg-head-afiliate {
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+          background-color: var(--mg-dorado);
+          color: var(--text-on-gold);
+          padding: 10px 22px;
+          border-radius: var(--r-pill);
+          font-size: var(--fs-sm);
+          font-family: var(--font-subtitle);
+          font-weight: 700;
+          text-decoration: none;
+          transition: var(--t-control);
+          white-space: nowrap;
+          box-shadow: var(--shadow-xs);
+        }
+        .mg-head-afiliate:hover {
+          filter: brightness(1.06);
+          box-shadow: var(--shadow-gold);
+        }
         @media (max-width: 1060px) {
           .mg-head-ref { display: none !important; }
         }
@@ -297,6 +343,16 @@ export default function SiteHeader({ active, refName }) {
           .mg-head-inner { height: 64px !important; }
           .mg-head-nav, .mg-head-wa, .mg-head-ref { display: none !important; }
           .mg-head-burger { display: inline-flex !important; }
+          .mg-head-afiliate {
+            padding: 8px 16px !important;
+            font-size: 13px !important;
+          }
+        }
+        @media (max-width: 400px) {
+          .mg-head-afiliate {
+            padding: 7px 12px !important;
+            font-size: 12px !important;
+          }
         }
       `}</style>
     </header>
