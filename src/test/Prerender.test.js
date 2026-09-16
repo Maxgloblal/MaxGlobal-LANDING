@@ -26,7 +26,13 @@ describe('TAREA-08 · Prerenderizado Estático y Metadatos Open Graph', () => {
 
   it('3 · La og:image del café apunta a la imagen de Supabase sin dominio local delante', () => {
     const cafeHtml = fs.readFileSync(path.join(distDir, 'productos/cafe-moringa/index.html'), 'utf8');
-    expect(cafeHtml).toMatch(/property="og:image"\s+content="https:\/\/utlohnidkuvxqppmoevj\.supabase\.co\/storage\/v1\/object\/public\/productos\/cafe-moringa\.webp"/i);
+    const supabaseUrl = (process.env.VITE_SUPABASE_URL || '').replace(/\/$/, '');
+    if (supabaseUrl) {
+      const escapedUrl = supabaseUrl.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+      expect(cafeHtml).toMatch(new RegExp(`property="og:image"\\s+content="${escapedUrl}\\/storage\\/v1\\/object\\/public\\/productos\\/cafe-moringa\\.webp"`, 'i'));
+    } else {
+      expect(cafeHtml).toMatch(/property="og:image"\s+content="https:\/\/[a-z0-9-]+\.supabase\.co\/storage\/v1\/object\/public\/productos\/cafe-moringa\.webp"/i);
+    }
     expect(cafeHtml).not.toContain('maxglobaloficial.comhttps');
   });
 
@@ -131,9 +137,14 @@ describe('TAREA-23 · La Landing Lee el Catálogo de la Base y Generación Diná
     expect(matchOg).not.toBeNull();
     const ogImage = matchOg[1];
 
-    expect(ogImage.startsWith('https://utlohnidkuvxqppmoevj.supabase.co/')).toBe(true);
+    const supabaseUrl = (process.env.VITE_SUPABASE_URL || '').replace(/\/$/, '');
+    if (supabaseUrl) {
+      expect(ogImage.startsWith(`${supabaseUrl}/`)).toBe(true);
+    } else {
+      expect(ogImage).toMatch(/^https:\/\/[a-z0-9-]+\.supabase\.co\//);
+    }
     expect(ogImage).not.toContain('maxglobaloficial.comhttps');
-    expect(cafeHtml).not.toContain('https://maxglobaloficial.comhttps://utlohnid');
+    expect(cafeHtml).not.toMatch(/https:\/\/maxglobaloficial\.comhttps:\/\//);
 
     // Verificar en todas las 8 fichas de producto
     const productDirs = fs.readdirSync(path.join(distDir, 'productos')).filter(d => d !== 'index.html');
@@ -142,7 +153,11 @@ describe('TAREA-23 · La Landing Lee el Catálogo de la Base y Generación Diná
       const pHtml = fs.readFileSync(path.join(distDir, `productos/${pDir}/index.html`), 'utf8');
       const pMatch = pHtml.match(/<meta\s+property=["']og:image["']\s+content=["']([^"']+)["']/i);
       expect(pMatch).not.toBeNull();
-      expect(pMatch[1].startsWith('https://utlohnidkuvxqppmoevj.supabase.co/')).toBe(true);
+      if (supabaseUrl) {
+        expect(pMatch[1].startsWith(`${supabaseUrl}/`)).toBe(true);
+      } else {
+        expect(pMatch[1]).toMatch(/^https:\/\/[a-z0-9-]+\.supabase\.co\//);
+      }
       expect(pMatch[1]).not.toContain('maxglobaloficial.comhttps');
     }
   });

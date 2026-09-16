@@ -49,6 +49,8 @@ async function main() {
     // CAPTURA 2: El HTML servido mostrando la og:image correcta y Schema Product
     console.log('Generando visualización del HTML servido con og:image...');
     const htmlServido = fs.readFileSync(path.resolve(__dirname, '../dist/productos/cafe-moringa/index.html'), 'utf8');
+    const ogImgMatch = htmlServido.match(/<meta\s+property=["']og:image["']\s+content=["']([^"']+)["']/i);
+    const ogImgUrl = ogImgMatch ? ogImgMatch[1] : '';
 
     // Extraer líneas relevantes de head: og:image, og:url, twitter:image, schema
     const lineasHead = htmlServido.split('\n').filter((l) =>
@@ -136,7 +138,7 @@ async function main() {
           </p>
 
           <div class="highlight success">
-            ✓ og:image directa: https://utlohnidkuvxqppmoevj.supabase.co/storage/v1/object/public/productos/cafe-moringa.webp
+            ✓ og:image directa: ${ogImgUrl}
           </div>
 
           <pre><code>${lineasHead.map(l => l.replace(/</g, '&lt;').replace(/>/g, '&gt;')).join('\n')}</code></pre>

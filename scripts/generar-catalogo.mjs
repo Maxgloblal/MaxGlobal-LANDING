@@ -5,14 +5,14 @@ import { fileURLToPath } from 'url';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-const SUPABASE_URL = (
-  process.env.VITE_SUPABASE_URL ||
-  'https://utlohnidkuvxqppmoevj.supabase.co'
-).replace(/\/$/, '');
+const SUPABASE_URL = (process.env.VITE_SUPABASE_URL || '').replace(/\/$/, '');
+const SUPABASE_ANON_KEY = process.env.VITE_SUPABASE_ANON_KEY;
 
-const SUPABASE_ANON_KEY =
-  process.env.VITE_SUPABASE_ANON_KEY ||
-  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InV0bG9obmlka3V2eHFwcG1vZXZqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODc4NzgyMzYsImV4cCI6MjEwMzQ1NDIzNn0.jd0uktH9xcFNEKOErOVUE5UdvbXYqrJncLBsSXE2WvE';
+if (!SUPABASE_URL || !SUPABASE_ANON_KEY) {
+  console.error('🔴 generar-catalogo: faltan VITE_SUPABASE_URL o VITE_SUPABASE_ANON_KEY.');
+  console.error('   El catálogo NO se genera a ciegas. Configura el entorno y repite.');
+  process.exit(1);
+}
 
 const TARGET_FILE = path.resolve(__dirname, '../src/data/productos-generado.json');
 
