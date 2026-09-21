@@ -13,6 +13,9 @@ export default function Registro() {
   const initialPack = searchParams.get('pack') || 'gold';
   const initialPatrocinador = searchParams.get('ref') || (typeof window !== 'undefined' ? sessionStorage.getItem('mg_ref') : '') || '';
 
+  const [codigoEnlace, setCodigoEnlace] = useState(initialPatrocinador);
+  const esReferidoBloqueado = Boolean(codigoEnlace && codigoEnlace.trim());
+
   const [formData, setFormData] = useState({
     nombre: '',
     dni: '',
@@ -35,10 +38,12 @@ export default function Registro() {
     if (urlRef) {
       sessionStorage.setItem('mg_ref', urlRef);
       setFormData((prev) => ({ ...prev, patrocinador: urlRef }));
+      setCodigoEnlace(urlRef);
     } else {
       const storedRef = sessionStorage.getItem('mg_ref');
       if (storedRef) {
         setFormData((prev) => ({ ...prev, patrocinador: storedRef }));
+        setCodigoEnlace(storedRef);
       }
     }
     const packParam = searchParams.get('pack');
@@ -356,10 +361,34 @@ export default function Registro() {
                     placeholder="MG-00000"
                     value={formData.patrocinador}
                     onChange={handleChange}
-                    style={inputStyle}
+                    readOnly={esReferidoBloqueado}
+                    style={{
+                      ...inputStyle,
+                      ...(esReferidoBloqueado
+                        ? {
+                            backgroundColor: 'var(--surface-sunken, #F8FAFC)',
+                            cursor: 'not-allowed',
+                            color: 'var(--text-strong)',
+                            borderColor: 'var(--border-subtle)',
+                          }
+                        : {}),
+                    }}
                     data-testid="input-patrocinador"
                   />
-                  <span style={hintStyle}>Se llena solo si llegaste por un enlace</span>
+                  {esReferidoBloqueado ? (
+                    <span
+                      data-testid="mensaje-patrocinador-bloqueado"
+                      style={{
+                        ...hintStyle,
+                        color: 'var(--brand-gold, #D1AD68)',
+                        fontWeight: 700,
+                      }}
+                    >
+                      Te invitó el socio {formData.patrocinador}
+                    </span>
+                  ) : (
+                    <span style={hintStyle}>Se llena solo si llegaste por un enlace</span>
+                  )}
                 </label>
               </div>
             </div>

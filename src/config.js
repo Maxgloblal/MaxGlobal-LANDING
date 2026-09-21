@@ -38,9 +38,32 @@ export const EMPRESA = {
   },
 };
 
+// Información institucional oficial (RF-180)
+export const INSTITUCIONAL = {
+  mision: 'Nuestra misión es transformar vidas en Latinoamérica a través de productos naturales de alta calidad y un modelo de negocio que impulsa el crecimiento personal, financiero y empresarial de las familias mediante franquicias y centros de bienestar.',
+  vision: 'Ser la empresa líder en bienestar integral y emprendimiento de Latinoamérica, reconocida por la excelencia de nuestros productos, el impacto positivo en el desarrollo financiero de las personas y una sólida red de franquicias que transformen miles de familias.',
+  valores: [
+    {
+      titulo: 'Calidad y Nutrición',
+      descripcion: 'Insumos naturales y superalimentos como la moringa en presentaciones prácticas de consumo diario.',
+    },
+    {
+      titulo: 'Oportunidad Real',
+      descripcion: 'Un modelo de distribución transparente con márgenes y comisiones claras desde el primer día.',
+    },
+    {
+      titulo: 'Comercio Formal',
+      descripcion: 'Emisión de comprobantes, registros formales y respaldo corporativo en cada operación.',
+    },
+  ],
+};
+
 // Endpoint oficial de la Edge Function para recepción de solicitudes públicas de afiliación
 const SUPABASE_URL = (import.meta.env.VITE_SUPABASE_URL || '').replace(/\/$/, '');
 export const URL_REGISTRO_EDGE_FUNCTION = `${SUPABASE_URL}/functions/v1/registro-afiliacion`;
+
+// URL oficial de la Oficina Virtual / Backoffice para socios
+export const URL_BACKOFFICE = (import.meta.env.VITE_BACKOFFICE_URL || '').replace(/\/$/, '');
 
 export const DEPARTAMENTOS = [
   'Amazonas', 'Áncash', 'Apurímac', 'Arequipa', 'Ayacucho',

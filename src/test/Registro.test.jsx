@@ -106,7 +106,11 @@ describe('Registro Page (P-04)', () => {
     );
 
     const user = userEvent.setup();
-    expect(screen.getByTestId('input-patrocinador')).toHaveValue('MG00012');
+    const inputPatrocinador = screen.getByTestId('input-patrocinador');
+    expect(inputPatrocinador).toHaveValue('MG00012');
+    expect(inputPatrocinador).toHaveAttribute('readonly');
+    expect(inputPatrocinador).not.toBeDisabled();
+    expect(screen.getByTestId('mensaje-patrocinador-bloqueado')).toHaveTextContent('Te invitó el socio MG00012');
 
     await user.type(screen.getByTestId('input-nombre'), 'Pedro Gomez');
     await user.type(screen.getByTestId('input-dni'), '12345678');
@@ -182,7 +186,16 @@ describe('Registro Page (P-04)', () => {
     );
 
     const user = userEvent.setup();
-    expect(screen.getByTestId('input-patrocinador')).toHaveValue('');
+    const inputPatrocinador = screen.getByTestId('input-patrocinador');
+    expect(inputPatrocinador).toHaveValue('');
+    expect(inputPatrocinador).not.toHaveAttribute('readonly');
+    expect(inputPatrocinador).not.toBeDisabled();
+    expect(screen.queryByTestId('mensaje-patrocinador-bloqueado')).not.toBeInTheDocument();
+
+    // Puede escribir un código manualmente
+    await user.type(inputPatrocinador, 'MG-MANUAL');
+    expect(inputPatrocinador).toHaveValue('MG-MANUAL');
+    await user.clear(inputPatrocinador);
 
     await user.type(screen.getByTestId('input-nombre'), 'Ana Torres');
     await user.type(screen.getByTestId('input-dni'), '87654321');

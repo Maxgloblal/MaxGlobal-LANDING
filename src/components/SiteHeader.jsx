@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link, NavLink, useSearchParams } from 'react-router-dom';
 import { MessageCircle, Menu, X } from 'lucide-react';
-import { EMPRESA } from '../config';
+import { EMPRESA, URL_BACKOFFICE } from '../config';
 
 export default function SiteHeader({ active, refName }) {
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -196,6 +196,19 @@ export default function SiteHeader({ active, refName }) {
             </a>
           </div>
 
+          {/* Botón Ingresar (Secundario, no compite con Afíliate) */}
+          {Boolean(URL_BACKOFFICE) && (
+            <a
+              href={URL_BACKOFFICE}
+              target="_blank"
+              rel="noopener noreferrer"
+              data-testid="head-ingresar"
+              className="mg-head-ingresar"
+            >
+              Ingresar
+            </a>
+          )}
+
           {/* Botón Afíliate (Visible en escritorio y móvil sin abrir el menú) */}
           <Link
             to="/registro"
@@ -299,6 +312,19 @@ export default function SiteHeader({ active, refName }) {
             Afíliate
           </NavLink>
 
+          {Boolean(URL_BACKOFFICE) && (
+            <a
+              href={URL_BACKOFFICE}
+              target="_blank"
+              rel="noopener noreferrer"
+              data-testid="mobile-nav-ingresar"
+              onClick={() => setMobileOpen(false)}
+              style={mobileNavLinkStyle({ isActive: false })}
+            >
+              Ingresar
+            </a>
+          )}
+
           <a
             href={waUrl}
             target="_blank"
@@ -333,6 +359,27 @@ export default function SiteHeader({ active, refName }) {
           from { opacity: 0; transform: translateY(-8px); }
           to { opacity: 1; transform: translateY(0); }
         }
+        .mg-head-ingresar {
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+          background-color: transparent;
+          color: var(--text-strong);
+          border: 1px solid var(--border-subtle);
+          padding: 9px 18px;
+          border-radius: var(--r-pill);
+          font-size: var(--fs-sm);
+          font-family: var(--font-subtitle);
+          font-weight: 600;
+          text-decoration: none;
+          transition: var(--t-control);
+          white-space: nowrap;
+        }
+        .mg-head-ingresar:hover {
+          background-color: var(--surface-sunken);
+          border-color: var(--border-strong, var(--text-muted));
+          color: var(--text-strong);
+        }
         .mg-head-afiliate {
           display: inline-flex;
           align-items: center;
@@ -358,7 +405,7 @@ export default function SiteHeader({ active, refName }) {
         }
         @media (max-width: 900px) {
           .mg-head-inner { height: 64px !important; }
-          .mg-head-nav, .mg-head-wa, .mg-head-ref { display: none !important; }
+          .mg-head-nav, .mg-head-wa, .mg-head-ref, .mg-head-ingresar { display: none !important; }
           .mg-head-burger { display: inline-flex !important; }
           .mg-head-afiliate {
             padding: 8px 16px !important;

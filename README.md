@@ -8,6 +8,38 @@ Web pública oficial de Max Global Corporation.
 - Vite
 - React Router
 
+## Variables de entorno · leer antes de arrancar
+
+Sin estas dos variables **nada funciona, y falla a propósito**:
+
+```env
+VITE_SUPABASE_URL=https://<PROJECT_REF>.supabase.co
+VITE_SUPABASE_ANON_KEY=<ANON_KEY>
+```
+
+Copia `.env.example` como `.env.local` y rellénalo. Para el día a día se trabaja
+contra la **demo**, nunca contra producción.
+
+```
+   DEMO         utlohnidkuvxqppmoevj    509 socios de prueba
+   PRODUCCIÓN   xkiwnxoferdfapezcwoq    datos reales
+```
+
+> [!CAUTION]
+> **No hay valores de respaldo, y es intencional.** Antes existía un respaldo
+> que apuntaba a la demo, así que un despliegue mal configurado salía verde y
+> escribía en la base equivocada sin avisar (TAREA-41). Ahora:
+>
+> - `npm run build` **falla** con mensaje explícito si faltan las variables
+> - la web **no carga** y muestra un error de configuración en pantalla
+>
+> Si alguna vez vuelves a poner un respaldo "por si acaso", aunque apunte a
+> producción, estás reintroduciendo el mismo bug con otro valor.
+
+Estas variables se leen **en el momento del build**, no en el navegador: el
+catálogo se genera durante `npm run build`. Si las cambias en Vercel, hay que
+**volver a desplegar**; guardarlas no basta.
+
 ## Arranque y comandos
 
 Instalación de dependencias:
@@ -92,11 +124,37 @@ El sitio está configurado para desplegarse en Vercel mediante el archivo de con
 
 Cualquier cambio de información debe realizarse en su respectiva fuente oficial para evitar discrepancias:
 
-- Precios y productos: `src/config.js` (constante `PRODUCTOS`). El precio declarado es el precio de venta al público; el precio de socio se calcula de manera automática según las reglas de negocio.
+- Precios y productos: **no se tocan aquí.** Desde la TAREA-23 el catálogo sale de la base de datos. Se editan en el backoffice, pantalla **P-32 · Productos**, y aparecen en la web al siguiente despliegue. El archivo `src/data/productos-generado.json` lo escribe `scripts/generar-catalogo.mjs` en cada `npm run dev` y `npm run build`: **es un archivo generado y no se edita a mano.** El precio guardado es el de venta al público; el de socio se calcula solo según las reglas de negocio.
 - Cuentas bancarias: `src/config.js` (constante `EMPRESA.cuentasBancarias`). La página de confirmación y las pruebas leen directamente de este arreglo. Si se añade, modifica o elimina una cuenta bancaria, se refleja automáticamente en todo el sistema.
 - Packs de afiliación: `src/config.js` (constante `PACKS`). Contiene nombres, precios, beneficios y configuraciones de cada pack.
 - Datos institucionales (RUC, razón social, teléfono, WhatsApp): `src/config.js` (objeto `EMPRESA`).
 - Textos legales y normativos: Archivos en `src/pages/` (`TerminosCondiciones.jsx`, `PoliticaPrivacidad.jsx`, `LibroReclamaciones.jsx`).
+
+## El formulario de registro
+
+El formulario de `/registro` no escribe en la base directamente. Envía los datos
+a una **Edge Function** llamada `registro-afiliacion`, que valida, aplica límite
+por IP, resuelve el patrocinador del `?ref=` e inserta la solicitud.
+
+```
+   La landing la LLAMA      src/config.js  ·  URL_REGISTRO_EDGE_FUNCTION
+   El backoffice la CONTIENE
+     SISTEMA MOTOR Y BACKOFFICE/supabase/functions/registro-afiliacion/
+```
+
+> [!CAUTION]
+> **Esa función se despliega aparte y no la crea el instalador SQL.** El 16/09
+> producción se quedó sin ella y todo el que intentaba afiliarse desde la web
+> recibía `Failed to fetch`. Si ves ese error, lo primero que hay que mirar es
+> si la función existe en el proyecto al que apuntan las variables:
+>
+> ```bash
+> supabase functions list --project-ref <PROJECT_REF>
+> ```
+>
+> Tiene que estar `ACTIVE` y con `verify_jwt: false`. Quien se registra es un
+> visitante anónimo sin cuenta: con la verificación activada, se rechazan todas
+> las solicitudes legítimas.
 
 ## Nota del prerenderizado
 

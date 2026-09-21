@@ -1,5 +1,5 @@
-import React from 'react';
-import { Check, MessageCircle } from 'lucide-react';
+import React, { useState } from 'react';
+import { Check, MessageCircle, Copy } from 'lucide-react';
 import { EMPRESA } from '../config';
 
 export default function Confirmacion() {
@@ -7,6 +7,29 @@ export default function Confirmacion() {
   const storedWaMsg = typeof window !== 'undefined' ? sessionStorage.getItem('mg_wa_msg') : null;
   const initialMsg = storedWaMsg ? `${storedWaMsg}\n\nAdjunto mi voucher de pago.` : waVoucherMsg;
   const waUrl = `https://wa.me/${EMPRESA.whatsapp}?text=${encodeURIComponent(initialMsg)}`;
+
+  // Estado para feedback de copia de cuentas bancarias (RF-172)
+  const [copiadoId, setCopiadoId] = useState(null);
+
+  const handleCopiar = async (texto, id) => {
+    if (!texto) return;
+    try {
+      if (navigator?.clipboard?.writeText) {
+        await navigator.clipboard.writeText(texto);
+      } else {
+        const input = document.createElement('input');
+        input.value = texto;
+        document.body.appendChild(input);
+        input.select();
+        document.execCommand('copy');
+        document.body.removeChild(input);
+      }
+      setCopiadoId(id);
+      setTimeout(() => setCopiadoId((curr) => (curr === id ? null : curr)), 2500);
+    } catch (err) {
+      console.error('Error al copiar:', err);
+    }
+  };
 
   return (
     <div style={{ backgroundColor: 'var(--surface-page)' }}>
@@ -110,11 +133,55 @@ export default function Confirmacion() {
                 </div>
                 <div className="mg-dato">
                   <span>Número de Cuenta</span>
-                  <span style={{ userSelect: 'all' }}>{cuenta.cuenta}</span>
+                  <span className="mg-dato-valor-copiar">
+                    <span style={{ userSelect: 'all' }}>{cuenta.cuenta}</span>
+                    <button
+                      type="button"
+                      onClick={() => handleCopiar(cuenta.cuenta, `cuenta-${idx}`)}
+                      data-testid={`btn-copiar-cuenta-${idx}`}
+                      title="Copiar número de cuenta"
+                      aria-label="Copiar número de cuenta"
+                      className={`mg-btn-copiar ${copiadoId === `cuenta-${idx}` ? 'mg-btn-copiado' : ''}`}
+                    >
+                      {copiadoId === `cuenta-${idx}` ? (
+                        <>
+                          <Check size={13} strokeWidth={2.5} />
+                          <span>¡Copiado!</span>
+                        </>
+                      ) : (
+                        <>
+                          <Copy size={13} />
+                          <span>Copiar</span>
+                        </>
+                      )}
+                    </button>
+                  </span>
                 </div>
                 <div className="mg-dato">
                   <span>CCI (Interbancario)</span>
-                  <span style={{ userSelect: 'all' }}>{cuenta.cci}</span>
+                  <span className="mg-dato-valor-copiar">
+                    <span style={{ userSelect: 'all' }}>{cuenta.cci}</span>
+                    <button
+                      type="button"
+                      onClick={() => handleCopiar(cuenta.cci, `cci-${idx}`)}
+                      data-testid={`btn-copiar-cci-${idx}`}
+                      title="Copiar CCI interbancario"
+                      aria-label="Copiar CCI interbancario"
+                      className={`mg-btn-copiar ${copiadoId === `cci-${idx}` ? 'mg-btn-copiado' : ''}`}
+                    >
+                      {copiadoId === `cci-${idx}` ? (
+                        <>
+                          <Check size={13} strokeWidth={2.5} />
+                          <span>¡Copiado!</span>
+                        </>
+                      ) : (
+                        <>
+                          <Copy size={13} />
+                          <span>Copiar</span>
+                        </>
+                      )}
+                    </button>
+                  </span>
                 </div>
                 <div className="mg-dato" style={idx === 0 ? undefined : { borderBottom: 'none' }}>
                   <span>Titular</span>
@@ -275,6 +342,37 @@ export default function Confirmacion() {
         .mg-dato > span:last-child {
           color: var(--text-strong);
           font-weight: 700;
+        }
+        .mg-dato-valor-copiar {
+          display: inline-flex;
+          align-items: center;
+          gap: 8px;
+          flex-wrap: wrap;
+        }
+        .mg-btn-copiar {
+          display: inline-flex;
+          align-items: center;
+          gap: 4px;
+          background: var(--gold-50, #FDF9F0);
+          border: 1px solid var(--border-subtle, #E5E7EB);
+          color: var(--text-body, #374151);
+          padding: 3px 8px;
+          border-radius: var(--r-sm, 4px);
+          font-family: var(--font-body);
+          font-size: 12px;
+          font-weight: 600;
+          cursor: pointer;
+          transition: all 0.15s ease;
+        }
+        .mg-btn-copiar:hover {
+          background: var(--surface-gold, #F5E6CC);
+          border-color: var(--brand-gold, #D1AD68);
+          color: var(--text-strong, #111827);
+        }
+        .mg-btn-copiar.mg-btn-copiado {
+          background: var(--surface-green, #E8F8EE);
+          border-color: var(--brand-green, #1BA741);
+          color: var(--brand-green, #1BA741);
         }
         @media (max-width: 768px) {
           .mg-conf-grid {

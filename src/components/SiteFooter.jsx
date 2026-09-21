@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { BookOpen } from 'lucide-react';
-import { EMPRESA } from '../config';
+import { EMPRESA, URL_BACKOFFICE } from '../config';
 
 export default function SiteFooter() {
   const empresaInfo = `${EMPRESA.razonSocial !== 'PENDIENTE' ? EMPRESA.razonSocial : '[Razón social]'} · RUC ${EMPRESA.ruc !== 'PENDIENTE' ? EMPRESA.ruc : '[número]'} · ${EMPRESA.domicilio !== 'PENDIENTE' ? EMPRESA.domicilio : '[domicilio fiscal]'}`;
@@ -85,6 +85,17 @@ export default function SiteFooter() {
             <Link to="/registro" style={linkStyle}>
               Registro
             </Link>
+            {Boolean(URL_BACKOFFICE) && (
+              <a
+                href={URL_BACKOFFICE}
+                target="_blank"
+                rel="noopener noreferrer"
+                data-testid="footer-link-ingresar"
+                style={linkStyle}
+              >
+                Ingresar
+              </a>
+            )}
           </div>
 
           {/* Columna 4: Legal */}

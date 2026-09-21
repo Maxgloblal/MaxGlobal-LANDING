@@ -45,4 +45,33 @@ describe('Confirmacion Page (P-05)', () => {
     expect(screen.getByText('Te mandamos el número de guía de transporte')).toBeInTheDocument();
     expect(screen.getByText('Recibes tus accesos oficiales al sistema')).toBeInTheDocument();
   });
+
+  it('renders copy buttons for bank accounts and handles copying (RF-172)', async () => {
+    const writeTextMock = vi.fn().mockResolvedValue();
+    Object.assign(navigator, {
+      clipboard: {
+        writeText: writeTextMock,
+      },
+    });
+
+    const { fireEvent } = await import('@testing-library/react');
+
+    render(
+      <MemoryRouter>
+        <Confirmacion />
+      </MemoryRouter>
+    );
+
+    const btnCopiarCuenta0 = screen.getByTestId('btn-copiar-cuenta-0');
+    expect(btnCopiarCuenta0).toBeInTheDocument();
+    expect(btnCopiarCuenta0).toHaveTextContent(/copiar/i);
+
+    const btnCopiarCci0 = screen.getByTestId('btn-copiar-cci-0');
+    expect(btnCopiarCci0).toBeInTheDocument();
+
+    fireEvent.click(btnCopiarCuenta0);
+    expect(writeTextMock).toHaveBeenCalledWith(EMPRESA.cuentasBancarias[0].cuenta);
+    expect(await screen.findByText(/¡copiado!/i)).toBeInTheDocument();
+  });
 });
+

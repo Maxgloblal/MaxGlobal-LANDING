@@ -1,9 +1,10 @@
 import React from 'react';
 import { describe, it, expect, beforeEach } from 'vitest';
 import { render, screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import { MemoryRouter } from 'react-router-dom';
 import SiteHeader from '../components/SiteHeader';
-import { EMPRESA } from '../config';
+import { EMPRESA, URL_BACKOFFICE } from '../config';
 
 describe('SiteHeader Component', () => {
   beforeEach(() => {
@@ -82,5 +83,38 @@ describe('SiteHeader Component', () => {
     expect(btn).toBeInTheDocument();
     // El drawer del menu movil no esta abierto
     expect(screen.queryByTestId('mobile-menu')).not.toBeInTheDocument();
+  });
+
+  it('renders secondary Ingresar button in desktop header', () => {
+    render(
+      <MemoryRouter>
+        <SiteHeader />
+      </MemoryRouter>
+    );
+
+    const btn = screen.getByTestId('head-ingresar');
+    expect(btn).toBeInTheDocument();
+    expect(btn).toHaveTextContent('Ingresar');
+    expect(btn).toHaveAttribute('target', '_blank');
+    expect(btn).toHaveAttribute('rel', 'noopener noreferrer');
+    expect(btn).toHaveAttribute('href', URL_BACKOFFICE);
+  });
+
+  it('renders Ingresar link in mobile menu drawer', async () => {
+    render(
+      <MemoryRouter>
+        <SiteHeader />
+      </MemoryRouter>
+    );
+
+    // Abrir menú móvil
+    const burger = screen.getByTestId('nav-burger');
+    await userEvent.setup().click(burger);
+
+    const mobileLink = screen.getByTestId('mobile-nav-ingresar');
+    expect(mobileLink).toBeInTheDocument();
+    expect(mobileLink).toHaveTextContent('Ingresar');
+    expect(mobileLink).toHaveAttribute('target', '_blank');
+    expect(mobileLink).toHaveAttribute('href', URL_BACKOFFICE);
   });
 });

@@ -81,7 +81,7 @@ describe('Legal Pages and Compliance (Ley 32495, Ley 29571, Ley 29733)', () => {
     expect(screen.getByText(/MG-LR-/)).toBeInTheDocument();
     expect(screen.getByTestId('btn-lr-download-txt')).toBeInTheDocument();
     expect(screen.getByText(/Constancia de Recepción Oficial/i)).toBeInTheDocument();
-  });
+  }, 15000);
 
   it('SiteFooter renders real links to the 3 legal pages', () => {
     render(

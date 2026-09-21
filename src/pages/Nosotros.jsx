@@ -1,11 +1,29 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { BookOpen, MessageCircle, Mail, MapPin, Sparkles, Award, ShieldCheck, HeartHandshake } from 'lucide-react';
-import { EMPRESA } from '../config';
+import { EMPRESA, INSTITUCIONAL } from '../config';
 
 export default function Nosotros() {
   const waContactMsg = 'Hola, quiero contactar con Max Global.';
   const waUrl = `https://wa.me/${EMPRESA.whatsapp}?text=${encodeURIComponent(waContactMsg)}`;
+
+  // Misión, Visión y Valores desde configuración centralizada (RF-180) con respaldos por defecto
+  const mision = INSTITUCIONAL?.mision || 'Nuestra misión es transformar vidas en Latinoamérica a través de productos naturales de alta calidad y un modelo de negocio que impulsa el crecimiento personal, financiero y empresarial de las familias mediante franquicias y centros de bienestar.';
+  const vision = INSTITUCIONAL?.vision || 'Ser la empresa líder en bienestar integral y emprendimiento de Latinoamérica, reconocida por la excelencia de nuestros productos, el impacto positivo en el desarrollo financiero de las personas y una sólida red de franquicias que transformen miles de familias.';
+  const valores = INSTITUCIONAL?.valores && INSTITUCIONAL.valores.length > 0 ? INSTITUCIONAL.valores : [
+    {
+      titulo: 'Calidad y Nutrición',
+      descripcion: 'Insumos naturales y superalimentos como la moringa en presentaciones prácticas de consumo diario.',
+    },
+    {
+      titulo: 'Oportunidad Real',
+      descripcion: 'Un modelo de distribución transparente con márgenes y comisiones claras desde el primer día.',
+    },
+    {
+      titulo: 'Comercio Formal',
+      descripcion: 'Emisión de comprobantes, registros formales y respaldo corporativo en cada operación.',
+    },
+  ];
 
   return (
     <div style={{ backgroundColor: 'var(--surface-page)' }}>
@@ -40,7 +58,7 @@ export default function Nosotros() {
 
       {/* 2. Misión y Visión — TEXTO OFICIAL del deck institucional
            Fuente: 99-FUENTES-ORIGINALES/MAX GLOBAL Corporation (4).pdf, pág. 2
-           NO modificar sin autorización del cliente. */}
+           Configurado en config.js (RF-180) */}
       <section style={{ paddingBottom: 'var(--sp-12)' }}>
         <div
           className="mg-container mg-nos-grid"
@@ -67,10 +85,7 @@ export default function Nosotros() {
                 color: 'var(--text-body)',
               }}
             >
-              Nuestra misión es transformar vidas en Latinoamérica a través de productos
-              naturales de alta calidad y un modelo de negocio que impulsa el crecimiento
-              personal, financiero y empresarial de las familias mediante franquicias y
-              centros de bienestar.
+              {mision}
             </p>
           </div>
 
@@ -95,10 +110,7 @@ export default function Nosotros() {
                 color: 'var(--text-body)',
               }}
             >
-              Ser la empresa líder en bienestar integral y emprendimiento de Latinoamérica,
-              reconocida por la excelencia de nuestros productos, el impacto positivo en el
-              desarrollo financiero de las personas y una sólida red de franquicias que
-              transformen miles de familias.
+              {vision}
             </p>
           </div>
         </div>
@@ -213,24 +225,14 @@ export default function Nosotros() {
                   gap: 'var(--sp-4)',
                 }}
               >
-                <li style={{ display: 'flex', gap: '10px', alignItems: 'flex-start' }}>
-                  <span style={{ color: 'var(--brand-gold)', fontWeight: 700, marginTop: '2px' }}>&bull;</span>
-                  <div style={{ fontSize: 'var(--fs-sm)', lineHeight: 'var(--lh-normal)', color: 'var(--text-body)' }}>
-                    <strong style={{ color: 'var(--text-strong)' }}>Calidad y Nutrición:</strong> Insumos naturales y superalimentos como la moringa en presentaciones prácticas de consumo diario.
-                  </div>
-                </li>
-                <li style={{ display: 'flex', gap: '10px', alignItems: 'flex-start' }}>
-                  <span style={{ color: 'var(--brand-gold)', fontWeight: 700, marginTop: '2px' }}>&bull;</span>
-                  <div style={{ fontSize: 'var(--fs-sm)', lineHeight: 'var(--lh-normal)', color: 'var(--text-body)' }}>
-                    <strong style={{ color: 'var(--text-strong)' }}>Oportunidad Real:</strong> Un modelo de distribución transparente con márgenes y comisiones claras desde el primer día.
-                  </div>
-                </li>
-                <li style={{ display: 'flex', gap: '10px', alignItems: 'flex-start' }}>
-                  <span style={{ color: 'var(--brand-gold)', fontWeight: 700, marginTop: '2px' }}>&bull;</span>
-                  <div style={{ fontSize: 'var(--fs-sm)', lineHeight: 'var(--lh-normal)', color: 'var(--text-body)' }}>
-                    <strong style={{ color: 'var(--text-strong)' }}>Comercio Formal:</strong> Emisión de comprobantes, registros formales y respaldo corporativo en cada operación.
-                  </div>
-                </li>
+                {valores.map((v, idx) => (
+                  <li key={idx} style={{ display: 'flex', gap: '10px', alignItems: 'flex-start' }}>
+                    <span style={{ color: 'var(--brand-gold)', fontWeight: 700, marginTop: '2px' }}>&bull;</span>
+                    <div style={{ fontSize: 'var(--fs-sm)', lineHeight: 'var(--lh-normal)', color: 'var(--text-body)' }}>
+                      <strong style={{ color: 'var(--text-strong)' }}>{v.titulo}:</strong> {v.descripcion}
+                    </div>
+                  </li>
+                ))}
               </ul>
             </div>
           </div>
