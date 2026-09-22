@@ -5,6 +5,19 @@ import { fileURLToPath } from 'url';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
+// Cargar variables de entorno si no están definidas en process.env
+if (!process.env.VITE_SUPABASE_URL || !process.env.VITE_SUPABASE_ANON_KEY) {
+  for (const envFile of ['.env.local', '.env', '.env.produccion']) {
+    const envPath = path.resolve(__dirname, '..', envFile);
+    if (fs.existsSync(envPath) && typeof process.loadEnvFile === 'function') {
+      try {
+        process.loadEnvFile(envPath);
+        if (process.env.VITE_SUPABASE_URL && process.env.VITE_SUPABASE_ANON_KEY) break;
+      } catch (_) {}
+    }
+  }
+}
+
 const SUPABASE_URL = (process.env.VITE_SUPABASE_URL || '').replace(/\/$/, '');
 const SUPABASE_ANON_KEY = process.env.VITE_SUPABASE_ANON_KEY;
 
