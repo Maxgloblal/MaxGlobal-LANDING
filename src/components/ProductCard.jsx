@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { ShoppingBag, Plus, Minus, Leaf, ShieldCheck } from 'lucide-react';
+import { ShoppingBag, Plus, Minus, Leaf, ShieldCheck, Share2 } from 'lucide-react';
 import { EMPRESA } from '../config';
 import { precioSocio, mejorDescuento } from '../data/catalogo';
 import { useCart } from '../context/CartContext';
+import ShareModal from './ShareModal';
 
 export default function ProductCard({
   id,
@@ -24,6 +25,7 @@ export default function ProductCard({
 }) {
   const [refCode, setRefCode] = useState('');
   const [imgError, setImgError] = useState(false);
+  const [isShareOpen, setIsShareOpen] = useState(false);
 
   let cart = null;
   try {
@@ -84,6 +86,52 @@ export default function ProductCard({
         e.currentTarget.style.borderColor = 'var(--border-subtle)';
       }}
     >
+      {/* Botón rápido para compartir producto */}
+      <button
+        type="button"
+        onClick={(e) => {
+          e.preventDefault();
+          e.stopPropagation();
+          setIsShareOpen(true);
+        }}
+        data-testid={`btn-card-share-${id}`}
+        aria-label={`Compartir ${displayName}`}
+        title="Compartir producto"
+        style={{
+          position: 'absolute',
+          top: 'clamp(16px, 3vw, 24px)',
+          right: 'clamp(16px, 3vw, 24px)',
+          zIndex: 4,
+          width: '32px',
+          height: '32px',
+          borderRadius: 'var(--r-circle)',
+          backgroundColor: 'rgba(255, 255, 255, 0.92)',
+          backdropFilter: 'blur(4px)',
+          border: '1px solid var(--border-subtle)',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          color: 'var(--text-muted)',
+          cursor: 'pointer',
+          transition: 'all var(--dur-fast) var(--ease-out)',
+          boxShadow: '0 2px 6px rgba(0,0,0,0.08)',
+        }}
+        onMouseEnter={(e) => {
+          e.currentTarget.style.color = 'var(--gold-800)';
+          e.currentTarget.style.borderColor = 'var(--brand-gold)';
+          e.currentTarget.style.backgroundColor = '#FFFFFF';
+          e.currentTarget.style.transform = 'scale(1.08)';
+        }}
+        onMouseLeave={(e) => {
+          e.currentTarget.style.color = 'var(--text-muted)';
+          e.currentTarget.style.borderColor = 'var(--border-subtle)';
+          e.currentTarget.style.backgroundColor = 'rgba(255, 255, 255, 0.92)';
+          e.currentTarget.style.transform = 'scale(1)';
+        }}
+      >
+        <Share2 size={15} />
+      </button>
+
       {/* Imagen del Producto con Enlace al Detalle */}
       <Link
         to={`/productos/${id}`}
@@ -406,6 +454,20 @@ export default function ProductCard({
           </button>
         </div>
       )}
+
+      {/* Modal de Compartir */}
+      <ShareModal
+        isOpen={isShareOpen}
+        onClose={() => setIsShareOpen(false)}
+        producto={{
+          id,
+          nombre: displayName,
+          precioPublico: numericPrice,
+          presentacion: displayPresentation,
+          descripcion: displayDesc,
+          imagen: displayImage,
+        }}
+      />
     </div>
   );
 }

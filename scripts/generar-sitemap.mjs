@@ -73,7 +73,14 @@ export function generarSitemap() {
   const sitemapDist = path.join(DIST_DIR, 'sitemap.xml');
   fs.writeFileSync(sitemapDist, xml, 'utf8');
 
-  console.log(`✓ [generar-sitemap] Sitemap dinámico generado con éxito: ${todasLasRutas.length} URLs en ${sitemapDist}`);
+  // Asegurar que public/sitemap.xml también exista para desarrollo y control de versiones
+  const publicDir = path.resolve(__dirname, '../public');
+  if (fs.existsSync(publicDir)) {
+    const sitemapPublic = path.join(publicDir, 'sitemap.xml');
+    fs.writeFileSync(sitemapPublic, xml, 'utf8');
+  }
+
+  console.log(`✓ [generar-sitemap] Sitemap dinámico generado con éxito: ${todasLasRutas.length} URLs en dist/sitemap.xml y public/sitemap.xml`);
   console.log(`   · Rutas fijas: ${rutasFijas.length}`);
   console.log(`   · Fichas de productos activos: ${rutasProductos.length}`);
 

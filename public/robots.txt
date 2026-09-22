@@ -5,3 +5,7 @@ Disallow: /confirmacion
 Disallow: /libro-de-reclamaciones
 
 Sitemap: https://maxglobaloficial.com/sitemap.xml
+
+# LLM & AI Agents Index
+# https://maxglobaloficial.com/llms.txt
+# https://maxglobaloficial.com/llms.md

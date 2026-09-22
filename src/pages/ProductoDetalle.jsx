@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
-import { ChevronRight, ShoppingBag, MessageCircle, Plus, Minus, Leaf, CheckCircle2 } from 'lucide-react';
+import { ChevronRight, ShoppingBag, MessageCircle, Plus, Minus, Leaf, CheckCircle2, Share2 } from 'lucide-react';
 import { getProducto, getProductosRelacionados, mejorDescuento, precioSocio } from '../data/catalogo';
 import { EMPRESA } from '../config';
 import { useCart } from '../context/CartContext';
 import ProductCard from '../components/ProductCard';
+import ShareModal from '../components/ShareModal';
 import NoEncontrado from './NoEncontrado';
 
 export default function ProductoDetalle() {
@@ -18,6 +19,7 @@ export default function ProductoDetalle() {
   const [cantidad, setCantidad] = useState(1);
   const [imgError, setImgError] = useState(false);
   const [refCode, setRefCode] = useState('');
+  const [isShareOpen, setIsShareOpen] = useState(false);
 
   let cart = null;
   try {
@@ -429,7 +431,52 @@ export default function ProductoDetalle() {
                     <MessageCircle size={20} />
                     <span>Pedir por WhatsApp</span>
                   </a>
+
+                  {/* Botón Compartir Producto */}
+                  <button
+                    onClick={() => setIsShareOpen(true)}
+                    data-testid="detail-btn-share"
+                    aria-label={`Compartir ${producto.nombre}`}
+                    style={{
+                      width: '100%',
+                      flex: '1 1 100%',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      gap: '8px',
+                      backgroundColor: '#FFFFFF',
+                      color: 'var(--text-strong)',
+                      fontFamily: 'var(--font-subtitle)',
+                      fontSize: 'var(--fs-sm)',
+                      fontWeight: 700,
+                      padding: '12px 20px',
+                      borderRadius: 'var(--r-sm)',
+                      border: '1px solid var(--border-subtle)',
+                      cursor: 'pointer',
+                      transition: 'all var(--dur-fast) var(--ease-out)',
+                    }}
+                    onMouseEnter={(e) => {
+                      e.currentTarget.style.borderColor = 'var(--brand-gold)';
+                      e.currentTarget.style.backgroundColor = 'var(--surface-gold)';
+                      e.currentTarget.style.color = 'var(--gold-800)';
+                    }}
+                    onMouseLeave={(e) => {
+                      e.currentTarget.style.borderColor = 'var(--border-subtle)';
+                      e.currentTarget.style.backgroundColor = '#FFFFFF';
+                      e.currentTarget.style.color = 'var(--text-strong)';
+                    }}
+                  >
+                    <Share2 size={18} color="var(--brand-gold)" />
+                    <span>Compartir este producto</span>
+                  </button>
                 </div>
+
+                {/* Modal de Compartir */}
+                <ShareModal
+                  isOpen={isShareOpen}
+                  onClose={() => setIsShareOpen(false)}
+                  producto={producto}
+                />
               </div>
             </div>
           </div>

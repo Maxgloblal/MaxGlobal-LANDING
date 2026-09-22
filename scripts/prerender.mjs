@@ -168,6 +168,14 @@ function prerender() {
       `<meta name="twitter:image" content="${escapeHtml(item.ogImage)}" />`
     );
 
+    // 5.1. Control de robots para páginas privadas/no indexables
+    if (['/registro', '/confirmacion', '/libro-de-reclamaciones'].includes(item.ruta)) {
+      html = html.replace(
+        /<meta\s+name=["']robots["']\s+content=["'][^"']*["']\s*\/?>/i,
+        '<meta name="robots" content="noindex, nofollow" />'
+      );
+    }
+
     // 6. Inyectar Schema Product únicamente en fichas de producto
     if (item.producto) {
       const p = item.producto;
