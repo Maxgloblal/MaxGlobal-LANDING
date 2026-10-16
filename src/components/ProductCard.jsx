@@ -292,7 +292,13 @@ export default function ProductCard({
             color: 'var(--text-body)',
             marginBottom: 'var(--sp-4)',
             flexGrow: 1,
+            display: '-webkit-box',
+            WebkitLineClamp: 3,
+            WebkitBoxOrient: 'vertical',
+            overflow: 'hidden',
+            textOverflow: 'ellipsis',
           }}
+          title={displayDesc}
         >
           {displayDesc}
         </p>

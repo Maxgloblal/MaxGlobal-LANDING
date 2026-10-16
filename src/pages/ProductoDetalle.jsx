@@ -250,6 +250,7 @@ export default function ProductoDetalle() {
                   lineHeight: 'var(--lh-relaxed)',
                   color: 'var(--text-body)',
                   marginBottom: 'var(--sp-6)',
+                  whiteSpace: 'pre-line',
                 }}
               >
                 {producto.descripcion}
