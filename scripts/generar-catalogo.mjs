@@ -97,7 +97,9 @@ export async function generarCatalogo() {
   }
 
   fs.writeFileSync(TARGET_FILE, JSON.stringify(productosMapeados, null, 2) + '\n', 'utf8');
-  console.log(`✓ [generar-catalogo] Catálogo generado con éxito: ${productosMapeados.length} productos activos en ${TARGET_FILE}`);
+  const targetJs = path.resolve(__dirname, '../src/data/productos-generado.js');
+  fs.writeFileSync(targetJs, 'export default ' + JSON.stringify(productosMapeados, null, 2) + ';\n', 'utf8');
+  console.log(`✓ [generar-catalogo] Catálogo generado con éxito: ${productosMapeados.length} productos activos en ${TARGET_FILE} y ${targetJs}`);
   return productosMapeados;
 }
 

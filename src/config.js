@@ -58,12 +58,16 @@ export const INSTITUCIONAL = {
   ],
 };
 
+export { default as PRODUCTOS } from './data/productos-generado.js';
+
 // Endpoint oficial de la Edge Function para recepción de solicitudes públicas de afiliación
-const SUPABASE_URL = (import.meta.env.VITE_SUPABASE_URL || '').replace(/\/$/, '');
+const _envUrl = (typeof import.meta !== 'undefined' && import.meta?.env?.VITE_SUPABASE_URL) || (typeof process !== 'undefined' && process.env?.VITE_SUPABASE_URL) || '';
+const SUPABASE_URL = _envUrl.replace(/\/$/, '');
 export const URL_REGISTRO_EDGE_FUNCTION = `${SUPABASE_URL}/functions/v1/registro-afiliacion`;
 
 // URL oficial de la Oficina Virtual / Backoffice para socios
-export const URL_BACKOFFICE = (import.meta.env.VITE_BACKOFFICE_URL || '').replace(/\/$/, '');
+const _envBackoffice = (typeof import.meta !== 'undefined' && import.meta?.env?.VITE_BACKOFFICE_URL) || (typeof process !== 'undefined' && process.env?.VITE_BACKOFFICE_URL) || '';
+export const URL_BACKOFFICE = _envBackoffice.replace(/\/$/, '');
 
 export const DEPARTAMENTOS = [
   'Amazonas', 'Áncash', 'Apurímac', 'Arequipa', 'Ayacucho',
