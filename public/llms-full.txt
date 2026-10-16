@@ -135,7 +135,7 @@ Los packs permiten iniciar el negocio de distribución independiente con diferen
 
 | Pack | Inversión (S/.) | Productos Incluidos | Puntos Rango | Residual | Descuento Recompra | Beneficio Especial |
 |---|---|---|---|---|---|---|
-| **Kit Emprendedor** | S/. 120 | 1 producto | 0 pts | 0 niveles | 40% | Acceso inicial, bono patrocinio S/. 50 |
+| **Kit Emprendedor** | S/. 120 | 1 producto o kit educativo | 0 pts | 0 niveles | 40% | Acceso inicial, bono patrocinio S/. 50 |
 | **Pack Ejecutivo** | S/. 360 | 4 productos | 70 pts | 5 niveles | 50% | 40% dto en pack, cubre activación mes 1 |
 | **Pack Gold** *(Más Elegido)* | S/. 1,200 | 13 productos | 150 pts | 10 niveles | 50% | 40% dto en pack, acceso al Bono Global |
 | **Pack Familiar** | S/. 4,000 | Armado libre | 400 pts | 10 niveles | 50% | 50% dto en armado de pedido, Bono Global |
