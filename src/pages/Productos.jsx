@@ -2,6 +2,7 @@ import React from 'react';
 import { useSearchParams, Link } from 'react-router-dom';
 import { Search, X, SlidersHorizontal, Filter, PackageSearch } from 'lucide-react';
 import ProductCard from '../components/ProductCard';
+import CatalogBanners from '../components/CatalogBanners';
 import { getProductos } from '../data/catalogo';
 
 // Normaliza texto eliminando acentos/diacríticos y pasando a minúsculas
@@ -64,6 +65,9 @@ export default function Productos() {
 
   return (
     <div style={{ backgroundColor: 'var(--surface-page)', minHeight: '85vh' }}>
+      {/* Banners Comerciales / Promocionales arriba del catálogo */}
+      <CatalogBanners updateFilters={updateFilters} />
+
       {/* 1. Hero Section */}
       <section
         style={{
@@ -378,7 +382,7 @@ export default function Productos() {
       </section>
 
       {/* 3. Grid de Productos o Estado Vacío */}
-      <section style={{ paddingBottom: 'var(--section-y)' }}>
+      <section id="catalogo-grilla" style={{ paddingBottom: 'var(--section-y)', scrollMarginTop: '90px' }}>
         <div className="mg-container">
           {sorted.length > 0 ? (
             <div data-testid="catalog-grid" className="mg-products-grid">

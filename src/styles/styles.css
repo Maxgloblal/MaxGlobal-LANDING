@@ -260,3 +260,25 @@ html, body {
 .mg-animate-float {
   animation: mg-float 4s ease-in-out infinite;
 }
+
+/* 10. Carrusel de Banners Comerciales */
+.mg-carousel-track {
+  display: flex;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.mg-carousel-track::-webkit-scrollbar {
+  display: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mg-carousel-track {
+    scroll-behavior: auto;
+  }
+}
+
