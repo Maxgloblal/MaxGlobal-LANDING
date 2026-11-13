@@ -323,7 +323,71 @@ html, body {
   }
 }
 
-/* 11. Barra de Chips de Categorías y Filtros Simplificados (TAREA-73) */
+/* 11. Cabecera del Catálogo y Beneficio Socio (Mobile-First UX) */
+.mg-catalog-header-section {
+  padding-top: var(--sp-6);
+  padding-bottom: var(--sp-2);
+  background-color: var(--surface-page);
+}
+
+.mg-catalog-header-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--sp-3);
+}
+
+.mg-catalog-title-group {
+  display: flex;
+  align-items: baseline;
+  gap: var(--sp-2);
+  flex-wrap: wrap;
+}
+
+.mg-catalog-title {
+  margin: 0;
+  font-size: clamp(1.4rem, 2.5vw, 1.85rem);
+  color: var(--text-strong);
+  line-height: var(--lh-tight);
+  letter-spacing: -0.02em;
+  font-weight: 800;
+}
+
+.mg-catalog-dot {
+  color: var(--text-muted);
+  font-size: var(--fs-sm);
+}
+
+.mg-catalog-count {
+  font-size: var(--fs-sm);
+  font-weight: 600;
+  color: var(--text-muted);
+}
+
+.mg-socio-benefit-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 14px;
+  background-color: var(--surface-green, #f0fdf4);
+  border: 1px solid var(--border-green, #bbf7d0);
+  border-radius: var(--r-pill);
+  font-size: var(--fs-xs);
+  color: var(--green-700, #15803d);
+  box-shadow: var(--shadow-xs);
+}
+
+.mg-socio-publico-hint {
+  color: var(--text-muted);
+}
+
+.mg-socio-highlight {
+  font-weight: 700;
+  color: var(--green-800, #166534);
+}
+
+/* 12. Barra de Chips de Categorías y Filtros Simplificados (TAREA-73) */
 .mg-category-chips-bar {
   display: flex;
   align-items: center;
@@ -393,17 +457,91 @@ html, body {
 }
 
 @media (max-width: 640px) {
-  .mg-filters-search-sort-row {
+  .mg-catalog-header-section {
+    padding-top: 14px;
+    padding-bottom: 4px;
+  }
+
+  .mg-catalog-header-row {
     flex-direction: column;
-    align-items: stretch;
-    gap: var(--sp-2);
+    align-items: flex-start;
+    gap: 3px;
   }
+
+  .mg-catalog-title {
+    font-size: 1.25rem;
+  }
+
+  .mg-catalog-count {
+    font-size: 0.82rem;
+  }
+
+  /* En móvil: sin caja verde gigante, como texto sutil e integrado */
+  .mg-socio-benefit-badge {
+    display: block;
+    width: 100%;
+    padding: 0;
+    background-color: transparent;
+    border: none;
+    box-shadow: none;
+    font-size: 0.76rem;
+    line-height: 1.35;
+    margin-top: 2px;
+  }
+
+  .mg-socio-publico-hint {
+    display: inline;
+    color: var(--text-muted);
+  }
+
+  .mg-socio-highlight {
+    display: inline;
+    margin-left: 4px;
+    color: var(--brand-green, #1e7e48);
+    font-weight: 700;
+  }
+
+  .mg-catalog-filters-section {
+    padding-bottom: var(--sp-4) !important;
+  }
+
+  .mg-category-chips-bar {
+    padding: 2px 0 6px !important;
+  }
+
+  .mg-category-chip {
+    padding: 6px 14px !important;
+    font-size: 0.8rem !important;
+  }
+
+  /* ¡Buscador y Ordenar en la MISMA FILA en móvil! */
+  .mg-filters-search-sort-row {
+    flex-direction: row !important;
+    align-items: center !important;
+    gap: 8px !important;
+  }
+
   .mg-filter-search-wrap {
-    width: 100%;
-    min-width: 100%;
+    flex: 1 !important;
+    min-width: 0 !important;
+    width: auto !important;
   }
+
+  .mg-filter-search-wrap input {
+    height: 38px !important;
+    padding: 8px 30px 8px 34px !important;
+    font-size: 0.82rem !important;
+  }
+
   .mg-filter-sort-wrap {
-    width: 100%;
+    width: 125px !important;
+    flex-shrink: 0 !important;
+  }
+
+  .mg-filter-sort-wrap select {
+    height: 38px !important;
+    padding: 8px 22px 8px 8px !important;
+    font-size: 0.78rem !important;
   }
 }
 

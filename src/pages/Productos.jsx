@@ -68,45 +68,18 @@ export default function Productos() {
       {/* Banners Comerciales / Promocionales arriba del catálogo */}
       <CatalogBanners updateFilters={updateFilters} />
 
-      {/* 1. Encabezado Compacto de Lujo */}
-      <section
-        style={{
-          paddingTop: 'var(--sp-6)',
-          paddingBottom: 'var(--sp-2)',
-          backgroundColor: 'var(--surface-page)',
-        }}
-      >
+      {/* 1. Encabezado Compacto */}
+      <section className="mg-catalog-header-section">
         <div className="mg-container">
-          <div
-            style={{
-              display: 'flex',
-              flexWrap: 'wrap',
-              alignItems: 'center',
-              justifyContent: 'space-between',
-              gap: 'var(--sp-3)',
-            }}
-          >
-            <div style={{ display: 'flex', alignItems: 'baseline', gap: 'var(--sp-3)', flexWrap: 'wrap' }}>
-              <h1
-                style={{
-                  margin: 0,
-                  fontSize: 'clamp(1.4rem, 2.5vw, 1.85rem)',
-                  color: 'var(--text-strong)',
-                  lineHeight: 'var(--lh-tight)',
-                  letterSpacing: '-0.02em',
-                  fontWeight: 800,
-                }}
-              >
+          <div className="mg-catalog-header-row">
+            <div className="mg-catalog-title-group">
+              <h1 className="mg-catalog-title">
                 Nuestros productos
               </h1>
-              <span style={{ color: 'var(--text-muted)', fontSize: 'var(--fs-sm)' }}>·</span>
+              <span className="mg-catalog-dot">·</span>
               <span
                 data-testid="catalog-count"
-                style={{
-                  fontSize: 'var(--fs-sm)',
-                  fontWeight: 600,
-                  color: 'var(--text-muted)',
-                }}
+                className="mg-catalog-count"
               >
                 {isFiltered
                   ? `${sorted.length} de ${allProducts.length} productos`
@@ -114,23 +87,10 @@ export default function Productos() {
               </span>
             </div>
 
-            {/* Pill ejecutiva de beneficio para socios */}
-            <div
-              style={{
-                display: 'inline-flex',
-                alignItems: 'center',
-                gap: '8px',
-                padding: '6px 14px',
-                backgroundColor: 'var(--surface-green, #f0fdf4)',
-                border: '1px solid var(--border-green, #bbf7d0)',
-                borderRadius: 'var(--r-pill)',
-                fontSize: 'var(--fs-xs)',
-                color: 'var(--green-700, #15803d)',
-                boxShadow: 'var(--shadow-xs)',
-              }}
-            >
-              <span style={{ color: 'var(--text-muted)' }}>Precios de venta al público.</span>
-              <strong style={{ fontWeight: 700, color: 'var(--green-800, #166534)' }}>
+            {/* Beneficio para socios: Pill en desktop, línea limpia sin caja en móvil */}
+            <div className="mg-socio-benefit-badge">
+              <span className="mg-socio-publico-hint">Precios al público · </span>
+              <strong className="mg-socio-highlight">
                 Como socio, los compras con 50% de descuento.
               </strong>
             </div>
@@ -193,7 +153,7 @@ export default function Productos() {
               />
               <input
                 type="text"
-                placeholder="Buscar por nombre o ingrediente..."
+                placeholder="Buscar producto..."
                 value={searchTerm}
                 onChange={(e) => updateFilters({ buscar: e.target.value })}
                 data-testid="input-buscar-productos"
