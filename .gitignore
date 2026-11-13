@@ -8,6 +8,7 @@ playwright-report
 01-AUDITORIAS/
 DOCUMENTACION-ANTIGRAVITY/
 src/data/productos-generado.json
+Imagenes adjuntar web/
 
 # Variables de entorno — NUNCA se suben
 .env

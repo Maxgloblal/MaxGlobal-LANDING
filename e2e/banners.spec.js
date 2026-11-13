@@ -35,6 +35,11 @@ test.describe('Banners comerciales en Catálogo (TAREA-71)', () => {
     await banner1.click();
     await expect(page).toHaveURL(/categoria=Salud(\+|%20)y(\+|%20)Nutrici(o|ó|%C3%B3)n/i);
 
+    // Verificar que el banner 1 deja activo el chip Salud y Nutrición (TAREA-73)
+    const chipSalud = page.locator('[data-testid="chip-categoria-salud-y-nutricion"]');
+    await expect(chipSalud).toBeVisible();
+    await expect(chipSalud).toHaveAttribute('aria-pressed', 'true');
+
     // Verificar que solo se muestran productos de Salud y Nutrición (5 de 8)
     const catalogCount = page.locator('[data-testid="catalog-count"]');
     await expect(catalogCount).toContainText('de 8 productos');
@@ -66,5 +71,57 @@ test.describe('Banners comerciales en Catálogo (TAREA-71)', () => {
     // Clic en punto 2 cambia de diapositiva
     await page.locator('[data-testid="banner-dot-2"]').click();
     await expect(page.locator('[data-testid="banner-dot-2"]')).toHaveAttribute('aria-selected', 'true');
+  });
+
+  test('validaciones TAREA-73: exactamente un h1, chips de categoría, sin scroll horizontal e imágenes responsivas', async ({ page }) => {
+    await page.goto('/productos');
+
+    // 1 · Hay exactamente un <h1> en /productos
+    const h1s = page.locator('h1');
+    await expect(h1s).toHaveCount(1);
+    await expect(h1s).toHaveText('Nuestros productos');
+
+    // 2 · Clic en cada chip de categoría filtra la grilla y actualiza la URL
+    const chipSalud = page.locator('[data-testid="chip-categoria-salud-y-nutricion"]');
+    const chipCuidado = page.locator('[data-testid="chip-categoria-cuidado-personal"]');
+    const chipPerfume = page.locator('[data-testid="chip-categoria-perfumeria"]');
+    const chipTodas = page.locator('[data-testid="chip-categoria-todas"]');
+
+    await chipCuidado.click();
+    await expect(page).toHaveURL(/categoria=Cuidado(\+|%20)Personal/i);
+    await expect(chipCuidado).toHaveAttribute('aria-pressed', 'true');
+
+    await chipPerfume.click();
+    await expect(page).toHaveURL(/categoria=Perfumer(i|í|%C3%AD)a/i);
+    await expect(chipPerfume).toHaveAttribute('aria-pressed', 'true');
+
+    await chipTodas.click();
+    await expect(chipTodas).toHaveAttribute('aria-pressed', 'true');
+
+    // 3 · Sin scroll horizontal en 390, 1440 y 1920 px
+    for (const width of [390, 1440, 1920]) {
+      await page.setViewportSize({ width, height: 900 });
+      await page.waitForTimeout(200);
+      const hasHorizontalScroll = await page.evaluate(
+        () => document.documentElement.scrollWidth > window.innerWidth
+      );
+      expect(hasHorizontalScroll).toBe(false);
+    }
+
+    // 4 · A 390 px se carga imagen -movil; a 1440 px la de escritorio
+    await page.setViewportSize({ width: 390, height: 844 });
+    await page.goto('/productos');
+    const bannerImg = page.locator('[data-testid="catalog-banner-0"] img');
+    await expect(bannerImg).toBeVisible();
+    const srcMobile = await bannerImg.evaluate((el) => el.currentSrc);
+    expect(srcMobile).toContain('-movil.webp');
+
+    await page.setViewportSize({ width: 1440, height: 900 });
+    await page.goto('/productos');
+    const bannerImgDesktop = page.locator('[data-testid="catalog-banner-0"] img');
+    await expect(bannerImgDesktop).toBeVisible();
+    const srcDesktop = await bannerImgDesktop.evaluate((el) => el.currentSrc);
+    expect(srcDesktop).not.toContain('-movil.webp');
+    expect(srcDesktop).toContain('banner-1-cafe-colageno.webp');
   });
 });

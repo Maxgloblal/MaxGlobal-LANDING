@@ -261,9 +261,26 @@ html, body {
   animation: mg-float 4s ease-in-out infinite;
 }
 
-/* 10. Carrusel de Banners Comerciales */
+/* 10. Carrusel de Banners Comerciales a Todo el Ancho */
+.mg-carousel-container {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 2560 / 720;
+  overflow: hidden;
+  margin: 0;
+  padding: 0;
+}
+
+@media (max-width: 640px) {
+  .mg-carousel-container {
+    aspect-ratio: 1 / 1;
+  }
+}
+
 .mg-carousel-track {
   display: flex;
+  width: 100%;
+  height: 100%;
   overflow-x: auto;
   scroll-snap-type: x mandatory;
   scroll-behavior: smooth;
@@ -281,4 +298,113 @@ html, body {
     scroll-behavior: auto;
   }
 }
+
+.mg-carousel-dots {
+  position: absolute;
+  bottom: clamp(10px, 2vw, 16px);
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  z-index: 10;
+  padding: 4px 10px;
+  border-radius: var(--r-pill);
+  background-color: rgba(0, 0, 0, 0.28);
+  backdrop-filter: blur(4px);
+}
+
+@media (max-width: 640px) {
+  .mg-carousel-dots {
+    left: auto;
+    right: 14px;
+    transform: none;
+    bottom: 12px;
+  }
+}
+
+/* 11. Barra de Chips de Categorías y Filtros Simplificados (TAREA-73) */
+.mg-category-chips-bar {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-2);
+  overflow-x: auto;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  padding: 4px 0 8px;
+  width: 100%;
+  -webkit-overflow-scrolling: touch;
+}
+
+.mg-category-chips-bar::-webkit-scrollbar {
+  display: none;
+}
+
+.mg-category-chip {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  border-radius: var(--r-pill);
+  padding: 8px 18px;
+  font-family: var(--font-body);
+  font-size: var(--fs-xs);
+  font-weight: 600;
+  white-space: nowrap;
+  flex-shrink: 0;
+  cursor: pointer;
+  transition: all var(--dur-fast) var(--ease-out);
+  outline: none;
+  border: 1px solid var(--border-subtle);
+  background-color: #FFFFFF;
+  color: var(--text-body);
+}
+
+.mg-category-chip:hover {
+  border-color: var(--brand-gold);
+  color: var(--text-strong);
+}
+
+.mg-category-chip.active {
+  background-color: var(--brand-gold);
+  color: var(--text-strong);
+  border-color: var(--brand-gold);
+  font-weight: 700;
+  box-shadow: 0 2px 8px rgba(209, 173, 104, 0.28);
+}
+
+.mg-filters-search-sort-row {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-3);
+  width: 100%;
+}
+
+.mg-filter-search-wrap {
+  flex: 1;
+  min-width: 240px;
+  position: relative;
+}
+
+.mg-filter-sort-wrap {
+  width: 220px;
+  flex-shrink: 0;
+  position: relative;
+}
+
+@media (max-width: 640px) {
+  .mg-filters-search-sort-row {
+    flex-direction: column;
+    align-items: stretch;
+    gap: var(--sp-2);
+  }
+  .mg-filter-search-wrap {
+    width: 100%;
+    min-width: 100%;
+  }
+  .mg-filter-sort-wrap {
+    width: 100%;
+  }
+}
+
 

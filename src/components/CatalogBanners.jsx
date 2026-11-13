@@ -5,6 +5,7 @@ const BANNERS = [
   {
     id: 'banner-cafe-colageno',
     image: '/images/banners/banner-1-cafe-colageno.webp',
+    imageMobile: '/images/banners/banner-1-cafe-colageno-movil.webp',
     alt: 'Coffee Capuccino y Colágeno Aeterna, S/ 150 cada uno',
     to: '/productos?categoria=Salud y Nutrición',
     targetFilter: { categoria: 'Salud y Nutrición', buscar: '' },
@@ -12,6 +13,7 @@ const BANNERS = [
   {
     id: 'banner-linea-moringa',
     image: '/images/banners/banner-2-linea-moringa.webp',
+    imageMobile: '/images/banners/banner-2-linea-moringa-movil.webp',
     alt: 'Línea Moringa: aceite, cápsulas y polvo, desde S/ 50',
     to: '/productos?buscar=moringa',
     targetFilter: { buscar: 'moringa', categoria: '' },
@@ -19,6 +21,7 @@ const BANNERS = [
   {
     id: 'banner-packs',
     image: '/images/banners/banner-3-packs.webp',
+    imageMobile: '/images/banners/banner-3-packs-movil.webp',
     alt: 'Packs de afiliación Max Global, desde S/ 120',
     to: '/packs-de-afiliacion',
     targetFilter: null,
@@ -144,137 +147,99 @@ export default function CatalogBanners({ updateFilters }) {
       className="mg-catalog-banners-section"
       aria-label="Banners comerciales y promociones"
       style={{
-        paddingTop: 'var(--sp-4)',
-        paddingBottom: '0',
-        backgroundColor: 'var(--gold-50)',
+        padding: 0,
+        margin: 0,
+        width: '100%',
+        backgroundColor: 'var(--surface-page)',
       }}
     >
-      <div className="mg-container">
+      <div className="mg-carousel-container">
+        {/* Carrusel de Diapositivas */}
         <div
-          style={{
-            position: 'relative',
-            width: '100%',
-            aspectRatio: '2560 / 960',
-            borderRadius: 'var(--r-card)',
-            overflow: 'hidden',
-            boxShadow: 'var(--shadow-xs)',
-            border: '1px solid var(--border-subtle)',
-            backgroundColor: 'var(--gold-100)',
-          }}
+          ref={trackRef}
+          className="mg-carousel-track"
+          onMouseEnter={() => setIsPaused(true)}
+          onMouseLeave={() => setIsPaused(false)}
+          onTouchStart={handleTouchStart}
+          onTouchMove={handleTouchMove}
+          onTouchEnd={handleTouchEnd}
+          onScroll={handleScroll}
         >
-          {/* Carrusel de Diapositivas */}
-          <div
-            ref={trackRef}
-            className="mg-carousel-track"
-            onMouseEnter={() => setIsPaused(true)}
-            onMouseLeave={() => setIsPaused(false)}
-            onTouchStart={handleTouchStart}
-            onTouchMove={handleTouchMove}
-            onTouchEnd={handleTouchEnd}
-            onScroll={handleScroll}
-            style={{
-              display: 'flex',
-              width: '100%',
-              height: '100%',
-              overflowX: 'auto',
-              scrollSnapType: 'x mandatory',
-              scrollBehavior: prefersReduced ? 'auto' : 'smooth',
-              scrollbarWidth: 'none',
-              msOverflowStyle: 'none',
-            }}
-          >
-            {BANNERS.map((banner, idx) => (
-              <Link
-                key={banner.id}
-                to={banner.to}
-                data-testid={`catalog-banner-${idx}`}
-                onClick={(e) => handleBannerClick(e, banner)}
-                style={{
-                  flex: '0 0 100%',
-                  width: '100%',
-                  height: '100%',
-                  scrollSnapAlign: 'start',
-                  scrollSnapStop: 'always',
-                  display: 'block',
-                  textDecoration: 'none',
-                  position: 'relative',
-                  cursor: 'pointer',
-                }}
-                aria-label={banner.alt}
-              >
-                <picture style={{ display: 'block', width: '100%', height: '100%' }}>
-                  {banner.imageMobile && (
-                    <source media="(max-width: 640px)" srcSet={banner.imageMobile} />
-                  )}
-                  <img
-                    src={banner.image}
-                    alt={banner.alt}
-                    loading={idx === 0 ? 'eager' : 'lazy'}
-                    fetchPriority={idx === 0 ? 'high' : undefined}
-                    width="2560"
-                    height="960"
-                    style={{
-                      width: '100%',
-                      height: '100%',
-                      display: 'block',
-                      objectFit: 'contain',
-                      borderRadius: 'inherit',
-                    }}
-                  />
-                </picture>
-              </Link>
-            ))}
-          </div>
-
-          {/* Puntos de Navegación (Dots) */}
-          <div
-            style={{
-              position: 'absolute',
-              bottom: 'clamp(8px, 2vw, 16px)',
-              left: '50%',
-              transform: 'translateX(-50%)',
-              display: 'flex',
-              alignItems: 'center',
-              gap: '8px',
-              zIndex: 10,
-              padding: '4px 10px',
-              borderRadius: 'var(--r-pill)',
-              backgroundColor: 'rgba(0, 0, 0, 0.28)',
-              backdropFilter: 'blur(4px)',
-            }}
-            role="tablist"
-            aria-label="Selector de diapositivas"
-          >
-            {BANNERS.map((b, idx) => {
-              const isActive = currentIndex === idx;
-              return (
-                <button
-                  key={idx}
-                  type="button"
-                  role="tab"
-                  aria-selected={isActive}
-                  aria-label={`Ir al banner ${idx + 1}: ${b.alt}`}
-                  data-testid={`banner-dot-${idx}`}
-                  onClick={(e) => {
-                    e.preventDefault();
-                    e.stopPropagation();
-                    goToSlide(idx);
-                  }}
+          {BANNERS.map((banner, idx) => (
+            <Link
+              key={banner.id}
+              to={banner.to}
+              data-testid={`catalog-banner-${idx}`}
+              onClick={(e) => handleBannerClick(e, banner)}
+              style={{
+                flex: '0 0 100%',
+                width: '100%',
+                height: '100%',
+                scrollSnapAlign: 'start',
+                scrollSnapStop: 'always',
+                display: 'block',
+                textDecoration: 'none',
+                position: 'relative',
+                cursor: 'pointer',
+              }}
+              aria-label={banner.alt}
+            >
+              <picture style={{ display: 'block', width: '100%', height: '100%' }}>
+                <source media="(max-width: 640px)" srcSet={banner.imageMobile} />
+                <img
+                  src={banner.image}
+                  alt={banner.alt}
+                  loading={idx === 0 ? 'eager' : 'lazy'}
+                  fetchPriority={idx === 0 ? 'high' : undefined}
+                  width="2560"
+                  height="720"
                   style={{
-                    width: isActive ? '24px' : '8px',
-                    height: '8px',
-                    borderRadius: 'var(--r-pill)',
-                    backgroundColor: isActive ? 'var(--brand-gold)' : 'rgba(255, 255, 255, 0.75)',
-                    border: 'none',
-                    padding: 0,
-                    cursor: 'pointer',
-                    transition: prefersReduced ? 'none' : 'all 0.3s ease',
-                    outline: 'none',
+                    width: '100%',
+                    height: '100%',
+                    display: 'block',
+                    objectFit: 'contain',
                   }}
                 />
-              );
-            })}
-          </div>
+              </picture>
+            </Link>
+          ))}
+        </div>
+
+        {/* Puntos de Navegación (Dots) */}
+        <div
+          className="mg-carousel-dots"
+          role="tablist"
+          aria-label="Selector de diapositivas"
+        >
+          {BANNERS.map((b, idx) => {
+            const isActive = currentIndex === idx;
+            return (
+              <button
+                key={idx}
+                type="button"
+                role="tab"
+                aria-selected={isActive}
+                aria-label={`Ir al banner ${idx + 1}: ${b.alt}`}
+                data-testid={`banner-dot-${idx}`}
+                onClick={(e) => {
+                  e.preventDefault();
+                  e.stopPropagation();
+                  goToSlide(idx);
+                }}
+                style={{
+                  width: isActive ? '24px' : '8px',
+                  height: '8px',
+                  borderRadius: 'var(--r-pill)',
+                  backgroundColor: isActive ? 'var(--brand-gold)' : 'rgba(255, 255, 255, 0.75)',
+                  border: 'none',
+                  padding: 0,
+                  cursor: 'pointer',
+                  transition: prefersReduced ? 'none' : 'all 0.3s ease',
+                  outline: 'none',
+                }}
+              />
+            );
+          })}
         </div>
       </div>
     </section>

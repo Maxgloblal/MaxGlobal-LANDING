@@ -14,7 +14,6 @@ describe('Productos Page (P-02)', () => {
       </MemoryRouter>
     );
 
-    expect(screen.getByText('Catálogo')).toBeInTheDocument();
     expect(screen.getByRole('heading', { name: /nuestros productos/i })).toBeInTheDocument();
     expect(screen.getByText(/como socio, los compras con 50% de descuento/i)).toBeInTheDocument();
   });
@@ -48,7 +47,7 @@ describe('Productos Page (P-02)', () => {
     expect(screen.getByTestId('catalog-count')).toHaveTextContent(`1 de ${PRODUCTOS.length} productos`);
   });
 
-  it('filters products by category dropdown selector', async () => {
+  it('filters products by category chip selector', async () => {
     const user = userEvent.setup();
     render(
       <MemoryRouter>
@@ -56,8 +55,8 @@ describe('Productos Page (P-02)', () => {
       </MemoryRouter>
     );
 
-    const select = screen.getByTestId('select-categoria-productos');
-    await user.selectOptions(select, 'Salud y Nutrición');
+    const chip = screen.getByTestId('chip-categoria-salud-y-nutricion');
+    await user.click(chip);
 
     const saludProds = PRODUCTOS.filter((p) => p.categoria === 'Salud y Nutrición');
     expect(screen.getByTestId('catalog-count')).toHaveTextContent(`${saludProds.length} de ${PRODUCTOS.length} productos`);

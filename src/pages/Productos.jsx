@@ -68,36 +68,56 @@ export default function Productos() {
       {/* Banners Comerciales / Promocionales arriba del catálogo */}
       <CatalogBanners updateFilters={updateFilters} />
 
-      {/* 1. Hero Section */}
+      {/* 1. Encabezado Compacto */}
       <section
         style={{
-          position: 'relative',
-          background: 'linear-gradient(180deg, var(--gold-50) 0%, var(--surface-page) 100%)',
-          padding: 'var(--section-y-loose) 0 var(--sp-6)',
-          overflow: 'hidden',
+          paddingTop: 'var(--sp-8)',
+          paddingBottom: 'var(--sp-4)',
+          backgroundColor: 'var(--surface-page)',
         }}
       >
-        {/* Glow de fondo */}
-        <div
-          className="mg-bg-aurora mg-glow-gold"
-          style={{ top: '-40px', right: '-40px', width: '280px', height: '280px' }}
-        />
-
-        <div className="mg-container" style={{ position: 'relative', zIndex: 1 }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--sp-3)', marginBottom: 'var(--sp-2)' }}>
-            <div className="mg-ribbon-gold" />
-            <span className="mg-eyebrow">Catálogo</span>
+        <div className="mg-container">
+          <div
+            style={{
+              display: 'flex',
+              flexWrap: 'wrap',
+              alignItems: 'baseline',
+              justifyContent: 'space-between',
+              gap: 'var(--sp-2)',
+            }}
+          >
+            <h1
+              style={{
+                margin: 0,
+                fontSize: 'clamp(1.6rem, 3vw, 2.2rem)',
+                color: 'var(--text-strong)',
+                lineHeight: 'var(--lh-tight)',
+              }}
+            >
+              Nuestros productos
+            </h1>
+            <span
+              data-testid="catalog-count"
+              style={{
+                fontSize: 'var(--fs-sm)',
+                fontWeight: 600,
+                color: 'var(--text-muted)',
+              }}
+            >
+              {isFiltered
+                ? `${sorted.length} de ${allProducts.length} productos`
+                : `${allProducts.length} productos`}
+            </span>
           </div>
-          <h1 style={{ marginTop: 'var(--sp-3)', fontSize: 'clamp(2.2rem, 5vw, 3.5rem)' }}>
-            Nuestros productos
-          </h1>
+
           <p
             style={{
-              marginTop: 'var(--sp-4)',
+              marginTop: 'var(--sp-2)',
               maxWidth: '56ch',
-              fontSize: 'var(--fs-md)',
+              fontSize: 'var(--fs-sm)',
               lineHeight: 'var(--lh-relaxed)',
               color: 'var(--text-body)',
+              marginBottom: 0,
             }}
           >
             Productos naturales de consumo diario. Los precios que ves son los de venta al público.{' '}
@@ -108,35 +128,55 @@ export default function Productos() {
         </div>
       </section>
 
-      {/* 2. Barra de Filtros y Desplegables de Marca */}
-      <section className="mg-catalog-filters-section" style={{ paddingBottom: 'var(--sp-8)' }}>
-        <div className="mg-container">
+      {/* 2. Barra de Filtros Simplificados (Sin tarjeta contenedora) */}
+      <section className="mg-catalog-filters-section" style={{ paddingBottom: 'var(--sp-6)' }}>
+        <div className="mg-container" style={{ display: 'flex', flexDirection: 'column', gap: 'var(--sp-3)' }}>
+          {/* Fila 1: Categorías como chips */}
           <div
-            style={{
-              backgroundColor: '#FFFFFF',
-              border: '1px solid var(--border-subtle)',
-              borderRadius: 'var(--r-card)',
-              padding: 'clamp(14px, 3vw, var(--sp-6))',
-              boxShadow: '0 8px 24px rgba(0, 0, 0, 0.04)',
-              display: 'flex',
-              flexDirection: 'column',
-              gap: 'var(--sp-4)',
-            }}
+            className="mg-category-chips-bar"
+            role="toolbar"
+            aria-label="Filtrar por categoría"
           >
-            {/* Fila 1: Buscador */}
-            <div
-              style={{
-                position: 'relative',
-                width: '100%',
-                display: 'flex',
-                alignItems: 'center',
-              }}
+            <button
+              type="button"
+              className={`mg-category-chip ${!selectedCategory ? 'active' : ''}`}
+              aria-pressed={!selectedCategory}
+              data-testid="chip-categoria-todas"
+              onClick={() => updateFilters({ categoria: '' })}
             >
+              Todas ({allProducts.length})
+            </button>
+            {categories.map((cat) => {
+              const count = allProducts.filter((p) => p.categoria === cat).length;
+              const isActive = selectedCategory === cat;
+              const slug = normalizar(cat).replace(/\s+/g, '-');
+              return (
+                <button
+                  key={cat}
+                  type="button"
+                  className={`mg-category-chip ${isActive ? 'active' : ''}`}
+                  aria-pressed={isActive}
+                  data-testid={`chip-categoria-${slug}`}
+                  data-category={cat}
+                  onClick={() => updateFilters({ categoria: cat })}
+                >
+                  {cat} ({count})
+                </button>
+              );
+            })}
+          </div>
+
+          {/* Fila 2: Buscador y Ordenar en la misma fila */}
+          <div className="mg-filters-search-sort-row">
+            {/* Buscador */}
+            <div className="mg-filter-search-wrap">
               <Search
                 size={18}
                 style={{
                   position: 'absolute',
                   left: '16px',
+                  top: '50%',
+                  transform: 'translateY(-50%)',
                   color: 'var(--brand-gold)',
                   pointerEvents: 'none',
                 }}
@@ -149,14 +189,15 @@ export default function Productos() {
                 data-testid="input-buscar-productos"
                 style={{
                   width: '100%',
-                  padding: '14px 42px 14px 46px',
+                  padding: '12px 42px 12px 46px',
                   borderRadius: 'var(--r-pill)',
                   border: '1.5px solid var(--border-subtle)',
-                  backgroundColor: 'var(--surface-page)',
+                  backgroundColor: '#FFFFFF',
                   fontSize: 'var(--fs-sm)',
                   fontFamily: 'var(--font-body)',
                   color: 'var(--text-strong)',
                   outline: 'none',
+                  boxSizing: 'border-box',
                   transition: 'border-color var(--dur-fast) var(--ease-out), box-shadow var(--dur-fast) var(--ease-out)',
                 }}
                 onFocus={(e) => {
@@ -176,6 +217,8 @@ export default function Productos() {
                   style={{
                     position: 'absolute',
                     right: '14px',
+                    top: '50%',
+                    transform: 'translateY(-50%)',
                     background: 'none',
                     border: 'none',
                     color: 'var(--text-muted)',
@@ -191,85 +234,41 @@ export default function Productos() {
               )}
             </div>
 
-            {/* Fila 2: Desplegables Elegantes con ADN Max Global */}
-            <div className="mg-filter-controls-row">
-              {/* Desplegable de Categoría */}
-              <div className="mg-select-group">
-                <label
-                  htmlFor="select-categoria"
+            {/* Ordenar */}
+            <div className="mg-filter-sort-wrap">
+              <div style={{ position: 'relative' }}>
+                <select
+                  id="select-orden"
+                  value={sortBy}
+                  onChange={(e) => updateFilters({ orden: e.target.value })}
+                  data-testid="select-orden-productos"
+                  className="mg-custom-select"
+                  aria-label="Ordenar productos"
                   style={{
-                    display: 'inline-flex',
-                    alignItems: 'center',
-                    gap: '6px',
-                    fontSize: 'var(--fs-2xs)',
-                    textTransform: 'uppercase',
-                    letterSpacing: 'var(--ls-wide)',
-                    color: 'var(--text-muted)',
-                    fontWeight: 700,
-                    marginBottom: '4px',
+                    width: '100%',
+                    padding: '12px 16px',
+                    borderRadius: 'var(--r-pill)',
+                    border: '1.5px solid var(--border-subtle)',
+                    backgroundColor: '#FFFFFF',
+                    fontSize: 'var(--fs-sm)',
+                    fontFamily: 'var(--font-body)',
+                    color: 'var(--text-strong)',
+                    outline: 'none',
+                    cursor: 'pointer',
+                    boxSizing: 'border-box',
                   }}
                 >
-                  <Filter size={13} color="var(--brand-gold)" />
-                  <span>Categoría</span>
-                </label>
-                <div style={{ position: 'relative' }}>
-                  <select
-                    id="select-categoria"
-                    value={selectedCategory}
-                    onChange={(e) => updateFilters({ categoria: e.target.value })}
-                    data-testid="select-categoria-productos"
-                    className="mg-custom-select"
-                  >
-                    <option value="">Todas las categorías ({allProducts.length})</option>
-                    {categories.map((cat) => {
-                      const count = allProducts.filter((p) => p.categoria === cat).length;
-                      return (
-                        <option key={cat} value={cat}>
-                          {cat} ({count})
-                        </option>
-                      );
-                    })}
-                  </select>
-                </div>
-              </div>
-
-              {/* Desplegable de Orden */}
-              <div className="mg-select-group">
-                <label
-                  htmlFor="select-orden"
-                  style={{
-                    display: 'inline-flex',
-                    alignItems: 'center',
-                    gap: '6px',
-                    fontSize: 'var(--fs-2xs)',
-                    textTransform: 'uppercase',
-                    letterSpacing: 'var(--ls-wide)',
-                    color: 'var(--text-muted)',
-                    fontWeight: 700,
-                    marginBottom: '4px',
-                  }}
-                >
-                  <SlidersHorizontal size={13} color="var(--brand-gold)" />
-                  <span>Ordenar por</span>
-                </label>
-                <div style={{ position: 'relative' }}>
-                  <select
-                    id="select-orden"
-                    value={sortBy}
-                    onChange={(e) => updateFilters({ orden: e.target.value })}
-                    data-testid="select-orden-productos"
-                    className="mg-custom-select"
-                  >
-                    <option value="nombre">Nombre (A-Z)</option>
-                    <option value="precio-asc">Precio: menor a mayor</option>
-                    <option value="precio-desc">Precio: mayor a menor</option>
-                    <option value="puntos-desc">Puntos: mayor a menor</option>
-                  </select>
-                </div>
+                  <option value="nombre">Nombre (A-Z)</option>
+                  <option value="precio-asc">Precio: menor a mayor</option>
+                  <option value="precio-desc">Precio: mayor a menor</option>
+                  <option value="puntos-desc">Puntos: mayor a menor</option>
+                </select>
               </div>
             </div>
+          </div>
 
-            {/* Badges de Filtros Activos + Contador */}
+          {/* Badges de Filtros Activos + Botón Limpiar filtros (si está filtrado) */}
+          {isFiltered && (
             <div
               style={{
                 display: 'flex',
@@ -279,18 +278,10 @@ export default function Productos() {
                 gap: 'var(--sp-2)',
                 fontSize: 'var(--fs-xs)',
                 color: 'var(--text-muted)',
-                paddingTop: 'var(--sp-3)',
-                borderTop: '1px solid var(--border-subtle)',
+                paddingTop: 'var(--sp-2)',
               }}
             >
               <div style={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: '8px' }}>
-                <span data-testid="catalog-count" style={{ fontWeight: 600, color: 'var(--text-strong)' }}>
-                  {isFiltered
-                    ? `${sorted.length} de ${allProducts.length} productos`
-                    : `${allProducts.length} productos`}
-                </span>
-
-                {/* Badge de Categoría Activa */}
                 {selectedCategory && (
                   <span
                     style={{
@@ -324,7 +315,6 @@ export default function Productos() {
                   </span>
                 )}
 
-                {/* Badge de Búsqueda Activa */}
                 {searchTerm.trim() && (
                   <span
                     style={{
@@ -359,25 +349,23 @@ export default function Productos() {
                 )}
               </div>
 
-              {isFiltered && (
-                <button
-                  onClick={handleClearFilters}
-                  data-testid="btn-reset-filtros"
-                  style={{
-                    background: 'none',
-                    border: 'none',
-                    color: 'var(--brand-gold-dark, var(--gold-700))',
-                    fontWeight: 700,
-                    cursor: 'pointer',
-                    fontSize: 'var(--fs-xs)',
-                    textDecoration: 'underline',
-                  }}
-                >
-                  Limpiar filtros
-                </button>
-              )}
+              <button
+                onClick={handleClearFilters}
+                data-testid="btn-reset-filtros"
+                style={{
+                  background: 'none',
+                  border: 'none',
+                  color: 'var(--brand-gold-dark, var(--gold-700))',
+                  fontWeight: 700,
+                  cursor: 'pointer',
+                  fontSize: 'var(--fs-xs)',
+                  textDecoration: 'underline',
+                }}
+              >
+                Limpiar filtros
+              </button>
             </div>
-          </div>
+          )}
         </div>
       </section>
 

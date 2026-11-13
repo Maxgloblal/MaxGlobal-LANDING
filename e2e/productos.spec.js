@@ -33,16 +33,17 @@ test.describe('Productos Page (P-02) E2E', () => {
     await expect(page.getByRole('heading', { name: /colágeno aeterna/i })).toBeVisible();
   });
 
-  test('should filter products by category dropdown and allow resetting', async ({ page }) => {
+  test('should filter products by category chip and allow resetting', async ({ page }) => {
     await page.goto('/productos');
 
-    // Select Salud y Nutrición category
-    const categorySelect = page.locator('[data-testid="select-categoria-productos"]');
-    await expect(categorySelect).toBeVisible();
-    await categorySelect.selectOption('Salud y Nutrición');
+    // Click Salud y Nutrición category chip
+    const categoryChip = page.locator('[data-testid="chip-categoria-salud-y-nutricion"]');
+    await expect(categoryChip).toBeVisible();
+    await categoryChip.click();
 
-    await expect(page).toHaveURL(/.*categoria=Salud\+y\+Nutrici%C3%B3n/);
+    await expect(page).toHaveURL(/.*categoria=Salud(\+|%20)y(\+|%20)Nutrici(o|ó|%C3%B3)n/i);
     await expect(page.locator('[data-testid="catalog-count"]')).toContainText('5 de 8 productos');
+    await expect(categoryChip).toHaveAttribute('aria-pressed', 'true');
 
     // Reset filters
     await page.click('[data-testid="btn-reset-filtros"]');
