@@ -44,7 +44,7 @@ async function main() {
     // 2 · Desktop (1440 px) Grilla de Productos
     console.log('2. Captura 1440px grilla...');
     await desktopPage.evaluate(() => {
-      const el = document.querySelector('[data-testid="products-grid"]');
+      const el = document.querySelector('[data-testid="catalog-grid"]');
       if (el) el.scrollIntoView({ behavior: 'instant', block: 'start' });
     });
     await desktopPage.waitForTimeout(400);
