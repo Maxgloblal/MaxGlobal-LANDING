@@ -22,6 +22,7 @@ export default function ProductCard({
   presentacion,
   image,
   imagen,
+  showDescription = false,
 }) {
   const [refCode, setRefCode] = useState('');
   const [imgError, setImgError] = useState(false);
@@ -283,8 +284,8 @@ export default function ProductCard({
         </p>
       )}
 
-      {/* Descripción */}
-      {displayDesc && (
+      {/* Descripción (oculta por defecto en el catálogo para diseño limpio y alturas uniformes) */}
+      {showDescription && displayDesc && (
         <p
           style={{
             fontSize: 'var(--fs-xs)',

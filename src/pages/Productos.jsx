@@ -68,11 +68,11 @@ export default function Productos() {
       {/* Banners Comerciales / Promocionales arriba del catálogo */}
       <CatalogBanners updateFilters={updateFilters} />
 
-      {/* 1. Encabezado Compacto */}
+      {/* 1. Encabezado Compacto de Lujo */}
       <section
         style={{
-          paddingTop: 'var(--sp-8)',
-          paddingBottom: 'var(--sp-4)',
+          paddingTop: 'var(--sp-6)',
+          paddingBottom: 'var(--sp-2)',
           backgroundColor: 'var(--surface-page)',
         }}
       >
@@ -81,50 +81,60 @@ export default function Productos() {
             style={{
               display: 'flex',
               flexWrap: 'wrap',
-              alignItems: 'baseline',
+              alignItems: 'center',
               justifyContent: 'space-between',
-              gap: 'var(--sp-2)',
+              gap: 'var(--sp-3)',
             }}
           >
-            <h1
-              style={{
-                margin: 0,
-                fontSize: 'clamp(1.6rem, 3vw, 2.2rem)',
-                color: 'var(--text-strong)',
-                lineHeight: 'var(--lh-tight)',
-              }}
-            >
-              Nuestros productos
-            </h1>
-            <span
-              data-testid="catalog-count"
-              style={{
-                fontSize: 'var(--fs-sm)',
-                fontWeight: 600,
-                color: 'var(--text-muted)',
-              }}
-            >
-              {isFiltered
-                ? `${sorted.length} de ${allProducts.length} productos`
-                : `${allProducts.length} productos`}
-            </span>
-          </div>
+            <div style={{ display: 'flex', alignItems: 'baseline', gap: 'var(--sp-3)', flexWrap: 'wrap' }}>
+              <h1
+                style={{
+                  margin: 0,
+                  fontSize: 'clamp(1.4rem, 2.5vw, 1.85rem)',
+                  color: 'var(--text-strong)',
+                  lineHeight: 'var(--lh-tight)',
+                  letterSpacing: '-0.02em',
+                  fontWeight: 800,
+                }}
+              >
+                Nuestros productos
+              </h1>
+              <span style={{ color: 'var(--text-muted)', fontSize: 'var(--fs-sm)' }}>·</span>
+              <span
+                data-testid="catalog-count"
+                style={{
+                  fontSize: 'var(--fs-sm)',
+                  fontWeight: 600,
+                  color: 'var(--text-muted)',
+                }}
+              >
+                {isFiltered
+                  ? `${sorted.length} de ${allProducts.length} productos`
+                  : `${allProducts.length} productos`}
+              </span>
+            </div>
 
-          <p
-            style={{
-              marginTop: 'var(--sp-2)',
-              maxWidth: '56ch',
-              fontSize: 'var(--fs-sm)',
-              lineHeight: 'var(--lh-relaxed)',
-              color: 'var(--text-body)',
-              marginBottom: 0,
-            }}
-          >
-            Productos naturales de consumo diario. Los precios que ves son los de venta al público.{' '}
-            <span style={{ color: 'var(--text-strong)', fontWeight: 700 }}>
-              Como socio, los compras con 50% de descuento.
-            </span>
-          </p>
+            {/* Pill ejecutiva de beneficio para socios */}
+            <div
+              style={{
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: '8px',
+                padding: '6px 14px',
+                backgroundColor: 'var(--surface-green, #f0fdf4)',
+                border: '1px solid var(--border-green, #bbf7d0)',
+                borderRadius: 'var(--r-pill)',
+                fontSize: 'var(--fs-xs)',
+                color: 'var(--green-700, #15803d)',
+                boxShadow: 'var(--shadow-xs)',
+              }}
+            >
+              <span style={{ color: 'var(--text-muted)' }}>Precios de venta al público.</span>
+              <strong style={{ fontWeight: 700, color: 'var(--green-800, #166534)' }}>
+                Como socio, los compras con 50% de descuento.
+              </strong>
+            </div>
+          </div>
         </div>
       </section>
 
