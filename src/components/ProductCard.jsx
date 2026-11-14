@@ -62,6 +62,7 @@ export default function ProductCard({
   return (
     <div
       data-testid={`product-card-${id}`}
+      className="mg-product-card"
       style={{
         display: 'flex',
         flexDirection: 'column',
@@ -205,65 +206,44 @@ export default function ProductCard({
         </div>
       </Link>
 
-      {/* Categoría */}
-      {displayCategory && (
-        <div style={{ display: 'flex', alignItems: 'center', gap: '6px', marginBottom: 'var(--sp-1)' }}>
-          <span
-            className="mg-eyebrow"
-            style={{ fontSize: 'var(--fs-3xs)' }}
-          >
-            {displayCategory}
-          </span>
-        </div>
-      )}
-
-      {/* Nombre y Puntos */}
+      {/* Fila 1: Categoría a la izquierda, Puntos a la derecha */}
       <div
         style={{
           display: 'flex',
-          alignItems: 'flex-start',
+          alignItems: 'center',
           justifyContent: 'space-between',
-          gap: 'var(--sp-2)',
-          marginBottom: 'var(--sp-2)',
+          gap: '4px',
+          marginBottom: 'var(--sp-1)',
         }}
       >
-        <h3
-          style={{
-            fontSize: 'var(--fs-md)',
-            color: 'var(--text-strong)',
-            margin: 0,
-            lineHeight: 'var(--lh-snug)',
-          }}
-        >
-          <Link
-            to={`/productos/${id}`}
+        {displayCategory ? (
+          <span
+            className="mg-eyebrow"
             style={{
-              color: 'inherit',
-              textDecoration: 'none',
-              transition: 'color var(--dur-fast) var(--ease-out)',
-            }}
-            onMouseEnter={(e) => {
-              e.currentTarget.style.color = 'var(--brand-gold)';
-            }}
-            onMouseLeave={(e) => {
-              e.currentTarget.style.color = 'inherit';
+              fontSize: 'var(--fs-3xs)',
+              whiteSpace: 'nowrap',
+              overflow: 'hidden',
+              textOverflow: 'ellipsis',
             }}
           >
-            {displayName}
-          </Link>
-        </h3>
+            {displayCategory}
+          </span>
+        ) : <span />}
+
         {displayPoints !== undefined && (
           <span
+            className="mg-points-badge"
             style={{
               backgroundColor: 'var(--surface-green)',
               color: 'var(--green-600)',
               border: '1px solid var(--border-green)',
-              padding: '2px 8px',
+              padding: '1px 6px',
               borderRadius: 'var(--r-pill)',
-              fontSize: 'var(--fs-2xs)',
+              fontSize: '10px',
               fontFamily: 'var(--font-body)',
               fontWeight: 700,
               whiteSpace: 'nowrap',
+              flexShrink: 0,
             }}
           >
             {displayPoints} pts
@@ -271,9 +251,38 @@ export default function ProductCard({
         )}
       </div>
 
+      {/* Fila 2: Nombre a ancho completo */}
+      <h3
+        className="mg-product-card-title"
+        style={{
+          fontSize: 'var(--fs-md)',
+          color: 'var(--text-strong)',
+          margin: '0 0 var(--sp-1)',
+          lineHeight: 'var(--lh-snug)',
+        }}
+      >
+        <Link
+          to={`/productos/${id}`}
+          style={{
+            color: 'inherit',
+            textDecoration: 'none',
+            transition: 'color var(--dur-fast) var(--ease-out)',
+          }}
+          onMouseEnter={(e) => {
+            e.currentTarget.style.color = 'var(--brand-gold)';
+          }}
+          onMouseLeave={(e) => {
+            e.currentTarget.style.color = 'inherit';
+          }}
+        >
+          {displayName}
+        </Link>
+      </h3>
+
       {/* Presentación */}
       {displayPresentation && (
         <p
+          className="mg-product-card-presentation"
           style={{
             fontSize: 'var(--fs-2xs)',
             color: 'var(--text-muted)',
@@ -307,6 +316,7 @@ export default function ProductCard({
 
       {/* Precios: Público y Los socios pagan desde */}
       <div
+        className="mg-card-price-box"
         style={{
           display: 'flex',
           flexDirection: 'column',
@@ -320,6 +330,7 @@ export default function ProductCard({
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline' }}>
           <span style={{ fontSize: 'var(--fs-2xs)', color: 'var(--text-muted)' }}>Público:</span>
           <span
+            className="mg-card-price-publico"
             style={{
               fontFamily: 'var(--font-display)',
               textTransform: 'uppercase',
@@ -333,8 +344,14 @@ export default function ProductCard({
         </div>
         {partnerPriceFrom && (
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', marginTop: '2px' }}>
-            <span style={{ fontSize: 'var(--fs-2xs)', color: 'var(--brand-green)', fontWeight: 600 }}>Los socios pagan desde:</span>
-            <span style={{ fontSize: 'var(--fs-xs)', color: 'var(--brand-green)', fontWeight: 700 }}>
+            <span style={{ fontSize: 'var(--fs-2xs)', color: 'var(--brand-green)', fontWeight: 600 }}>
+              <span className="mg-label-desktop">Los socios pagan desde:</span>
+              <span className="mg-label-mobile">Socio:</span>
+            </span>
+            <span
+              className="mg-card-price-socio"
+              style={{ fontSize: 'var(--fs-xs)', color: 'var(--brand-green)', fontWeight: 800 }}
+            >
               S/. {partnerPriceFrom}
             </span>
           </div>
@@ -359,12 +376,13 @@ export default function ProductCard({
           data-testid={`btn-add-to-cart-${id}`}
           data-test-order-btn={`btn-order-wa-${id}`}
           aria-label={`Agregar ${displayName} al pedido`}
+          className="mg-card-btn-add"
           style={{
             marginTop: 'auto',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
-            gap: '8px',
+            gap: '6px',
             backgroundColor: 'var(--brand-gold)',
             color: 'var(--n-700)',
             fontFamily: 'var(--font-subtitle)',
@@ -386,8 +404,9 @@ export default function ProductCard({
             e.currentTarget.style.transform = 'none';
           }}
         >
-          <ShoppingBag size={18} aria-hidden="true" />
-          <span>Agregar al pedido</span>
+          <ShoppingBag size={17} aria-hidden="true" />
+          <span className="mg-label-desktop">Agregar al pedido</span>
+          <span className="mg-label-mobile">Agregar</span>
         </button>
       ) : (
         <div

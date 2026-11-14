@@ -246,9 +246,65 @@ html, body {
   .mg-products-grid,
   .mg-products-grid-preview,
   .mg-products-2x2 {
-    grid-template-columns: 1fr;
-    gap: var(--sp-4);
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
   }
+
+  .mg-product-card {
+    padding: 8px 8px 10px !important;
+    border-radius: var(--r-md) !important;
+  }
+
+  .mg-product-card-title {
+    font-size: 0.82rem !important;
+    line-height: 1.2 !important;
+    min-height: 2.4em;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .mg-product-card-presentation {
+    font-size: 0.68rem !important;
+    margin-bottom: 6px !important;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .mg-card-price-box {
+    padding: 5px 6px !important;
+    margin-bottom: 8px !important;
+  }
+
+  .mg-card-price-publico {
+    font-size: 0.78rem !important;
+  }
+
+  .mg-card-price-socio {
+    font-size: 0.78rem !important;
+  }
+
+  .mg-card-btn-add {
+    padding: 7px 8px !important;
+    font-size: 0.72rem !important;
+    gap: 4px !important;
+  }
+
+  .mg-label-desktop {
+    display: none !important;
+  }
+  .mg-label-mobile {
+    display: inline !important;
+  }
+}
+
+.mg-label-desktop {
+  display: inline;
+}
+.mg-label-mobile {
+  display: none;
 }
 
 /* 9. Animación de Flotación Sutil */
