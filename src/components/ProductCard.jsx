@@ -66,12 +66,13 @@ export default function ProductCard({
       style={{
         display: 'flex',
         flexDirection: 'column',
-        backgroundColor: 'var(--surface-card)',
-        border: '1px solid var(--border-subtle)',
-        borderRadius: 'var(--r-card)',
-        padding: 'clamp(12px, 2.5vw, var(--sp-5))',
-        boxShadow: 'var(--shadow-xs)',
-        transition: 'var(--t-surface)',
+        backgroundColor: '#FFFFFF',
+        border: '1px solid rgba(0, 0, 0, 0.08)',
+        borderRadius: '16px',
+        boxShadow: '0 4px 16px rgba(0, 0, 0, 0.06)',
+        overflow: 'hidden',
+        padding: 0,
+        transition: 'transform var(--dur-fast) var(--ease-out), box-shadow var(--dur-fast) var(--ease-out), border-color var(--dur-fast) var(--ease-out)',
         minWidth: 0,
         width: '100%',
         boxSizing: 'border-box',
@@ -79,87 +80,36 @@ export default function ProductCard({
       }}
       onMouseEnter={(e) => {
         e.currentTarget.style.transform = 'translateY(-3px)';
-        e.currentTarget.style.boxShadow = '0 12px 24px rgba(209, 173, 104, 0.18)';
-        e.currentTarget.style.borderColor = 'var(--border-gold)';
+        e.currentTarget.style.boxShadow = '0 12px 24px rgba(0, 0, 0, 0.1)';
+        e.currentTarget.style.borderColor = 'rgba(209, 173, 104, 0.4)';
       }}
       onMouseLeave={(e) => {
         e.currentTarget.style.transform = 'none';
-        e.currentTarget.style.boxShadow = 'var(--shadow-xs)';
-        e.currentTarget.style.borderColor = 'var(--border-subtle)';
+        e.currentTarget.style.boxShadow = '0 4px 16px rgba(0, 0, 0, 0.06)';
+        e.currentTarget.style.borderColor = 'rgba(0, 0, 0, 0.08)';
       }}
     >
-      {/* Botón rápido para compartir producto */}
-      <button
-        type="button"
-        onClick={(e) => {
-          e.preventDefault();
-          e.stopPropagation();
-          setIsShareOpen(true);
-        }}
-        data-testid={`btn-card-share-${id}`}
-        aria-label={`Compartir ${displayName}`}
-        title="Compartir producto"
+      {/* 1. Imagen de Borde a Borde (Edge-to-Edge) con Overlays */}
+      <div
+        className="mg-card-media-wrap"
         style={{
-          position: 'absolute',
-          top: 'clamp(16px, 3vw, 24px)',
-          right: 'clamp(16px, 3vw, 24px)',
-          zIndex: 4,
-          width: '32px',
-          height: '32px',
-          borderRadius: 'var(--r-circle)',
-          backgroundColor: 'rgba(255, 255, 255, 0.92)',
-          backdropFilter: 'blur(4px)',
-          border: '1px solid var(--border-subtle)',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          color: 'var(--text-muted)',
-          cursor: 'pointer',
-          transition: 'all var(--dur-fast) var(--ease-out)',
-          boxShadow: '0 2px 6px rgba(0,0,0,0.08)',
-        }}
-        onMouseEnter={(e) => {
-          e.currentTarget.style.color = 'var(--gold-800)';
-          e.currentTarget.style.borderColor = 'var(--brand-gold)';
-          e.currentTarget.style.backgroundColor = '#FFFFFF';
-          e.currentTarget.style.transform = 'scale(1.08)';
-        }}
-        onMouseLeave={(e) => {
-          e.currentTarget.style.color = 'var(--text-muted)';
-          e.currentTarget.style.borderColor = 'var(--border-subtle)';
-          e.currentTarget.style.backgroundColor = 'rgba(255, 255, 255, 0.92)';
-          e.currentTarget.style.transform = 'scale(1)';
-        }}
-      >
-        <Share2 size={15} />
-      </button>
-
-      {/* Imagen del Producto con Enlace al Detalle */}
-      <Link
-        to={`/productos/${id}`}
-        style={{
-          textDecoration: 'none',
-          display: 'block',
+          position: 'relative',
           width: '100%',
-          borderRadius: 'var(--r-md)',
+          aspectRatio: '1 / 1',
           overflow: 'hidden',
-          marginBottom: 'var(--sp-3)',
+          backgroundColor: '#F8F9FA',
         }}
-        aria-label={`Ver detalles de ${displayName}`}
       >
-        <div
+        <Link
+          to={`/productos/${id}`}
           style={{
+            textDecoration: 'none',
+            borderBottom: 'none',
+            display: 'block',
             width: '100%',
-            aspectRatio: '1 / 1',
-            borderRadius: 'var(--r-md)',
-            backgroundColor: displayImage && !imgError ? '#F8F9FA' : 'var(--surface-gold)',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            textAlign: 'center',
-            overflow: 'hidden',
-            position: 'relative',
+            height: '100%',
           }}
+          aria-label={`Ver detalles de ${displayName}`}
         >
           {displayImage && !imgError ? (
             <img
@@ -170,7 +120,7 @@ export default function ProductCard({
                 height: '100%',
                 objectFit: 'cover',
                 display: 'block',
-                borderRadius: 'var(--r-md)',
+                transition: 'transform 0.4s var(--ease-out)',
               }}
               onError={() => setImgError(true)}
             />
@@ -197,30 +147,109 @@ export default function ProductCard({
                   color: 'var(--gold-700)',
                   lineHeight: 'var(--lh-normal)',
                   fontWeight: 700,
+                  textAlign: 'center',
                 }}
               >
                 100% Natural<br />Max Global
               </span>
             </div>
           )}
-        </div>
-      </Link>
+        </Link>
 
-      {/* Fila 1: Categoría a la izquierda, Puntos a la derecha */}
+        {/* Badge flotante de Puntos (Top-Left sobre la foto) */}
+        {displayPoints !== undefined && (
+          <span
+            className="mg-points-badge"
+            style={{
+              position: 'absolute',
+              top: '8px',
+              left: '8px',
+              zIndex: 3,
+              backgroundColor: 'rgba(26, 26, 24, 0.85)',
+              color: '#FFFFFF',
+              padding: '2px 8px',
+              borderRadius: 'var(--r-pill)',
+              fontSize: '10px',
+              fontFamily: 'var(--font-body)',
+              fontWeight: 700,
+              backdropFilter: 'blur(4px)',
+              boxShadow: '0 2px 6px rgba(0,0,0,0.18)',
+              border: 'none',
+              whiteSpace: 'nowrap',
+              pointerEvents: 'none',
+            }}
+          >
+            {displayPoints} pts
+          </span>
+        )}
+
+        {/* Botón flotante para compartir producto (Top-Right sobre la foto) */}
+        <button
+          type="button"
+          onClick={(e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            setIsShareOpen(true);
+          }}
+          data-testid={`btn-card-share-${id}`}
+          aria-label={`Compartir ${displayName}`}
+          title="Compartir producto"
+          style={{
+            position: 'absolute',
+            top: '8px',
+            right: '8px',
+            zIndex: 4,
+            width: '28px',
+            height: '28px',
+            borderRadius: 'var(--r-circle)',
+            backgroundColor: 'rgba(255, 255, 255, 0.92)',
+            backdropFilter: 'blur(4px)',
+            border: '1px solid rgba(0, 0, 0, 0.08)',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            color: 'var(--text-muted)',
+            cursor: 'pointer',
+            transition: 'all var(--dur-fast) var(--ease-out)',
+            boxShadow: '0 2px 6px rgba(0,0,0,0.1)',
+          }}
+          onMouseEnter={(e) => {
+            e.currentTarget.style.color = 'var(--gold-800)';
+            e.currentTarget.style.backgroundColor = '#FFFFFF';
+            e.currentTarget.style.transform = 'scale(1.08)';
+          }}
+          onMouseLeave={(e) => {
+            e.currentTarget.style.color = 'var(--text-muted)';
+            e.currentTarget.style.backgroundColor = 'rgba(255, 255, 255, 0.92)';
+            e.currentTarget.style.transform = 'scale(1)';
+          }}
+        >
+          <Share2 size={14} />
+        </button>
+      </div>
+
+      {/* 2. Cuerpo de Contenido con Padding */}
       <div
+        className="mg-card-body"
         style={{
+          padding: '10px 12px 4px',
           display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'space-between',
-          gap: '4px',
-          marginBottom: 'var(--sp-1)',
+          flexDirection: 'column',
+          flexGrow: 1,
         }}
       >
-        {displayCategory ? (
+        {/* Categoría a ancho completo (sin cortes) */}
+        {displayCategory && (
           <span
             className="mg-eyebrow"
             style={{
-              fontSize: 'var(--fs-3xs)',
+              fontSize: '10px',
+              color: 'var(--gold-800, #a0740b)',
+              fontWeight: 700,
+              letterSpacing: '0.06em',
+              textTransform: 'uppercase',
+              display: 'block',
+              marginBottom: '2px',
               whiteSpace: 'nowrap',
               overflow: 'hidden',
               textOverflow: 'ellipsis',
@@ -228,187 +257,186 @@ export default function ProductCard({
           >
             {displayCategory}
           </span>
-        ) : <span />}
+        )}
 
-        {displayPoints !== undefined && (
-          <span
-            className="mg-points-badge"
+        {/* Nombre a ancho completo */}
+        <h3
+          className="mg-product-card-title"
+          style={{
+            fontSize: 'var(--fs-md)',
+            color: 'var(--text-strong)',
+            margin: '0 0 2px',
+            lineHeight: 'var(--lh-snug)',
+          }}
+        >
+          <Link
+            to={`/productos/${id}`}
             style={{
-              backgroundColor: 'var(--surface-green)',
-              color: 'var(--green-600)',
-              border: '1px solid var(--border-green)',
-              padding: '1px 6px',
-              borderRadius: 'var(--r-pill)',
-              fontSize: '10px',
-              fontFamily: 'var(--font-body)',
-              fontWeight: 700,
-              whiteSpace: 'nowrap',
-              flexShrink: 0,
+              color: 'inherit',
+              textDecoration: 'none',
+              borderBottom: 'none',
+              transition: 'color var(--dur-fast) var(--ease-out)',
+            }}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.color = 'var(--brand-gold)';
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.color = 'inherit';
             }}
           >
-            {displayPoints} pts
-          </span>
+            {displayName}
+          </Link>
+        </h3>
+
+        {/* Presentación */}
+        {displayPresentation && (
+          <p
+            className="mg-product-card-presentation"
+            style={{
+              fontSize: 'var(--fs-2xs)',
+              color: 'var(--text-muted)',
+              marginBottom: '6px',
+            }}
+          >
+            {displayPresentation}
+          </p>
+        )}
+
+        {/* Descripción (oculta por defecto en el catálogo para diseño limpio y alturas uniformes) */}
+        {showDescription && displayDesc && (
+          <p
+            style={{
+              fontSize: 'var(--fs-xs)',
+              lineHeight: 'var(--lh-normal)',
+              color: 'var(--text-body)',
+              marginBottom: 'var(--sp-4)',
+              flexGrow: 1,
+              display: '-webkit-box',
+              WebkitLineClamp: 3,
+              WebkitBoxOrient: 'vertical',
+              overflow: 'hidden',
+              textOverflow: 'ellipsis',
+            }}
+            title={displayDesc}
+          >
+            {displayDesc}
+          </p>
         )}
       </div>
 
-      {/* Fila 2: Nombre a ancho completo */}
-      <h3
-        className="mg-product-card-title"
-        style={{
-          fontSize: 'var(--fs-md)',
-          color: 'var(--text-strong)',
-          margin: '0 0 var(--sp-1)',
-          lineHeight: 'var(--lh-snug)',
-        }}
-      >
-        <Link
-          to={`/productos/${id}`}
-          style={{
-            color: 'inherit',
-            textDecoration: 'none',
-            transition: 'color var(--dur-fast) var(--ease-out)',
-          }}
-          onMouseEnter={(e) => {
-            e.currentTarget.style.color = 'var(--brand-gold)';
-          }}
-          onMouseLeave={(e) => {
-            e.currentTarget.style.color = 'inherit';
-          }}
-        >
-          {displayName}
-        </Link>
-      </h3>
-
-      {/* Presentación */}
-      {displayPresentation && (
-        <p
-          className="mg-product-card-presentation"
-          style={{
-            fontSize: 'var(--fs-2xs)',
-            color: 'var(--text-muted)',
-            marginBottom: 'var(--sp-2)',
-          }}
-        >
-          {displayPresentation}
-        </p>
-      )}
-
-      {/* Descripción (oculta por defecto en el catálogo para diseño limpio y alturas uniformes) */}
-      {showDescription && displayDesc && (
-        <p
-          style={{
-            fontSize: 'var(--fs-xs)',
-            lineHeight: 'var(--lh-normal)',
-            color: 'var(--text-body)',
-            marginBottom: 'var(--sp-4)',
-            flexGrow: 1,
-            display: '-webkit-box',
-            WebkitLineClamp: 3,
-            WebkitBoxOrient: 'vertical',
-            overflow: 'hidden',
-            textOverflow: 'ellipsis',
-          }}
-          title={displayDesc}
-        >
-          {displayDesc}
-        </p>
-      )}
-
-      {/* Precios: Público y Los socios pagan desde */}
+      {/* 3. Precios y Botón de Acción */}
       <div
-        className="mg-card-price-box"
+        className="mg-card-footer"
         style={{
+          padding: '0 12px 12px',
+          marginTop: 'auto',
           display: 'flex',
           flexDirection: 'column',
-          backgroundColor: 'var(--surface-sunken)',
-          padding: '8px 12px',
-          borderRadius: 'var(--r-sm)',
-          marginBottom: 'var(--sp-3)',
-          border: '1px solid var(--border-subtle)',
         }}
       >
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline' }}>
-          <span style={{ fontSize: 'var(--fs-2xs)', color: 'var(--text-muted)' }}>Público:</span>
-          <span
-            className="mg-card-price-publico"
-            style={{
-              fontFamily: 'var(--font-display)',
-              textTransform: 'uppercase',
-              letterSpacing: 'var(--ls-display)',
-              fontSize: 'var(--fs-md)',
-              color: 'var(--text-strong)',
-            }}
-          >
-            {formattedPrice}
-          </span>
-        </div>
-        {partnerPriceFrom && (
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', marginTop: '2px' }}>
-            <span style={{ fontSize: 'var(--fs-2xs)', color: 'var(--brand-green)', fontWeight: 600 }}>
-              <span className="mg-label-desktop">Los socios pagan desde:</span>
-              <span className="mg-label-mobile">Socio:</span>
-            </span>
-            <span
-              className="mg-card-price-socio"
-              style={{ fontSize: 'var(--fs-xs)', color: 'var(--brand-green)', fontWeight: 800 }}
-            >
-              S/. {partnerPriceFrom}
-            </span>
-          </div>
-        )}
-      </div>
-
-      {/* Botón Carrito: Agregar o Selector de Cantidad */}
-      {qtyInCart === 0 ? (
-        <button
-          onClick={() => {
-            if (cart) {
-              cart.addItem({
-                id,
-                nombre: displayName,
-                precioPublico: numericPrice,
-                puntos: displayPoints,
-                imagen: displayImage,
-              });
-              cart.openCart();
-            }
-          }}
-          data-testid={`btn-add-to-cart-${id}`}
-          data-test-order-btn={`btn-order-wa-${id}`}
-          aria-label={`Agregar ${displayName} al pedido`}
-          className="mg-card-btn-add"
+        {/* Precios: Desencajonados con divisor fino */}
+        <div
+          className="mg-card-price-box"
           style={{
-            marginTop: 'auto',
+            borderTop: '1px solid #F1F0EB',
+            paddingTop: '6px',
+            paddingBottom: '8px',
             display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
+            alignItems: 'baseline',
+            justifyContent: 'space-between',
             gap: '6px',
-            backgroundColor: 'var(--brand-gold)',
-            color: 'var(--n-700)',
-            fontFamily: 'var(--font-subtitle)',
-            fontSize: 'var(--fs-sm)',
-            fontWeight: 700,
-            border: 'none',
-            padding: '12px 16px',
-            borderRadius: 'var(--r-sm)',
-            cursor: 'pointer',
-            boxShadow: 'var(--shadow-gold)',
-            transition: 'background-color var(--dur-fast) var(--ease-out), transform var(--dur-fast) var(--ease-out)',
-          }}
-          onMouseEnter={(e) => {
-            e.currentTarget.style.backgroundColor = 'var(--gold-400)';
-            e.currentTarget.style.transform = 'translateY(-1px)';
-          }}
-          onMouseLeave={(e) => {
-            e.currentTarget.style.backgroundColor = 'var(--brand-gold)';
-            e.currentTarget.style.transform = 'none';
+            marginBottom: '8px',
           }}
         >
-          <ShoppingBag size={17} aria-hidden="true" />
-          <span className="mg-label-desktop">Agregar al pedido</span>
-          <span className="mg-label-mobile">Agregar</span>
-        </button>
-      ) : (
+          {/* Precio Público */}
+          <div style={{ display: 'flex', alignItems: 'baseline', gap: '3px' }}>
+            <span style={{ fontSize: '10px', color: 'var(--text-muted)' }}>
+              <span className="mg-label-desktop">Público: </span>
+              <span className="mg-label-mobile">Púb: </span>
+            </span>
+            <span
+              className="mg-card-price-publico"
+              style={{
+                fontSize: '11px',
+                color: 'var(--text-muted)',
+                textDecoration: 'line-through',
+              }}
+            >
+              {formattedPrice}
+            </span>
+          </div>
+
+          {/* Precio Socio */}
+          {partnerPriceFrom && (
+            <div style={{ display: 'flex', alignItems: 'baseline', gap: '4px', textAlign: 'right' }}>
+              <span style={{ fontSize: '10px', color: 'var(--brand-green)', fontWeight: 700 }}>
+                <span className="mg-label-desktop">Los socios pagan desde: </span>
+                <span className="mg-label-mobile">Socio </span>
+              </span>
+              <span
+                className="mg-card-price-socio"
+                style={{
+                  fontSize: '13px',
+                  color: 'var(--brand-green)',
+                  fontWeight: 900,
+                }}
+              >
+                S/. {partnerPriceFrom}
+              </span>
+            </div>
+          )}
+        </div>
+
+        {/* Botón Carrito: Agregar o Selector de Cantidad */}
+        {qtyInCart === 0 ? (
+          <button
+            onClick={() => {
+              if (cart) {
+                cart.addItem({
+                  id,
+                  nombre: displayName,
+                  precioPublico: numericPrice,
+                  puntos: displayPoints,
+                  imagen: displayImage,
+                });
+                cart.openCart();
+              }
+            }}
+            data-testid={`btn-add-to-cart-${id}`}
+            data-test-order-btn={`btn-order-wa-${id}`}
+            aria-label={`Agregar ${displayName} al pedido`}
+            className="mg-card-btn-add"
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              gap: '6px',
+              backgroundColor: '#1A1A18',
+              color: '#FFFFFF',
+              fontFamily: 'var(--font-subtitle)',
+              fontSize: 'var(--fs-sm)',
+              fontWeight: 700,
+              border: 'none',
+              padding: '10px 14px',
+              borderRadius: '8px',
+              cursor: 'pointer',
+              boxShadow: '0 2px 6px rgba(0, 0, 0, 0.12)',
+              transition: 'background-color var(--dur-fast) var(--ease-out), transform var(--dur-fast) var(--ease-out)',
+            }}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.backgroundColor = '#2D2D29';
+              e.currentTarget.style.transform = 'translateY(-1px)';
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.backgroundColor = '#1A1A18';
+              e.currentTarget.style.transform = 'none';
+            }}
+          >
+            <ShoppingBag size={15} color="var(--brand-gold)" aria-hidden="true" />
+            <span className="mg-label-desktop">Agregar al pedido</span>
+            <span className="mg-label-mobile">Agregar</span>
+          </button>
+        ) : (
         <div
           data-testid={`card-qty-controller-${id}`}
           style={{
@@ -480,6 +508,7 @@ export default function ProductCard({
           </button>
         </div>
       )}
+      </div>
 
       {/* Modal de Compartir */}
       <ShareModal

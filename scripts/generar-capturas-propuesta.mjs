@@ -65,7 +65,7 @@ async function main() {
     // 4 · Mobile (390 px) Grilla
     console.log('4. Captura 390px grilla...');
     await mobilePage.evaluate(() => {
-      const el = document.querySelector('[data-testid="products-grid"]');
+      const el = document.querySelector('[data-testid="catalog-grid"]');
       if (el) el.scrollIntoView({ behavior: 'instant', block: 'start' });
     });
     await mobilePage.waitForTimeout(400);
