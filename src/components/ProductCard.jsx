@@ -41,7 +41,22 @@ export default function ProductCard({
   const displayPoints = puntos !== undefined ? puntos : points;
   const displayCategory = categoria || category;
   const displayPresentation = presentacion || presentation;
-  const displayImage = imagen || image;
+  const rawImage = imagen || image;
+  const localImage = id ? `/images/productos/${id}.webp` : null;
+  const [currentImg, setCurrentImg] = useState(localImage || rawImage);
+
+  useEffect(() => {
+    setCurrentImg(id ? `/images/productos/${id}.webp` : rawImage);
+    setImgError(false);
+  }, [id, rawImage]);
+
+  const handleImgError = () => {
+    if (currentImg !== rawImage && rawImage) {
+      setCurrentImg(rawImage);
+    } else {
+      setImgError(true);
+    }
+  };
 
   useEffect(() => {
     const storedRef = sessionStorage.getItem('mg_ref');
@@ -111,9 +126,9 @@ export default function ProductCard({
           }}
           aria-label={`Ver detalles de ${displayName}`}
         >
-          {displayImage && !imgError ? (
+          {currentImg && !imgError ? (
             <img
-              src={displayImage}
+              src={currentImg}
               alt={displayName}
               style={{
                 width: '100%',
@@ -122,7 +137,7 @@ export default function ProductCard({
                 display: 'block',
                 transition: 'transform 0.4s var(--ease-out)',
               }}
-              onError={() => setImgError(true)}
+              onError={handleImgError}
             />
           ) : (
             <div
@@ -397,7 +412,7 @@ export default function ProductCard({
                   nombre: displayName,
                   precioPublico: numericPrice,
                   puntos: displayPoints,
-                  imagen: displayImage,
+                  imagen: currentImg,
                 });
                 cart.openCart();
               }
@@ -520,7 +535,7 @@ export default function ProductCard({
           precioPublico: numericPrice,
           presentacion: displayPresentation,
           descripcion: displayDesc,
-          imagen: displayImage,
+          imagen: currentImg,
         }}
       />
     </div>

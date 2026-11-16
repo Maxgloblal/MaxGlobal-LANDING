@@ -222,9 +222,9 @@ export default function CartDrawer() {
                     flexShrink: 0,
                   }}
                 >
-                  {item.imagen ? (
+                  {item.imagen || item.id ? (
                     <img
-                      src={item.imagen}
+                      src={item.imagen || `/images/productos/${item.id}.webp`}
                       alt={item.nombre}
                       style={{ width: '100%', height: '100%', objectFit: 'contain' }}
                       onError={(e) => {
@@ -236,7 +236,7 @@ export default function CartDrawer() {
                   ) : null}
                   <div
                     style={{
-                      display: item.imagen ? 'none' : 'flex',
+                      display: (item.imagen || item.id) ? 'none' : 'flex',
                       alignItems: 'center',
                       justifyContent: 'center',
                     }}

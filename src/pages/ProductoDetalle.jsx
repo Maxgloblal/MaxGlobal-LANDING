@@ -21,6 +21,22 @@ export default function ProductoDetalle() {
   const [refCode, setRefCode] = useState('');
   const [isShareOpen, setIsShareOpen] = useState(false);
 
+  const localImg = producto?.id ? `/images/productos/${producto.id}.webp` : null;
+  const [currentImg, setCurrentImg] = useState(localImg || producto?.imagen);
+
+  useEffect(() => {
+    setCurrentImg(producto?.id ? `/images/productos/${producto.id}.webp` : producto?.imagen);
+    setImgError(false);
+  }, [producto?.id, producto?.imagen]);
+
+  const handleImgError = () => {
+    if (currentImg !== producto?.imagen && producto?.imagen) {
+      setCurrentImg(producto.imagen);
+    } else {
+      setImgError(true);
+    }
+  };
+
   let cart = null;
   try {
     cart = useCart();
@@ -126,9 +142,9 @@ export default function ProductoDetalle() {
                 position: 'relative',
               }}
             >
-              {producto.imagen && !imgError ? (
+              {currentImg && !imgError ? (
                 <img
-                  src={producto.imagen}
+                  src={currentImg}
                   alt={producto.nombre}
                   data-testid="detail-product-img"
                   style={{
@@ -138,7 +154,7 @@ export default function ProductoDetalle() {
                     objectFit: 'cover',
                     display: 'block',
                   }}
-                  onError={() => setImgError(true)}
+                  onError={handleImgError}
                 />
               ) : (
                 <div
@@ -379,7 +395,7 @@ export default function ProductoDetalle() {
                   <button
                     onClick={() => {
                       if (cart) {
-                        cart.addItem(producto, cantidad);
+                        cart.addItem({ ...producto, imagen: currentImg }, cantidad);
                         cart.openCart();
                       }
                     }}
@@ -476,7 +492,7 @@ export default function ProductoDetalle() {
                 <ShareModal
                   isOpen={isShareOpen}
                   onClose={() => setIsShareOpen(false)}
-                  producto={producto}
+                  producto={{ ...producto, imagen: currentImg }}
                 />
               </div>
             </div>

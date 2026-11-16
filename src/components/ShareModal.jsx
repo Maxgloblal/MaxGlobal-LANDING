@@ -179,9 +179,9 @@ ${shareUrl}`;
             padding: 'var(--sp-3)',
           }}
         >
-          {producto.imagen ? (
+          {producto.imagen || producto.id ? (
             <img
-              src={producto.imagen}
+              src={producto.imagen || `/images/productos/${producto.id}.webp`}
               alt={producto.nombre}
               style={{
                 width: '56px',
@@ -189,6 +189,11 @@ ${shareUrl}`;
                 borderRadius: 'var(--r-sm)',
                 objectFit: 'cover',
                 backgroundColor: '#FFFFFF',
+              }}
+              onError={(e) => {
+                if (producto.id && e.currentTarget.src.includes('supabase')) {
+                  e.currentTarget.src = `/images/productos/${producto.id}.webp`;
+                }
               }}
             />
           ) : (
