@@ -123,7 +123,7 @@ describe('Productos Page (P-02)', () => {
     );
   });
 
-  it('renders commercial banners carousel with 3 banners and pagination dots', () => {
+  it('renders commercial banners carousel with 4 banners and pagination dots', () => {
     render(
       <MemoryRouter>
         <Productos />
@@ -133,17 +133,21 @@ describe('Productos Page (P-02)', () => {
     const banner1 = screen.getByTestId('catalog-banner-0');
     const banner2 = screen.getByTestId('catalog-banner-1');
     const banner3 = screen.getByTestId('catalog-banner-2');
+    const banner4 = screen.getByTestId('catalog-banner-3');
 
     expect(banner1).toBeInTheDocument();
     expect(banner2).toBeInTheDocument();
     expect(banner3).toBeInTheDocument();
+    expect(banner4).toBeInTheDocument();
 
-    expect(banner1).toHaveAttribute('href', '/productos?categoria=Salud y Nutrición');
-    expect(banner2).toHaveAttribute('href', '/productos?buscar=moringa');
-    expect(banner3).toHaveAttribute('href', '/packs-de-afiliacion');
+    expect(banner1).toHaveAttribute('href', '/productos/esplendor');
+    expect(banner2).toHaveAttribute('href', '/productos?categoria=Salud y Nutrición');
+    expect(banner3).toHaveAttribute('href', '/productos?buscar=moringa');
+    expect(banner4).toHaveAttribute('href', '/packs-de-afiliacion');
 
     expect(screen.getByTestId('banner-dot-0')).toBeInTheDocument();
     expect(screen.getByTestId('banner-dot-1')).toBeInTheDocument();
     expect(screen.getByTestId('banner-dot-2')).toBeInTheDocument();
+    expect(screen.getByTestId('banner-dot-3')).toBeInTheDocument();
   });
 });
