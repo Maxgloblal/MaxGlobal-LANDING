@@ -16,14 +16,56 @@ export default function Packs() {
   const waDudasMsg = 'Hola, quiero que me expliquen cuál pack me conviene.';
   const waDudasUrl = `https://wa.me/${EMPRESA.whatsapp}?text=${encodeURIComponent(waDudasMsg)}`;
 
+  const handleBannerClick = (e) => {
+    e.preventDefault();
+    const el = document.getElementById('packs');
+    if (el) {
+      const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      el.scrollIntoView({ behavior: prefersReduced ? 'auto' : 'smooth' });
+    }
+  };
+
   return (
     <div style={{ backgroundColor: 'var(--surface-page)' }}>
+      {/* Banner Superior a Todo el Ancho (TAREA-75) */}
+      <section
+        className="mg-packs-banner-section"
+        aria-label="Banner Emprende con Max Global"
+      >
+        <div className="mg-carousel-container">
+          <a
+            href="#packs"
+            onClick={handleBannerClick}
+            className="mg-packs-banner-link"
+            aria-label="Emprende con Max Global, packs desde S/ 120"
+            data-testid="banner-emprende-link"
+          >
+            <picture style={{ display: 'block', width: '100%', height: '100%' }}>
+              <source media="(max-width: 640px)" srcSet="/images/banners/banner-4-emprende-movil.webp" />
+              <img
+                src="/images/banners/banner-4-emprende.webp"
+                alt="Emprende con Max Global, packs desde S/ 120"
+                loading="eager"
+                fetchPriority="high"
+                width="2560"
+                height="720"
+                style={{
+                  width: '100%',
+                  height: '100%',
+                  display: 'block',
+                  objectFit: 'contain',
+                }}
+              />
+            </picture>
+          </a>
+        </div>
+      </section>
+
       {/* 1. Hero Section */}
       <section
-        id="packs"
         style={{
           background: 'linear-gradient(180deg, var(--gold-50) 0%, var(--n-0) 60%)',
-          padding: 'var(--section-y) 0 var(--sp-12)',
+          padding: 'var(--sp-8) 0 var(--sp-6)',
         }}
       >
         <div className="mg-container">
@@ -52,17 +94,9 @@ export default function Packs() {
       </section>
 
       {/* 2. Grid de Packs */}
-      <section style={{ paddingBottom: 'var(--section-y)' }}>
-        <div className="mg-container">
-          <div
-            style={{
-              display: 'grid',
-              gridTemplateColumns: 'repeat(auto-fit, minmax(214px, 1fr))',
-              gap: 'var(--sp-4)',
-              paddingTop: '18px',
-              alignItems: 'stretch',
-            }}
-          >
+      <section id="packs" style={{ paddingBottom: 'var(--section-y)' }}>
+        <div className="mg-packs-container">
+          <div className="mg-packs-grid">
             {packs.map((pack) => (
               <PackCard
                 key={pack.id}
@@ -401,10 +435,6 @@ export default function Packs() {
           gap: 0 var(--sp-8);
         }
         @media (max-width: 900px) {
-          .mg-packs-grid {
-            grid-template-columns: 1fr !important;
-            gap: var(--sp-6) !important;
-          }
           .mg-table-hint {
             display: block !important;
           }

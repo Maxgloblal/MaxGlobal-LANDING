@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { Link } from 'react-router-dom';
 
-const BANNERS = [
+export const DEFAULT_CATALOG_BANNERS = [
   {
     id: 'banner-esplendor',
     image: '/images/banners/banner-1-esplendor.webp',
@@ -36,7 +36,8 @@ const BANNERS = [
   },
 ];
 
-export default function CatalogBanners({ updateFilters }) {
+export default function CatalogBanners({ banners = DEFAULT_CATALOG_BANNERS, updateFilters, testIdPrefix = 'catalog-banner' }) {
+  const activeBanners = banners && banners.length > 0 ? banners : DEFAULT_CATALOG_BANNERS;
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
   const [prefersReduced, setPrefersReduced] = useState(false);
@@ -76,14 +77,14 @@ export default function CatalogBanners({ updateFilters }) {
 
     const timer = setInterval(() => {
       setCurrentIndex((prev) => {
-        const next = (prev + 1) % BANNERS.length;
+        const next = (prev + 1) % activeBanners.length;
         scrollToSlide(next, true);
         return next;
       });
     }, 6000);
 
     return () => clearInterval(timer);
-  }, [isPaused, prefersReduced, scrollToSlide]);
+  }, [isPaused, prefersReduced, scrollToSlide, activeBanners.length]);
 
   // Mantener la posición al cambiar tamaño de ventana
   useEffect(() => {
@@ -100,7 +101,7 @@ export default function CatalogBanners({ updateFilters }) {
     const { scrollLeft, clientWidth } = trackRef.current;
     if (clientWidth > 0) {
       const idx = Math.round(scrollLeft / clientWidth);
-      if (idx >= 0 && idx < BANNERS.length && idx !== currentIndex) {
+      if (idx >= 0 && idx < activeBanners.length && idx !== currentIndex) {
         setCurrentIndex(idx);
       }
     }
@@ -120,11 +121,11 @@ export default function CatalogBanners({ updateFilters }) {
   const handleTouchEnd = () => {
     const diff = touchStartX.current - touchEndX.current;
     if (diff > 45) {
-      const next = (currentIndex + 1) % BANNERS.length;
+      const next = (currentIndex + 1) % activeBanners.length;
       setCurrentIndex(next);
       scrollToSlide(next, true);
     } else if (diff < -45) {
-      const prev = (currentIndex - 1 + BANNERS.length) % BANNERS.length;
+      const prev = (currentIndex - 1 + activeBanners.length) % activeBanners.length;
       setCurrentIndex(prev);
       scrollToSlide(prev, true);
     }
@@ -142,6 +143,14 @@ export default function CatalogBanners({ updateFilters }) {
       if (grid && typeof grid.scrollIntoView === 'function') {
         grid.scrollIntoView({ behavior: 'smooth' });
       }
+    } else if (banner.to && banner.to.startsWith('#')) {
+      e.preventDefault();
+      const targetId = banner.to.slice(1);
+      const el = document.getElementById(targetId);
+      if (el && typeof el.scrollIntoView === 'function') {
+        el.scrollIntoView({ behavior: 'smooth' });
+      }
+      window.history.pushState(null, '', banner.to);
     }
   };
 
@@ -173,11 +182,11 @@ export default function CatalogBanners({ updateFilters }) {
           onTouchEnd={handleTouchEnd}
           onScroll={handleScroll}
         >
-          {BANNERS.map((banner, idx) => (
+          {activeBanners.map((banner, idx) => (
             <Link
               key={banner.id}
               to={banner.to}
-              data-testid={`catalog-banner-${idx}`}
+              data-testid={`${testIdPrefix}-${idx}`}
               onClick={(e) => handleBannerClick(e, banner)}
               style={{
                 flex: '0 0 100%',
@@ -219,7 +228,7 @@ export default function CatalogBanners({ updateFilters }) {
           role="tablist"
           aria-label="Selector de diapositivas"
         >
-          {BANNERS.map((b, idx) => {
+          {activeBanners.map((b, idx) => {
             const isActive = currentIndex === idx;
             return (
               <button

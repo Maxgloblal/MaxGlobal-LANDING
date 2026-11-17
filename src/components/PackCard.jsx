@@ -37,108 +37,92 @@ export default function PackCard({
 
   return (
     <div
-      style={{
-        position: 'relative',
-        display: 'flex',
-        flexDirection: 'column',
-        backgroundColor: featured ? 'var(--surface-gold)' : 'var(--surface-card)',
-        border: featured ? '2px solid var(--brand-gold)' : '1px solid var(--border-subtle)',
-        borderRadius: 'var(--r-pack)',
-        padding: 'var(--sp-6)',
-        boxShadow: featured ? 'var(--shadow-gold)' : 'var(--shadow-xs)',
-        transition: 'var(--t-surface)',
-        height: '100%',
-        boxSizing: 'border-box',
-      }}
-      onMouseEnter={(e) => {
-        e.currentTarget.style.transform = 'translateY(-3px)';
-        e.currentTarget.style.boxShadow = featured ? 'var(--shadow-md)' : 'var(--shadow-sm)';
-      }}
-      onMouseLeave={(e) => {
-        e.currentTarget.style.transform = 'none';
-        e.currentTarget.style.boxShadow = featured ? 'var(--shadow-gold)' : 'var(--shadow-xs)';
-      }}
+      className={`mg-pack-card ${featured ? 'mg-pack-card-gold' : ''}`}
+      data-testid={`pack-card-${id || 'pack'}`}
     >
-      {/* Ribbon / Badge si es destacado */}
+      {/* Ribbon / Badge si es destacado (centrado arriba) */}
       {ribbon && (
-        <div
-          style={{
-            position: 'absolute',
-            top: '-12px',
-            right: '20px',
-            backgroundColor: 'var(--brand-gold)',
-            color: 'var(--n-700)',
-            fontFamily: 'var(--font-body)',
-            fontSize: 'var(--fs-2xs)',
-            fontWeight: 700,
-            textTransform: 'uppercase',
-            letterSpacing: 'var(--ls-wide)',
-            padding: '4px 12px',
-            borderRadius: 'var(--r-pill)',
-            boxShadow: 'var(--shadow-xs)',
-          }}
-        >
+        <div className="mg-pack-ribbon">
           {ribbon}
         </div>
       )}
 
-      {/* Cabecera del Pack */}
-      <div>
-        <h3
-          style={{
-            fontSize: 'var(--fs-lg)',
-            color: 'var(--text-strong)',
-            marginBottom: 'var(--sp-2)',
-          }}
-        >
-          {name}
-        </h3>
-        <div
-          style={{
-            fontFamily: 'var(--font-display)',
-            fontSize: 'var(--fs-3xl)',
-            color: 'var(--text-strong)',
-            letterSpacing: 'var(--ls-display)',
-            textTransform: 'uppercase',
-            marginBottom: 'var(--sp-2)',
-          }}
-        >
-          {price}
-        </div>
-        {valor != null && (
-          <div
-            style={{
-              fontSize: 'var(--fs-xs)',
-              fontWeight: 700,
-              color: 'var(--text-strong)',
-              marginBottom: 'var(--sp-2)',
-            }}
-          >
-            Te llevas S/. {valor.toLocaleString('es-PE')} en producto
-          </div>
-        )}
-        <p
-          style={{
-            fontSize: 'var(--fs-xs)',
-            color: 'var(--text-muted)',
-            lineHeight: 'var(--lh-normal)',
-            minHeight: '36px',
-            marginBottom: 'var(--sp-5)',
-          }}
-        >
-          {lead}
-        </p>
-      </div>
-
-      <hr
-        style={{
-          border: 'none',
-          borderTop: '1px solid var(--border-subtle)',
-          margin: '0 0 var(--sp-5) 0',
+      {/* 1. Insignia: Arriba de todo en cada tarjeta, centrada */}
+      <img
+        src={`/images/packs/icono-${id}.svg`}
+        alt=""
+        className="mg-pack-insignia"
+        width="112"
+        height="112"
+        onError={(e) => {
+          e.currentTarget.style.display = 'none';
         }}
       />
 
-      {/* Lista de Características */}
+      {/* 2. Nombre (centrado) */}
+      <h3
+        style={{
+          fontSize: 'var(--fs-lg)',
+          color: featured ? 'var(--n-0)' : 'var(--text-strong)',
+          marginBottom: 'var(--sp-2)',
+          textAlign: 'center',
+          fontWeight: 700,
+        }}
+      >
+        {name}
+      </h3>
+
+      {/* 3. Precio (centrado) */}
+      <div
+        style={{
+          fontFamily: 'var(--font-display)',
+          fontSize: 'var(--fs-3xl)',
+          color: featured ? 'var(--brand-gold)' : 'var(--text-strong)',
+          letterSpacing: 'var(--ls-display)',
+          textTransform: 'uppercase',
+          marginBottom: 'var(--sp-2)',
+          textAlign: 'center',
+          lineHeight: 1.1,
+        }}
+      >
+        {price}
+      </div>
+
+      {/* 4. "Te llevas S/ X en producto" (pill, centered) */}
+      {valor != null && (
+        <div style={{ textAlign: 'center', marginBottom: 'var(--sp-3)' }}>
+          <span
+            style={{
+              display: 'inline-block',
+              padding: '4px 12px',
+              borderRadius: 'var(--r-pill)',
+              backgroundColor: 'var(--gold-50)',
+              color: 'var(--gold-700)',
+              fontSize: 'var(--fs-xs)',
+              fontWeight: 700,
+              lineHeight: 'var(--lh-normal)',
+            }}
+          >
+            Te llevas S/. {valor.toLocaleString('es-PE')} en producto
+          </span>
+        </div>
+      )}
+
+      {/* 5. Frase corta (lead) */}
+      <p
+        style={{
+          fontSize: 'var(--fs-sm)',
+          color: featured ? 'var(--n-200)' : 'var(--text-muted)',
+          lineHeight: 'var(--lh-normal)',
+          minHeight: '38px',
+          marginBottom: 'var(--sp-5)',
+          textAlign: 'center',
+        }}
+      >
+        {lead}
+      </p>
+
+      {/* 6. Beneficios (color #3A3733, 16px mínimo, line-height 1.5; en Gold texto claro) */}
       <ul
         style={{
           listStyle: 'none',
@@ -157,62 +141,39 @@ export default function PackCard({
               display: 'flex',
               alignItems: 'flex-start',
               gap: 'var(--sp-2)',
-              fontSize: 'var(--fs-xs)',
-              lineHeight: 'var(--lh-normal)',
-              color: feat.muted ? 'var(--text-muted)' : 'var(--text-body)',
+              fontSize: '16px',
+              lineHeight: 1.5,
+              color: feat.muted
+                ? 'var(--n-400)'
+                : featured
+                ? 'var(--n-50)'
+                : '#3A3733',
             }}
           >
             <span
               style={{
-                color: feat.muted ? 'var(--n-400)' : 'var(--green-500)',
+                color: feat.muted
+                  ? 'var(--n-400)'
+                  : featured
+                  ? 'var(--brand-gold)'
+                  : 'var(--green-500)',
                 flexShrink: 0,
-                marginTop: '2px',
+                marginTop: '3px',
                 display: 'inline-flex',
               }}
             >
-              <Check size={14} strokeWidth={2.5} />
+              <Check size={16} strokeWidth={2.5} />
             </span>
             <span>{feat.text}</span>
           </li>
         ))}
       </ul>
 
-      {/* Botón CTA */}
+      {/* 7. Botón CTA pegado abajo */}
       <button
         onClick={handleSelect}
         data-testid={`btn-select-pack-${id || 'pack'}`}
-        style={{
-          width: '100%',
-          padding: '12px 16px',
-          borderRadius: 'var(--r-pill)',
-          fontFamily: 'var(--font-subtitle)',
-          fontSize: 'var(--fs-sm)',
-          fontWeight: 700,
-          border: featured ? 'none' : '1px solid var(--border-strong)',
-          backgroundColor: featured ? 'var(--brand-gold)' : 'var(--surface-page)',
-          color: featured ? 'var(--n-700)' : 'var(--text-strong)',
-          cursor: 'pointer',
-          transition: 'var(--t-control)',
-          display: 'inline-flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-        }}
-        onMouseEnter={(e) => {
-          if (featured) {
-            e.currentTarget.style.backgroundColor = 'var(--gold-500)';
-          } else {
-            e.currentTarget.style.backgroundColor = 'var(--surface-gold)';
-            e.currentTarget.style.borderColor = 'var(--brand-gold)';
-          }
-        }}
-        onMouseLeave={(e) => {
-          if (featured) {
-            e.currentTarget.style.backgroundColor = 'var(--brand-gold)';
-          } else {
-            e.currentTarget.style.backgroundColor = 'var(--surface-page)';
-            e.currentTarget.style.borderColor = 'var(--border-strong)';
-          }
-        }}
+        className={`mg-pack-btn ${featured ? 'mg-pack-btn-gold' : 'mg-pack-btn-default'}`}
       >
         {cta}
       </button>

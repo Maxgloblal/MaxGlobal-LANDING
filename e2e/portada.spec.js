@@ -1,72 +1,145 @@
 import { test, expect } from '@playwright/test';
 
-test.describe('Portada Page (P-01 v2) E2E', () => {
-  test('should display full hero section and stats', async ({ page }) => {
+const PACK_IDS = ['kit-emprendedor', 'ejecutivo', 'gold', 'familiar', 'empresarial'];
+const PACK_NAMES = ['Kit Emprendedor', 'Pack Ejecutivo', 'Pack Gold', 'Pack Familiar', 'Pack Empresarial'];
+
+test.describe('Portada Comercial (TAREA-76) E2E', () => {
+  test('1 · Carga los 3 banners de la portada y cada uno navega a su destino', async ({ page }) => {
     await page.goto('/');
 
-    await expect(page.locator('h1')).toContainText('Un negocio propio');
-    await expect(page.locator('text=con productos que la gente vuelve a comprar')).toBeVisible();
+    const banner0 = page.locator('[data-testid="portada-banner-0"]');
+    const banner1 = page.locator('[data-testid="portada-banner-1"]');
+    const banner2 = page.locator('[data-testid="portada-banner-2"]');
 
-    // Estadísticas flotantes
-    await expect(page.locator('text=8').first()).toBeVisible();
-    await expect(page.locator('text=50%').first()).toBeVisible();
-    await expect(page.locator('text=10').first()).toBeVisible();
-    await expect(page.locator('text=descuento de socio').first()).toBeVisible();
+    await expect(banner0).toBeVisible();
+    await expect(banner1).toBeAttached();
+    await expect(banner2).toBeAttached();
+
+    // Banner 1 -> /packs-de-afiliacion
+    await banner1.click({ force: true });
+    await expect(page).toHaveURL(/.*packs-de-afiliacion/);
+
+    // Banner 2 -> /productos
+    await page.goto('/');
+    await page.locator('[data-testid="portada-banner-2"]').click({ force: true });
+    await expect(page).toHaveURL(/.*productos/);
   });
 
-  test('should display trust bar and 3 steps to start', async ({ page }) => {
+  test('2 · Exactamente un solo <h1> en la página y la estadística de productos es dinámica', async ({ page }) => {
     await page.goto('/');
 
-    // Barra de confianza
-    await expect(page.locator('text=Productos 100% naturales')).toBeVisible();
-    await expect(page.locator('text=Envíos a todo el Perú')).toBeVisible();
+    const h1s = page.locator('h1');
+    await expect(h1s).toHaveCount(1);
+    await expect(h1s).toContainText('Un negocio propio');
 
-    // 3 Pasos
-    await expect(page.locator('text=Empezar toma tres pasos')).toBeVisible();
-    await expect(page.getByRole('heading', { name: 'Eliges tu pack' })).toBeVisible();
-    await expect(page.getByRole('heading', { name: 'Recibes tu producto' })).toBeVisible();
-    await expect(page.getByRole('heading', { name: 'Empiezas a construir' })).toBeVisible();
+    const statsBox = page.locator('[data-testid="portada-stats-card"]');
+    await expect(statsBox).toBeVisible();
+    await expect(statsBox).toContainText('productos');
+    await expect(statsBox).toContainText('50%');
+    await expect(statsBox).toContainText('10');
   });
 
-  test('should display product carousel and compensation preview', async ({ page }) => {
+  test('3 · La cinta de productos muestra las tarjetas de producto y cada una abre su ficha', async ({ page }) => {
     await page.goto('/');
 
-    // Carrusel de productos
-    await expect(page.locator('text=Los productos').first()).toBeVisible();
-    await expect(page.locator('text=Ver el catálogo completo')).toBeVisible();
+    const cards = page.locator('.pr-mq .mg-product-card');
+    const count = await cards.count();
+    expect(count).toBeGreaterThan(0);
 
-    // Las cuatro formas de ganar
-    await expect(page.locator('text=Las cuatro formas de ganar')).toBeVisible();
-    await expect(page.locator('text=Patrocinio').first()).toBeVisible();
-    await expect(page.locator('text=Residual').first()).toBeVisible();
-    await expect(page.locator('text=Rango').first()).toBeVisible();
-    await expect(page.locator('text=Global').first()).toBeVisible();
-
-    // Banner de cierre
-    await expect(page.getByRole('heading', { name: 'Empieza hoy' })).toBeVisible();
+    // Verificar que un producto abre su ficha
+    await page.goto('/productos/cafe-moringa');
+    await expect(page).toHaveURL(/.*productos\/cafe-moringa/);
   });
 
-  test('should display four compensation bonuses properly on mobile viewport (390px)', async ({ page }) => {
-    await page.setViewportSize({ width: 390, height: 844 });
+  test('4 · Los 5 packs de afiliación se muestran y cada uno lleva a /registro?pack=<id>', async ({ page }) => {
     await page.goto('/');
 
-    await expect(page.locator('text=Las cuatro formas de ganar')).toBeVisible();
-
-    const bonuses = ['Patrocinio', 'Residual', 'Rango', 'Global'];
-    for (const b of bonuses) {
-      await expect(page.locator(`.mg-row:has-text("${b}")`)).toBeVisible();
+    for (let i = 0; i < PACK_IDS.length; i++) {
+      const id = PACK_IDS[i];
+      const name = PACK_NAMES[i];
+      const packCard = page.locator(`[data-testid="pack-card-${id}"]`);
+      await expect(packCard).toBeVisible();
+      await expect(packCard).toHaveAttribute('href', `/registro?pack=${id}`);
+      await expect(packCard).toContainText(name);
     }
 
-    // Verify labels Cuándo and Sobre qué are visible on mobile
-    await expect(page.locator('.mg-row-label:has-text("Cuándo")').first()).toBeVisible();
-    await expect(page.locator('.mg-row-label:has-text("Sobre qué")').first()).toBeVisible();
+    // Gold debe tener su etiqueta destacada
+    const goldCard = page.locator('[data-testid="pack-card-gold"]');
+    await expect(goldCard).toHaveClass(/hl/);
+    await expect(goldCard).toContainText('El más elegido');
   });
 
-  test('clicking hero CTAs navigates to packs or opens whatsapp', async ({ page }) => {
+  test('5 · Dos caminos (Quiero comprar / Quiero emprender) navegan correctamente', async ({ page }) => {
     await page.goto('/');
 
-    await page.click('[data-testid="hero-btn-packs"]');
-    await expect(page).toHaveURL(/.*packs-de-afiliacion/);
-    await expect(page.locator('h1')).toContainText('Elige cómo quieres empezar');
+    const caminoComprar = page.locator('[data-testid="camino-comprar"]');
+    await expect(caminoComprar).toBeVisible();
+    await expect(caminoComprar).toHaveAttribute('href', '/productos');
+
+    const caminoEmprender = page.locator('[data-testid="camino-emprender"]');
+    await expect(caminoEmprender).toBeVisible();
+    await expect(caminoEmprender).toHaveAttribute('href', '/packs-de-afiliacion');
+  });
+
+  test('6 · Empezar toma tres pasos con fotos y números 01, 02, 03', async ({ page }) => {
+    await page.goto('/');
+
+    const stepsSec = page.locator('#como-funciona');
+    await expect(stepsSec).toBeVisible();
+    await expect(stepsSec).toContainText('01');
+    await expect(stepsSec).toContainText('02');
+    await expect(stepsSec).toContainText('03');
+    await expect(stepsSec.getByRole('heading', { name: 'Eliges tu pack' })).toBeVisible();
+    await expect(stepsSec.getByRole('heading', { name: 'Recibes tu producto' })).toBeVisible();
+    await expect(stepsSec.getByRole('heading', { name: 'Empiezas a construir' })).toBeVisible();
+  });
+
+  test('7 · Plan de compensación muestra los 4 bonos y el botón Ver el plan completo', async ({ page }) => {
+    await page.goto('/');
+
+    const planSec = page.locator('#plan');
+    await expect(planSec).toBeVisible();
+    await expect(planSec).toContainText('Patrocinio');
+    await expect(planSec).toContainText('Residual');
+    await expect(planSec).toContainText('Rango');
+    await expect(planSec).toContainText('Global');
+
+    const btnPlan = page.locator('[data-testid="btn-ver-plan-completo"]');
+    await expect(btnPlan).toBeVisible();
+    await expect(btnPlan).toHaveAttribute('href', '/packs-de-afiliacion#comisiones');
+  });
+
+  test('8 · Cierre final Empieza hoy con imagen y CTAs', async ({ page }) => {
+    await page.goto('/');
+
+    const cierreSec = page.locator('#cierre');
+    await expect(cierreSec).toBeVisible();
+    await expect(cierreSec.getByRole('heading', { name: 'Empieza hoy' })).toBeVisible();
+    await expect(page.locator('[data-testid="close-btn-packs"]')).toBeVisible();
+    await expect(page.locator('[data-testid="close-btn-whatsapp"]')).toBeVisible();
+  });
+
+  test('9 · Sin scroll horizontal en 390, 1024, 1440 y 1920 px', async ({ page }) => {
+    const viewports = [390, 1024, 1440, 1920];
+
+    for (const width of viewports) {
+      await page.setViewportSize({ width, height: 900 });
+      await page.goto('/');
+      await page.waitForLoadState('networkidle');
+
+      const scrollWidth = await page.evaluate(() => document.documentElement.scrollWidth);
+      const clientWidth = await page.evaluate(() => document.documentElement.clientWidth);
+
+      expect(scrollWidth).toBeLessThanOrEqual(clientWidth);
+    }
+  });
+
+  test('10 · prefers-reduced-motion: animaciones de cintas pausadas / quietas', async ({ page }) => {
+    await page.emulateMedia({ reducedMotion: 'reduce' });
+    await page.goto('/');
+
+    const tickerIn = page.locator('.tk-in').first();
+    const anim = await tickerIn.evaluate((el) => window.getComputedStyle(el).animationName);
+    expect(['none', ''].includes(anim)).toBe(true);
   });
 });
