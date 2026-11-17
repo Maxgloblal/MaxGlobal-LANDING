@@ -109,7 +109,7 @@ function RouteManager() {
     }
 
     if (currentProd) {
-      const prodDesc = `${currentProd.descripcion}${currentProd.presentacion ? ` ${currentProd.presentacion}.` : ''} S/. ${currentProd.precioPublico}. Envíos a todo el Perú.`;
+      const prodDesc = `${currentProd.descripcion}${currentProd.presentacion ? ` ${currentProd.presentacion}.` : ''} S/ ${currentProd.precioPublico}. Envíos a todo el Perú.`;
       descMeta.setAttribute('content', prodDesc);
     } else {
       descMeta.setAttribute(

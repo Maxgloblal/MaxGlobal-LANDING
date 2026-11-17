@@ -61,7 +61,7 @@ describe('TAREA-30 · Pruebas de Valor en Producto de los Packs', () => {
         <PackCard
           id={kitPack.id}
           name={kitPack.nombre}
-          price={`S/. ${kitPack.precio}`}
+          price={`S/ ${kitPack.precio}`}
           lead={kitPack.lead}
           features={kitPack.beneficios}
           valorEnProducto={valorEnProducto(kitPack)}
@@ -80,7 +80,7 @@ describe('TAREA-30 · Pruebas de Valor en Producto de los Packs', () => {
         <PackCard
           id={goldPack.id}
           name={goldPack.nombre}
-          price={`S/. ${goldPack.precio.toLocaleString('es-PE')}`}
+          price={`S/ ${goldPack.precio.toLocaleString('es-PE')}`}
           lead={goldPack.lead}
           features={goldPack.beneficios}
           featured={goldPack.destacado}
@@ -93,7 +93,7 @@ describe('TAREA-30 · Pruebas de Valor en Producto de los Packs', () => {
     const valorGoldFmt = valorEnProducto(goldPack).toLocaleString('es-PE');
     expect(valorGoldFmt).toBe('2' + ',000');
     expect(screen.getByText(new RegExp(valorGoldFmt))).toBeInTheDocument();
-    expect(screen.getByText(`Te llevas S/. ${valorGoldFmt} en producto`)).toBeInTheDocument();
+    expect(screen.getByText(`Te llevas S/ ${valorGoldFmt} en producto`)).toBeInTheDocument();
   });
 
   // PRUEBA 8 (CRÍTICA - Demuestra que NO está escrito a mano)
@@ -114,7 +114,7 @@ describe('TAREA-30 · Pruebas de Valor en Producto de los Packs', () => {
         <PackCard
           id={goldModificado.id}
           name={goldModificado.nombre}
-          price={`S/. ${goldModificado.precio.toLocaleString('es-PE')}`}
+          price={`S/ ${goldModificado.precio.toLocaleString('es-PE')}`}
           lead={goldModificado.lead}
           features={goldModificado.beneficios}
           valorEnProducto={nuevoValor}
@@ -123,7 +123,7 @@ describe('TAREA-30 · Pruebas de Valor en Producto de los Packs', () => {
     );
 
     const nuevoValorFmt = nuevoValor.toLocaleString('es-PE');
-    expect(screen.getByText(`Te llevas S/. ${nuevoValorFmt} en producto`)).toBeInTheDocument();
+    expect(screen.getByText(`Te llevas S/ ${nuevoValorFmt} en producto`)).toBeInTheDocument();
   });
 
   // PRUEBA INTEGRAL EN LA PÁGINA COMPLETA DE PACKS
@@ -136,10 +136,10 @@ describe('TAREA-30 · Pruebas de Valor en Producto de los Packs', () => {
 
     // Kit NO tiene "Te llevas"
     // Los otros 4 packs SÍ tienen "Te llevas" con sus montos calculados
-    const esperadoEjecutivo = `Te llevas S/. ${valorEnProducto(ejecutivoPack).toLocaleString('es-PE')} en producto`;
-    const esperadoGold = `Te llevas S/. ${valorEnProducto(goldPack).toLocaleString('es-PE')} en producto`;
-    const esperadoFamiliar = `Te llevas S/. ${valorEnProducto(familiarPack).toLocaleString('es-PE')} en producto`;
-    const esperadoEmpresarial = `Te llevas S/. ${valorEnProducto(empresarialPack).toLocaleString('es-PE')} en producto`;
+    const esperadoEjecutivo = `Te llevas S/ ${valorEnProducto(ejecutivoPack).toLocaleString('es-PE')} en producto`;
+    const esperadoGold = `Te llevas S/ ${valorEnProducto(goldPack).toLocaleString('es-PE')} en producto`;
+    const esperadoFamiliar = `Te llevas S/ ${valorEnProducto(familiarPack).toLocaleString('es-PE')} en producto`;
+    const esperadoEmpresarial = `Te llevas S/ ${valorEnProducto(empresarialPack).toLocaleString('es-PE')} en producto`;
 
     expect(screen.getByText(esperadoEjecutivo)).toBeInTheDocument();
     expect(screen.getByText(esperadoGold)).toBeInTheDocument();

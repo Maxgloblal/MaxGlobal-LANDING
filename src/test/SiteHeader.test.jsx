@@ -35,16 +35,23 @@ describe('SiteHeader Component', () => {
     expect(screen.getByRole('link', { name: /nosotros/i })).toBeInTheDocument();
   });
 
-  it('renders WhatsApp button with prefilled message', () => {
+  it('renders WhatsApp button with prefilled message in mobile menu and keeps desktop clean', async () => {
+    const user = userEvent.setup();
     render(
       <MemoryRouter>
         <SiteHeader />
       </MemoryRouter>
     );
 
-    const waLinks = screen.getAllByRole('link', { name: /hablar por whatsapp/i });
-    expect(waLinks.length).toBeGreaterThan(0);
-    expect(waLinks[0]).toHaveAttribute('href', expect.stringContaining(`https://wa.me/${EMPRESA.whatsapp}`));
+    // En escritorio no hay botón de WhatsApp repetido
+    expect(screen.queryByRole('link', { name: /hablar por whatsapp/i })).not.toBeInTheDocument();
+
+    // En el menú móvil sí se mantiene
+    const burger = screen.getByTestId('nav-burger');
+    await user.click(burger);
+    const waLink = screen.getByRole('link', { name: /hablar por whatsapp/i });
+    expect(waLink).toBeInTheDocument();
+    expect(waLink).toHaveAttribute('href', expect.stringContaining(`https://wa.me/${EMPRESA.whatsapp}`));
   });
 
   it('displays referral label when stored in sessionStorage', () => {

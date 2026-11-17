@@ -26,10 +26,10 @@ export default function CartDrawer() {
 
     items.forEach((item) => {
       const subtotal = item.precioPublico * item.cantidad;
-      msg += `• ${item.cantidad}× ${item.nombre} ..... S/. ${subtotal}\n`;
+      msg += `• ${item.cantidad}× ${item.nombre} ..... S/ ${subtotal}\n`;
     });
 
-    msg += `\nTotal a precio público: S/. ${totalPublico}\n`;
+    msg += `\nTotal a precio público: S/ ${totalPublico}\n`;
     msg += `Puntos: ${totalPuntos}\n`;
 
     if (refCode && refCode.trim() !== '') {
@@ -262,7 +262,7 @@ export default function CartDrawer() {
                   </h4>
                   <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
                     <span style={{ fontSize: 'var(--fs-xs)', color: 'var(--text-strong)', fontWeight: 700 }}>
-                      S/. {item.precioPublico * item.cantidad}
+                      S/ {item.precioPublico * item.cantidad}
                     </span>
                     <span style={{ fontSize: 'var(--fs-3xs)', color: 'var(--brand-green)', fontWeight: 700 }}>
                       {item.puntos * item.cantidad} pts
@@ -427,7 +427,7 @@ export default function CartDrawer() {
                     color: 'var(--text-strong)',
                   }}
                 >
-                  S/. {totalPublico}
+                  S/ {totalPublico}
                 </span>
               </div>
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline' }}>

@@ -23,7 +23,7 @@ test.describe('Shopping Cart & WhatsApp Flow (P-02 / Bloque B & C) E2E', () => {
     // 2. Incrementar cantidad en el drawer
     await page.locator(`[data-testid="cart-btn-plus-${prodCafe.id}"]`).click();
     await expect(page.locator(`[data-testid="cart-item-qty-${prodCafe.id}"]`)).toHaveText('2');
-    await expect(page.locator('[data-testid="cart-total-publico"]')).toContainText(`S/. ${prodCafe.precioPublico * 2}`);
+    await expect(page.locator('[data-testid="cart-total-publico"]')).toContainText(`S/ ${prodCafe.precioPublico * 2}`);
     await expect(page.locator('[data-testid="cart-total-puntos"]')).toContainText(`${prodCafe.puntos * 2} pts`);
 
     // Cerrar drawer
@@ -36,7 +36,7 @@ test.describe('Shopping Cart & WhatsApp Flow (P-02 / Bloque B & C) E2E', () => {
     await expect(page.locator(`[data-testid="cart-item-${prodColageno.id}"]`)).toBeVisible();
     const totalPublico = prodCafe.precioPublico * 2 + prodColageno.precioPublico;
     const totalPuntos = prodCafe.puntos * 2 + prodColageno.puntos;
-    await expect(page.locator('[data-testid="cart-total-publico"]')).toContainText(`S/. ${totalPublico}`);
+    await expect(page.locator('[data-testid="cart-total-publico"]')).toContainText(`S/ ${totalPublico}`);
     await expect(page.locator('[data-testid="cart-total-puntos"]')).toContainText(`${totalPuntos} pts`);
 
     // Cerrar drawer y navegar a otra página para comprobar persistencia en sessionStorage
@@ -68,7 +68,7 @@ test.describe('Shopping Cart & WhatsApp Flow (P-02 / Bloque B & C) E2E', () => {
     const decodedHref = decodeURIComponent(href);
     expect(decodedHref).toContain(`2× ${prodCafe.nombre}`);
     expect(decodedHref).toContain(`1× ${prodColageno.nombre}`);
-    expect(decodedHref).toContain(`Total a precio público: S/. ${totalPublico}`);
+    expect(decodedHref).toContain(`Total a precio público: S/ ${totalPublico}`);
     expect(decodedHref).toContain(`Puntos: ${totalPuntos}`);
     expect(decodedHref).toContain('Mi código de socio: MG-00417');
   });

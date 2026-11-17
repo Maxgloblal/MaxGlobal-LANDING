@@ -10,10 +10,11 @@ test.describe('Productos Page (P-02) E2E', () => {
     await expect(page.locator('text=Como socio, los compras con 50% de descuento.')).toBeVisible();
 
     // Productos
+    const catalogGrid = page.locator('[data-testid="catalog-grid"]');
     for (const prod of PRODUCTOS) {
-      await expect(page.getByRole('heading', { name: prod.nombre })).toBeVisible();
-      await expect(page.locator(`text=S/. ${prod.precioPublico}`).first()).toBeVisible();
-      await expect(page.locator(`text=${prod.puntos} pts`).first()).toBeVisible();
+      await expect(catalogGrid.getByRole('heading', { name: prod.nombre })).toBeVisible();
+      await expect(catalogGrid.locator(`text=S/ ${prod.precioPublico}`).first()).toBeVisible();
+      await expect(catalogGrid.locator(`text=${prod.puntos} pts`).first()).toBeVisible();
     }
   });
 

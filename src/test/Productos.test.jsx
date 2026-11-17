@@ -104,7 +104,7 @@ describe('Productos Page (P-02)', () => {
     );
 
     PRODUCTOS.forEach((prod) => {
-      expect(screen.getAllByText(`S/. ${prod.precioPublico}`).length).toBeGreaterThanOrEqual(1);
+      expect(screen.getAllByText(`S/ ${prod.precioPublico}`).length).toBeGreaterThanOrEqual(1);
       expect(screen.getAllByText(`${prod.puntos} pts`).length).toBeGreaterThanOrEqual(1);
     });
   });

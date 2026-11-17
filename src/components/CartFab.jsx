@@ -5,6 +5,9 @@ import { useCart } from '../context/CartContext';
 export default function CartFab() {
   const { totalItems, toggleCart } = useCart();
 
+  // TAREA-78: No se muestra cuando totalItems === 0. Aparece al agregar el primer producto.
+  if (!totalItems || totalItems === 0) return null;
+
   return (
     <button
       onClick={toggleCart}

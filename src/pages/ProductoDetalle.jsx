@@ -56,7 +56,7 @@ export default function ProductoDetalle() {
   const relacionados = getProductosRelacionados(producto.id, 3);
 
   // Mensaje directo para WhatsApp
-  const waMsg = `Hola Max Global, deseo consultar y pedir ${cantidad}× ${producto.nombre} (Total público: S/. ${producto.precioPublico * cantidad}, ${producto.puntos * cantidad} pts)${refCode ? ` - Mi código de socio: ${refCode}` : ''}.`;
+  const waMsg = `Hola Max Global, deseo consultar y pedir ${cantidad}× ${producto.nombre} (Total público: S/ ${producto.precioPublico * cantidad}, ${producto.puntos * cantidad} pts)${refCode ? ` - Mi código de socio: ${refCode}` : ''}.`;
   const waUrl = `https://wa.me/${EMPRESA.whatsapp}?text=${encodeURIComponent(waMsg)}`;
 
   return (
@@ -296,7 +296,7 @@ export default function ProductoDetalle() {
                       letterSpacing: 'var(--ls-display)',
                     }}
                   >
-                    S/. {producto.precioPublico}
+                    S/ {producto.precioPublico}
                   </span>
                 </div>
 
@@ -320,7 +320,7 @@ export default function ProductoDetalle() {
                       fontWeight: 800,
                     }}
                   >
-                    S/. {partnerPriceFrom}
+                    S/ {partnerPriceFrom}
                   </span>
                 </div>
               </div>

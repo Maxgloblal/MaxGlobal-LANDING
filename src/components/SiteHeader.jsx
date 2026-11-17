@@ -159,7 +159,7 @@ export default function SiteHeader({ active, refName }) {
           </span>
         )}
 
-        {/* Acciones Derecha (WhatsApp + Afíliate + Burger Móvil) */}
+        {/* Acciones Derecha (Ingresar + Afíliate + Burger Móvil) */}
         <div
           className="mg-head-actions"
           style={{
@@ -169,33 +169,6 @@ export default function SiteHeader({ active, refName }) {
             gap: 'var(--sp-3)',
           }}
         >
-          {/* Botón WhatsApp Escritorio */}
-          <div className="mg-head-wa">
-            <a
-              href={waUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              data-testid="head-whatsapp"
-              style={{
-                display: 'inline-flex',
-                alignItems: 'center',
-                gap: '8px',
-                backgroundColor: 'var(--whatsapp)',
-                color: '#FFFFFF',
-                padding: '10px 20px',
-                borderRadius: 'var(--r-pill)',
-                fontSize: 'var(--fs-sm)',
-                fontFamily: 'var(--font-subtitle)',
-                fontWeight: 700,
-                textDecoration: 'none',
-                transition: 'var(--t-control)',
-              }}
-            >
-              <MessageCircle size={18} color="#FFFFFF" />
-              <span>Hablar por WhatsApp</span>
-            </a>
-          </div>
-
           {/* Botón Ingresar (Secundario, no compite con Afíliate) */}
           {Boolean(URL_BACKOFFICE) && (
             <a

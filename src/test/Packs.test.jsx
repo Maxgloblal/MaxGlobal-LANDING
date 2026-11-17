@@ -14,7 +14,7 @@ describe('Packs Component & PackCard', () => {
         <PackCard
           id="gold"
           name="Pack Gold"
-          price="S/. 1,200"
+          price="S/ 1,200"
           lead="El plan completo."
           cta="Elegir Gold"
           featured={true}
@@ -29,7 +29,7 @@ describe('Packs Component & PackCard', () => {
     );
 
     expect(screen.getByText('Pack Gold')).toBeInTheDocument();
-    expect(screen.getByText('S/. 1,200')).toBeInTheDocument();
+    expect(screen.getByText('S/ 1,200')).toBeInTheDocument();
     expect(screen.getByText('El más elegido')).toBeInTheDocument();
     expect(screen.getByText('13 productos incluidos')).toBeInTheDocument();
 

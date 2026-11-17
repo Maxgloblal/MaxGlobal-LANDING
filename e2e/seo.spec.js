@@ -67,7 +67,7 @@ test.describe('SEO, Metatags & Canonical URL (P-07) E2E', () => {
     // Meta description
     const desc = page.locator('meta[name="description"]');
     const descContent = await desc.getAttribute('content');
-    expect(descContent).toContain(`S/. ${prod.precioPublico}`);
+    expect(descContent).toContain(`S/ ${prod.precioPublico}`);
 
     // Schema.org Product JSON-LD
     const jsonLdContent = await page.locator('#schema-product').textContent();

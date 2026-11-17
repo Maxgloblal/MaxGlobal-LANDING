@@ -430,7 +430,7 @@ export default function Productos() {
           <div style={{ maxWidth: '52ch' }}>
             <h3 style={{ fontSize: 'var(--fs-xl)' }}>Los socios pagan la mitad</h3>
             <p style={{ marginTop: 'var(--sp-3)', fontSize: 'var(--fs-md)', lineHeight: 'var(--lh-relaxed)' }}>
-              Con cualquier pack desde S/. 360 compras todos estos productos con{' '}
+              Con cualquier pack desde S/ 360 compras todos estos productos con{' '}
               <span style={{ color: 'var(--text-strong)', fontWeight: 700 }}>
                 50% de descuento, de por vida
               </span>.

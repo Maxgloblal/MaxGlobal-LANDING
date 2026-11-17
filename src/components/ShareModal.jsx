@@ -33,7 +33,7 @@ export default function ShareModal({ isOpen, onClose, producto }) {
 
   const waText = `¡Hola! Te recomiendo este producto de Max Global Corporation:
 
-🌿 *${producto.nombre}* — S/. ${producto.precioPublico}
+🌿 *${producto.nombre}* — S/ ${producto.precioPublico}
 ${producto.descripcion ? `${producto.descripcion}\n` : ''}${producto.presentacion ? `Presentación: ${producto.presentacion}\n` : ''}
 👉 Conoce más o pídela aquí:
 ${shareUrl}`;
@@ -65,7 +65,7 @@ ${shareUrl}`;
       try {
         await navigator.share({
           title: `${producto.nombre} — Max Global`,
-          text: `🌿 ${producto.nombre} (S/. ${producto.precioPublico}) en Max Global Corporation`,
+          text: `🌿 ${producto.nombre} (S/ ${producto.precioPublico}) en Max Global Corporation`,
           url: shareUrl,
         });
       } catch (err) {
@@ -235,7 +235,7 @@ ${shareUrl}`;
             <div style={{ display: 'flex', alignItems: 'baseline', gap: '6px', marginTop: '2px' }}>
               <span style={{ fontSize: 'var(--fs-xs)', color: 'var(--text-muted)' }}>Público:</span>
               <span style={{ fontSize: 'var(--fs-sm)', fontWeight: 800, color: 'var(--text-strong)' }}>
-                S/. {producto.precioPublico}
+                S/ {producto.precioPublico}
               </span>
             </div>
           </div>

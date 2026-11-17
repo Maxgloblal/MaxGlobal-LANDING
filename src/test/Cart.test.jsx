@@ -98,7 +98,7 @@ describe('Cart Context and Flow (Bloque B & C)', () => {
     const waBtn = screen.getByTestId('btn-cart-whatsapp');
     const href = waBtn.getAttribute('href');
     expect(href).toContain('https://wa.me/');
-    expect(decodeURIComponent(href)).toContain(`Total a precio público: S/. ${prodCafe.precioPublico * 2}`);
+    expect(decodeURIComponent(href)).toContain(`Total a precio público: S/ ${prodCafe.precioPublico * 2}`);
     expect(decodeURIComponent(href)).toContain(`Puntos: ${prodCafe.puntos * 2}`);
     expect(decodeURIComponent(href)).toContain('Mi código de socio: MG-00417');
   });
@@ -120,7 +120,7 @@ describe('Cart Context and Flow (Bloque B & C)', () => {
     const plusBtn = screen.getByTestId(`cart-btn-plus-${prodCafe.id}`);
     await user.click(plusBtn);
     expect(screen.getByTestId(`cart-item-qty-${prodCafe.id}`)).toHaveTextContent('3');
-    expect(screen.getByTestId('cart-total-publico')).toHaveTextContent(`S/. ${prodCafe.precioPublico * 3}`);
+    expect(screen.getByTestId('cart-total-publico')).toHaveTextContent(`S/ ${prodCafe.precioPublico * 3}`);
 
     // Decrease quantity
     const minusBtn = screen.getByTestId(`cart-btn-minus-${prodCafe.id}`);

@@ -114,23 +114,18 @@ test.describe('Portada Comercial (TAREA-76) E2E', () => {
     expect(headerBox.y).toBeCloseTo(0, 1);
   });
 
-  test('4d · Barra de confianza aparece debajo de la intro con los 4 beneficios', async ({ page }) => {
+  test('4d · Barra de confianza eliminada y CartFab oculto cuando el carrito está vacío', async ({ page }) => {
     await page.goto('/');
 
-    const trustSection = page.locator('.mg-trust-section');
-    await expect(trustSection).toBeVisible();
+    // La barra de confianza fue eliminada (TAREA-78)
+    await expect(page.locator('.mg-trust-section')).toHaveCount(0);
+    await expect(page.locator('.mg-trust-grid')).toHaveCount(0);
 
-    await expect(trustSection).toContainText('Productos 100% naturales');
-    await expect(trustSection).toContainText('Envíos a todo el Perú');
-    await expect(trustSection).toContainText('Descuento de por vida para socios');
-    await expect(trustSection).toContainText('Comisiones hasta 10 niveles');
+    // CartFab no debe mostrarse cuando totalItems === 0
+    await expect(page.locator('[data-testid="btn-cart-fab"]')).toHaveCount(0);
 
-    // En celular (390px), la grilla es 2x2
-    await page.setViewportSize({ width: 390, height: 844 });
-    const cols = await page.locator('.mg-trust-grid').evaluate((el) => {
-      return window.getComputedStyle(el).gridTemplateColumns.split(' ').length;
-    });
-    expect(cols).toBe(2);
+    // WhatsApp repetido en SiteHeader de escritorio no debe existir
+    await expect(page.locator('header [data-testid="head-whatsapp"]')).toHaveCount(0);
   });
 
   test('5 · Dos caminos (Quiero comprar / Quiero emprender) navegan correctamente', async ({ page }) => {

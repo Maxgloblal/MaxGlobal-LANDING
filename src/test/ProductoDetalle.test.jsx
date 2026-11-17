@@ -46,8 +46,8 @@ describe('ProductoDetalle Page (/productos/:id)', () => {
     expect(screen.getByTestId('detail-points')).toHaveTextContent(`${sampleProd.puntos} pts`);
 
     // Prices
-    expect(screen.getByTestId('detail-price-publico')).toHaveTextContent(`S/. ${sampleProd.precioPublico}`);
-    expect(screen.getByTestId('detail-price-partner')).toHaveTextContent(`S/. ${partnerPrice}`);
+    expect(screen.getByTestId('detail-price-publico')).toHaveTextContent(`S/ ${sampleProd.precioPublico}`);
+    expect(screen.getByTestId('detail-price-partner')).toHaveTextContent(`S/ ${partnerPrice}`);
 
     // Action buttons
     expect(screen.getByTestId('detail-btn-add-cart')).toBeInTheDocument();
@@ -72,7 +72,7 @@ describe('ProductoDetalle Page (/productos/:id)', () => {
     expect(href).toContain('https://wa.me/');
     const decoded = decodeURIComponent(href);
     expect(decoded).toContain(`2× ${sampleProd.nombre}`);
-    expect(decoded).toContain(`Total público: S/. ${sampleProd.precioPublico * 2}`);
+    expect(decoded).toContain(`Total público: S/ ${sampleProd.precioPublico * 2}`);
     expect(decoded).toContain(`Mi código de socio: MG-00417`);
   });
 
@@ -88,7 +88,7 @@ describe('ProductoDetalle Page (/productos/:id)', () => {
     }
 
     // Price & points
-    expect(screen.getByTestId('detail-price-publico')).toHaveTextContent(`S/. ${dalba.precioPublico}`);
+    expect(screen.getByTestId('detail-price-publico')).toHaveTextContent(`S/ ${dalba.precioPublico}`);
     expect(screen.getByTestId('detail-points')).toHaveTextContent(`${dalba.puntos} pts`);
 
     // Action buttons work

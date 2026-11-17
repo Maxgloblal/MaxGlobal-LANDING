@@ -14,21 +14,22 @@ test.describe('Packs Page (P-03) E2E — TAREA-75', () => {
     await expect(page.locator('h1')).toContainText('Elige cómo quieres empezar');
 
     // Packs
-    await expect(page.getByRole('heading', { name: 'Kit Emprendedor' })).toBeVisible();
-    await expect(page.getByText('S/. 120').first()).toBeVisible();
+    const packsGrid = page.locator('#packs');
+    await expect(packsGrid.getByRole('heading', { name: 'Kit Emprendedor' })).toBeVisible();
+    await expect(packsGrid.getByText('S/ 120').first()).toBeVisible();
 
-    await expect(page.getByRole('heading', { name: 'Pack Ejecutivo' })).toBeVisible();
-    await expect(page.getByText('S/. 360').first()).toBeVisible();
+    await expect(packsGrid.getByRole('heading', { name: 'Pack Ejecutivo' })).toBeVisible();
+    await expect(packsGrid.getByText('S/ 360').first()).toBeVisible();
 
-    await expect(page.getByRole('heading', { name: 'Pack Gold' })).toBeVisible();
-    await expect(page.getByText('S/. 1,200').first()).toBeVisible();
-    await expect(page.getByText('El más elegido').first()).toBeVisible();
+    await expect(packsGrid.getByRole('heading', { name: 'Pack Gold' })).toBeVisible();
+    await expect(packsGrid.getByText('S/ 1,200').first()).toBeVisible();
+    await expect(packsGrid.getByText('El más elegido').first()).toBeVisible();
 
-    await expect(page.getByRole('heading', { name: 'Pack Familiar' })).toBeVisible();
-    await expect(page.getByText('S/. 4,000').first()).toBeVisible();
+    await expect(packsGrid.getByRole('heading', { name: 'Pack Familiar' })).toBeVisible();
+    await expect(packsGrid.getByText('S/ 4,000').first()).toBeVisible();
 
-    await expect(page.getByRole('heading', { name: 'Pack Empresarial' })).toBeVisible();
-    await expect(page.getByText('S/. 8,000').first()).toBeVisible();
+    await expect(packsGrid.getByRole('heading', { name: 'Pack Empresarial' })).toBeVisible();
+    await expect(packsGrid.getByText('S/ 8,000').first()).toBeVisible();
   });
 
   test('clicking pack CTA navigates to registro with selected pack parameter', async ({ page }) => {

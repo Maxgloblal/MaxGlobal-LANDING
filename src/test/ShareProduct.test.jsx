@@ -34,7 +34,7 @@ describe('Funcionalidad de Compartir Productos', () => {
     expect(screen.getByTestId('share-modal-title')).toBeInTheDocument();
     expect(screen.getByText('Aceite de Moringa')).toBeInTheDocument();
     expect(screen.getByText('Frasco gotero 50 ml')).toBeInTheDocument();
-    expect(screen.getByText('S/. 120')).toBeInTheDocument();
+    expect(screen.getByText('S/ 120')).toBeInTheDocument();
 
     expect(screen.getByTestId('btn-share-whatsapp')).toBeInTheDocument();
     expect(screen.getByTestId('btn-copy-link')).toBeInTheDocument();
@@ -152,7 +152,7 @@ describe('Funcionalidad de Compartir Productos', () => {
 
     // Con datos exactos del producto
     expect(href).toContain('Aceite de Moringa');
-    expect(href).toContain('S/. 120');
+    expect(href).toContain('S/ 120');
     expect(href).toContain('/productos/aceite-moringa');
   });
 

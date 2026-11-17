@@ -70,16 +70,4 @@ describe('Portada Page (P-01 v2)', () => {
     expect(screen.getByRole('heading', { name: /empieza hoy/i })).toBeInTheDocument();
   });
 
-  it('renders the trust bar with 4 benefits', () => {
-    render(
-      <MemoryRouter>
-        <Portada />
-      </MemoryRouter>
-    );
-
-    expect(screen.getByText('Productos 100% naturales')).toBeInTheDocument();
-    expect(screen.getByText('Envíos a todo el Perú')).toBeInTheDocument();
-    expect(screen.getByText('Descuento de por vida para socios')).toBeInTheDocument();
-    expect(screen.getByText('Comisiones hasta 10 niveles')).toBeInTheDocument();
-  });
 });

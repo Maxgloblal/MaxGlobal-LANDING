@@ -89,7 +89,7 @@ export default function Registro() {
 
     // Armamos mensaje para enviar a WhatsApp
     const selectedPackObj = getPack(formData.pack) || packs[2] || { nombre: 'Pack Gold', precio: 1200 };
-    const waMsg = `Hola, completé mi registro de afiliación:\n- Nombre: ${formData.nombre}\n- DNI: ${formData.dni}\n- Teléfono: ${formData.telefono}\n- Departamento: ${formData.departamento}, ${formData.provincia}\n- Pack: ${selectedPackObj.nombre} (S/. ${selectedPackObj.precio})\n${formData.patrocinador ? `Ref: ${formData.patrocinador}` : ''}`;
+    const waMsg = `Hola, completé mi registro de afiliación:\n- Nombre: ${formData.nombre}\n- DNI: ${formData.dni}\n- Teléfono: ${formData.telefono}\n- Departamento: ${formData.departamento}, ${formData.provincia}\n- Pack: ${selectedPackObj.nombre} (S/ ${selectedPackObj.precio})\n${formData.patrocinador ? `Ref: ${formData.patrocinador}` : ''}`;
 
     try {
       const resp = await fetch(URL_REGISTRO_EDGE_FUNCTION, {
@@ -344,7 +344,7 @@ export default function Registro() {
                   >
                     {packs.map((p) => (
                       <option key={p.id} value={p.id}>
-                        {p.nombre} — S/. {p.precio.toLocaleString()}
+                        {p.nombre} — S/ {p.precio.toLocaleString()}
                       </option>
                     ))}
                   </select>

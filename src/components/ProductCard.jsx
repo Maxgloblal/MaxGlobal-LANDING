@@ -66,7 +66,7 @@ export default function ProductCard({
   }, []);
 
   const numericPrice = typeof rawPrice === 'string' ? parseInt(rawPrice.replace(/\D/g, ''), 10) || 0 : typeof rawPrice === 'number' ? rawPrice : 0;
-  const formattedPrice = typeof rawPrice === 'string' ? rawPrice : `S/. ${numericPrice}`;
+  const formattedPrice = typeof rawPrice === 'string' ? rawPrice.replace(/S\/\.\s*/g, 'S/ ') : `S/ ${numericPrice}`;
   
   // El mejor descuento vigente sale de los packs dinámicamente
   const maxDiscount = mejorDescuento();
@@ -81,6 +81,7 @@ export default function ProductCard({
       style={{
         display: 'flex',
         flexDirection: 'column',
+        height: '100%',
         backgroundColor: '#FFFFFF',
         border: '1px solid rgba(0, 0, 0, 0.08)',
         borderRadius: '16px',
@@ -165,7 +166,7 @@ export default function ProductCard({
                   textAlign: 'center',
                 }}
               >
-                100% Natural<br />Max Global
+                Bienestar Natural<br />Max Global
               </span>
             </div>
           )}
@@ -274,14 +275,19 @@ export default function ProductCard({
           </span>
         )}
 
-        {/* Nombre a ancho completo */}
+        {/* Nombre a ancho completo (reserva 2 líneas y corta a 2 líneas máximo) */}
         <h3
           className="mg-product-card-title"
           style={{
             fontSize: 'var(--fs-md)',
             color: 'var(--text-strong)',
             margin: '0 0 2px',
-            lineHeight: 'var(--lh-snug)',
+            lineHeight: '1.3',
+            height: '2.6em',
+            display: '-webkit-box',
+            WebkitLineClamp: 2,
+            WebkitBoxOrient: 'vertical',
+            overflow: 'hidden',
           }}
         >
           <Link
@@ -396,7 +402,7 @@ export default function ProductCard({
                   fontWeight: 900,
                 }}
               >
-                S/. {partnerPriceFrom}
+                S/ {partnerPriceFrom}
               </span>
             </div>
           )}

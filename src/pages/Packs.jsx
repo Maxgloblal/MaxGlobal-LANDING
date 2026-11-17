@@ -102,7 +102,7 @@ export default function Packs() {
                 key={pack.id}
                 id={pack.id}
                 name={pack.nombre}
-                price={pack.price || `S/. ${pack.precio.toLocaleString('es-PE')}`}
+                price={pack.price || `S/ ${pack.precio.toLocaleString('es-PE')}`}
                 lead={pack.lead}
                 cta={pack.cta}
                 featured={pack.destacado}
@@ -162,7 +162,7 @@ export default function Packs() {
                   <td className="mg-cell mg-cell-row">Precio</td>
                   {packs.map((p) => (
                     <td key={p.id} className={`mg-cell ${p.destacado ? 'mg-cell-gold' : ''}`}>
-                      S/. {p.precio.toLocaleString()}
+                      S/ {p.precio.toLocaleString()}
                     </td>
                   ))}
                 </tr>

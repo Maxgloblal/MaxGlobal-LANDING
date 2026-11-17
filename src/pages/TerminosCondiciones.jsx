@@ -130,7 +130,7 @@ export default function TerminosCondiciones() {
               6. Precios, Moneda y Pedidos
             </h2>
             <p>
-              Todos los precios de venta al público expuestos en el sitio web están expresados en <strong>Soles (S/.)</strong> e incluyen los impuestos de ley aplicables. Los socios acceden a precios de descuento según la categoría del pack activo. Los pedidos se procesan y coordinan de forma directa y personalizada a través del canal oficial de WhatsApp.
+              Todos los precios de venta al público expuestos en el sitio web están expresados en <strong>Soles (S/)</strong> e incluyen los impuestos de ley aplicables. Los socios acceden a precios de descuento según la categoría del pack activo. Los pedidos se procesan y coordinan de forma directa y personalizada a través del canal oficial de WhatsApp.
             </p>
           </section>
 

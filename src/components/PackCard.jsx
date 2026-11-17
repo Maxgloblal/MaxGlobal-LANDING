@@ -103,7 +103,7 @@ export default function PackCard({
               lineHeight: 'var(--lh-normal)',
             }}
           >
-            Te llevas S/. {valor.toLocaleString('es-PE')} en producto
+            Te llevas S/ {valor.toLocaleString('es-PE')} en producto
           </span>
         </div>
       )}

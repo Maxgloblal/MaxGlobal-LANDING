@@ -1,6 +1,6 @@
 import React, { useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { MessageCircle, ArrowRight, ChevronLeft, ChevronRight, BadgeCheck, Truck, Wallet, TrendingUp } from 'lucide-react';
+import { MessageCircle, ArrowRight, ChevronLeft, ChevronRight } from 'lucide-react';
 import CatalogBanners from '../components/CatalogBanners';
 import ProductCard from '../components/ProductCard';
 import { EMPRESA, PACKS } from '../config';
@@ -145,64 +145,6 @@ export default function Portada() {
         </div>
       </section>
 
-      {/* 3. Barra de Confianza (Beneficios del Manual de Marca) */}
-      <section
-        className="mg-trust-section"
-        style={{
-          backgroundColor: 'var(--surface-sunken)',
-          borderBottom: '1px solid var(--border-subtle)',
-          padding: 'var(--sp-6) 0 var(--sp-8)',
-          position: 'relative',
-        }}
-      >
-        <div className="mg-container">
-          <div className="mg-trust-grid">
-            <div className="mg-trust-card">
-              <div className="mg-badge-3d-green">
-                <BadgeCheck size={26} color="#FFFFFF" strokeWidth={2.4} />
-              </div>
-              <div>
-                <strong style={{ display: 'block', fontSize: 'var(--fs-sm)', color: 'var(--text-strong)' }}>
-                  Productos 100% naturales
-                </strong>
-              </div>
-            </div>
-
-            <div className="mg-trust-card">
-              <div className="mg-badge-3d-gold">
-                <Truck size={26} color="#FFFFFF" strokeWidth={2.4} />
-              </div>
-              <div>
-                <strong style={{ display: 'block', fontSize: 'var(--fs-sm)', color: 'var(--text-strong)' }}>
-                  Envíos a todo el Perú
-                </strong>
-              </div>
-            </div>
-
-            <div className="mg-trust-card">
-              <div className="mg-badge-3d-green">
-                <Wallet size={26} color="#FFFFFF" strokeWidth={2.4} />
-              </div>
-              <div>
-                <strong style={{ display: 'block', fontSize: 'var(--fs-sm)', color: 'var(--text-strong)' }}>
-                  Descuento de por vida para socios
-                </strong>
-              </div>
-            </div>
-
-            <div className="mg-trust-card">
-              <div className="mg-badge-3d-gold">
-                <TrendingUp size={26} color="#FFFFFF" strokeWidth={2.4} />
-              </div>
-              <div>
-                <strong style={{ display: 'block', fontSize: 'var(--fs-sm)', color: 'var(--text-strong)' }}>
-                  Comisiones hasta 10 niveles
-                </strong>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
 
       {/* 4. Cinta de productos (Reemplaza cuadrícula de 4) */}
       <section
@@ -413,7 +355,7 @@ export default function Portada() {
                 <span>01</span>
               </div>
               <h3>Eliges tu pack</h3>
-              <p>Desde S/. 120. Cada uno incluye producto y define hasta cuántos niveles cobras.</p>
+              <p>Desde S/ 120. Cada uno incluye producto y define hasta cuántos niveles cobras.</p>
             </article>
 
             {/* Paso 2 */}
@@ -541,11 +483,11 @@ export default function Portada() {
                       loading="lazy"
                     />
                     <h3>{pack.nombre}</h3>
-                    <b>S/. {pack.precio.toLocaleString('es-PE')}</b>
+                    <b>S/ {pack.precio.toLocaleString('es-PE')}</b>
 
                     {valorProd ? (
                       <span className="tl">
-                        Te llevas S/. {valorProd.toLocaleString('es-PE')} en producto
+                        Te llevas S/ {valorProd.toLocaleString('es-PE')} en producto
                       </span>
                     ) : (
                       <span className="tl ph2">&nbsp;</span>

@@ -91,7 +91,7 @@ export default function LibroReclamaciones() {
       '',
       '--- 2. DETALLE DEL BIEN CONTRATADO ---',
       `Tipo de Bien          : ${formData.tipoBien}`,
-      `Monto Reclamado       : S/. ${formData.montoReclamado || '0.00'}`,
+      `Monto Reclamado       : S/ ${formData.montoReclamado || '0.00'}`,
       `Descripción           : ${formData.descripcionBien}`,
       '',
       '--- 3. DETALLE DE LA RECLAMACIÓN ---',
@@ -131,7 +131,7 @@ export default function LibroReclamaciones() {
       `*Domicilio:* ${formData.domicilio} (${formData.provincia}, ${formData.departamento})`,
       formData.esMenor ? `*Apoderado:* ${formData.nombreApoderado} (DNI: ${formData.dniApoderado})` : null,
       ``,
-      `*Bien:* ${formData.tipoBien} - Monto: S/. ${formData.montoReclamado || '0.00'}`,
+      `*Bien:* ${formData.tipoBien} - Monto: S/ ${formData.montoReclamado || '0.00'}`,
       `*Descripción:* ${formData.descripcionBien}`,
       ``,
       `*Tipo:* ${formData.tipoReclamacion.toUpperCase()}`,
@@ -152,7 +152,7 @@ export default function LibroReclamaciones() {
       `CONSUMIDOR: ${formData.nombres} (${formData.tipoDoc} ${formData.numeroDoc})\n` +
       `Correo: ${formData.email} | Tel: ${formData.telefono}\n` +
       `Domicilio: ${formData.domicilio} - ${formData.provincia}, ${formData.departamento}\n\n` +
-      `BIEN: ${formData.tipoBien} - Monto: S/. ${formData.montoReclamado || '0.00'}\n` +
+      `BIEN: ${formData.tipoBien} - Monto: S/ ${formData.montoReclamado || '0.00'}\n` +
       `Descripción: ${formData.descripcionBien}\n\n` +
       `TIPO: ${formData.tipoReclamacion.toUpperCase()}\n` +
       `Detalle: ${formData.detalle}\n` +
@@ -614,7 +614,7 @@ export default function LibroReclamaciones() {
 
               <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: 'var(--sp-4)' }}>
                 <div>
-                  <label className="mg-label">Monto Reclamado (S/.)</label>
+                  <label className="mg-label">Monto Reclamado (S/)</label>
                   <input
                     type="number"
                     step="0.01"
