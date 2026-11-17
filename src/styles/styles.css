@@ -11,7 +11,7 @@
    ============================================================ */
 
 html, body {
-  overflow-x: hidden;
+  overflow-x: clip;
   width: 100%;
   -webkit-text-size-adjust: 100%;
 }
@@ -861,47 +861,81 @@ html, body {
 }
 
 /* ============================================================
-   TAREA-76: Portada Comercial (Banners, Cintas y Secciones)
+   TAREA-77: AnnouncementBar y Barra de Confianza
    ============================================================ */
 
-/* 1. TickerBand (Cintas de marquesina continua) */
-.tk {
-  background: linear-gradient(90deg, #B8924A, var(--brand-gold) 50%, #B8924A);
+/* 1. AnnouncementBar (Barra de anuncios fija arriba de SiteHeader) */
+.mg-announcement-bar {
+  height: 38px;
+  background: linear-gradient(90deg, #B8924A, var(--brand-gold, #D1AD68) 50%, #B8924A);
   color: #1A1A1A;
-  overflow: hidden;
-  white-space: nowrap;
   font-family: var(--font-subtitle);
   font-weight: 700;
-  font-size: 0.9rem;
-  letter-spacing: 0.06em;
+  font-size: 13.5px;
+  letter-spacing: 0.04em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 var(--sp-4);
+  position: relative;
   user-select: none;
+  overflow: hidden;
+}
+
+.mg-announcement-inner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   width: 100%;
 }
-.tk-in {
-  display: inline-flex;
+
+.mg-announcement-desktop {
+  display: flex;
   align-items: center;
-  animation: mv 38s linear infinite;
-  padding: 10px 0;
-  width: max-content;
+  justify-content: center;
+  gap: 14px;
+  white-space: nowrap;
 }
-.tk span {
-  padding: 0 18px;
+
+.mg-announcement-dot {
+  font-weight: 900;
+  font-size: 16px;
+  opacity: 0.7;
 }
-.tk i {
-  font-style: normal;
-  color: #FFFFFF;
+
+.mg-announcement-mobile {
+  display: none;
+  white-space: nowrap;
+  text-align: center;
 }
-.tk.dk {
-  background: #1A1A1A;
-  color: var(--gold-200);
+
+@media (max-width: 899px) {
+  .mg-announcement-desktop {
+    display: none !important;
+  }
+  .mg-announcement-mobile {
+    display: block !important;
+  }
 }
-.tk.dk i {
-  color: var(--brand-gold);
+
+/* 1b. Barra de Confianza (Grilla 4 en escritorio, 2x2 en celular) */
+.mg-trust-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--sp-5);
+  align-items: stretch;
 }
-.tk.dk .tk-in {
-  animation-direction: reverse;
-  padding: 16px 0;
-  font-size: 1rem;
+@media (max-width: 900px) {
+  .mg-trust-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--sp-4);
+  }
+}
+@media (max-width: 480px) {
+  .mg-trust-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--sp-3);
+  }
 }
 
 @keyframes mv {
@@ -1497,9 +1531,11 @@ html, body {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .tk-in,
   .pr-in {
     animation: none !important;
+  }
+  .mg-announcement-mobile {
+    transition: none !important;
   }
 }
 

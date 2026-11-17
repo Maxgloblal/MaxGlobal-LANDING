@@ -51,7 +51,15 @@ test.describe('Portada Comercial (TAREA-76) E2E', () => {
     await expect(page).toHaveURL(/.*productos\/cafe-moringa/);
   });
 
-  test('4 · Los 5 packs de afiliación se muestran y cada uno lleva a /registro?pack=<id>', async ({ page }) => {
+  test('4 · Los 5 packs de afiliación se muestran con sus insignias oficiales icono-*.svg y llevan a /registro?pack=<id>', async ({ page }) => {
+    // Escuchar solicitudes de red para verificar 0 errores 404 en las imágenes de packs
+    const failedImages = [];
+    page.on('response', (response) => {
+      if (response.url().includes('/images/packs/icono-') && response.status() === 404) {
+        failedImages.push(response.url());
+      }
+    });
+
     await page.goto('/');
 
     for (let i = 0; i < PACK_IDS.length; i++) {
@@ -61,12 +69,68 @@ test.describe('Portada Comercial (TAREA-76) E2E', () => {
       await expect(packCard).toBeVisible();
       await expect(packCard).toHaveAttribute('href', `/registro?pack=${id}`);
       await expect(packCard).toContainText(name);
+
+      const iconImg = packCard.locator('img');
+      await expect(iconImg).toHaveAttribute('src', `/images/packs/icono-${id}.svg`);
     }
+
+    expect(failedImages).toHaveLength(0);
 
     // Gold debe tener su etiqueta destacada
     const goldCard = page.locator('[data-testid="pack-card-gold"]');
     await expect(goldCard).toHaveClass(/hl/);
     await expect(goldCard).toContainText('El más elegido');
+  });
+
+  test('4b · No queda ninguna cinta TickerBand (.tk) en la portada', async ({ page }) => {
+    await page.goto('/');
+    await expect(page.locator('.tk')).toHaveCount(0);
+    await expect(page.locator('.tk-in')).toHaveCount(0);
+  });
+
+  test('4c · Barra de anuncios AnnouncementBar está arriba del SiteHeader en /, /productos y /packs-de-afiliacion', async ({ page }) => {
+    const rutas = ['/', '/productos', '/packs-de-afiliacion'];
+
+    for (const r of rutas) {
+      await page.goto(r);
+      const bar = page.locator('[data-testid="announcement-bar"]');
+      await expect(bar).toBeVisible();
+
+      // Verificar que precede al header en el DOM
+      const isBeforeHeader = await page.evaluate(() => {
+        const barEl = document.querySelector('[data-testid="announcement-bar"]');
+        const headEl = document.querySelector('header');
+        return barEl && headEl && (barEl.compareDocumentPosition(headEl) & Node.DOCUMENT_POSITION_FOLLOWING);
+      });
+      expect(Boolean(isBeforeHeader)).toBe(true);
+    }
+
+    // Al scrollear hacia abajo, el header se mantiene sticky sin huecos
+    await page.goto('/');
+    await page.evaluate(() => window.scrollTo(0, 300));
+    await page.waitForTimeout(200);
+
+    const headerBox = await page.locator('header').boundingBox();
+    expect(headerBox.y).toBeCloseTo(0, 1);
+  });
+
+  test('4d · Barra de confianza aparece debajo de la intro con los 4 beneficios', async ({ page }) => {
+    await page.goto('/');
+
+    const trustSection = page.locator('.mg-trust-section');
+    await expect(trustSection).toBeVisible();
+
+    await expect(trustSection).toContainText('Productos 100% naturales');
+    await expect(trustSection).toContainText('Envíos a todo el Perú');
+    await expect(trustSection).toContainText('Descuento de por vida para socios');
+    await expect(trustSection).toContainText('Comisiones hasta 10 niveles');
+
+    // En celular (390px), la grilla es 2x2
+    await page.setViewportSize({ width: 390, height: 844 });
+    const cols = await page.locator('.mg-trust-grid').evaluate((el) => {
+      return window.getComputedStyle(el).gridTemplateColumns.split(' ').length;
+    });
+    expect(cols).toBe(2);
   });
 
   test('5 · Dos caminos (Quiero comprar / Quiero emprender) navegan correctamente', async ({ page }) => {
@@ -134,12 +198,12 @@ test.describe('Portada Comercial (TAREA-76) E2E', () => {
     }
   });
 
-  test('10 · prefers-reduced-motion: animaciones de cintas pausadas / quietas', async ({ page }) => {
+  test('10 · prefers-reduced-motion: animaciones de cinta de productos pausadas / quietas', async ({ page }) => {
     await page.emulateMedia({ reducedMotion: 'reduce' });
     await page.goto('/');
 
-    const tickerIn = page.locator('.tk-in').first();
-    const anim = await tickerIn.evaluate((el) => window.getComputedStyle(el).animationName);
+    const prIn = page.locator('.pr-in').first();
+    const anim = await prIn.evaluate((el) => window.getComputedStyle(el).animationName);
     expect(['none', ''].includes(anim)).toBe(true);
   });
 });

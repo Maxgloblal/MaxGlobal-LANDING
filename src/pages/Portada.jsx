@@ -1,8 +1,7 @@
 import React, { useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { MessageCircle, ArrowRight, ChevronLeft, ChevronRight } from 'lucide-react';
+import { MessageCircle, ArrowRight, ChevronLeft, ChevronRight, BadgeCheck, Truck, Wallet, TrendingUp } from 'lucide-react';
 import CatalogBanners from '../components/CatalogBanners';
-import TickerBand from '../components/TickerBand';
 import ProductCard from '../components/ProductCard';
 import { EMPRESA, PACKS } from '../config';
 import { getProductos, valorEnProducto } from '../data/catalogo';
@@ -52,13 +51,10 @@ export default function Portada() {
 
   return (
     <div style={{ backgroundColor: 'var(--surface-page)', position: 'relative', overflow: 'hidden' }}>
-      {/* 1. Cinta dorada superior */}
-      <TickerBand variant="gold" />
-
-      {/* 2. Carrusel de 3 banners de marca */}
+      {/* 1. Carrusel de 3 banners de marca */}
       <CatalogBanners banners={PORTADA_BANNERS} testIdPrefix="portada-banner" />
 
-      {/* 3. Intro (Hero sin foto, con stats card dinámica) */}
+      {/* 2. Intro (Hero sin foto, con stats card dinámica) */}
       <section className="mg-intro">
         <div className="mg-container ig">
           <div>
@@ -144,6 +140,65 @@ export default function Portada() {
             <div>
               <b>10</b>
               <span>niveles</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* 3. Barra de Confianza (Beneficios del Manual de Marca) */}
+      <section
+        className="mg-trust-section"
+        style={{
+          backgroundColor: 'var(--surface-sunken)',
+          borderBottom: '1px solid var(--border-subtle)',
+          padding: 'var(--sp-6) 0 var(--sp-8)',
+          position: 'relative',
+        }}
+      >
+        <div className="mg-container">
+          <div className="mg-trust-grid">
+            <div className="mg-trust-card">
+              <div className="mg-badge-3d-green">
+                <BadgeCheck size={26} color="#FFFFFF" strokeWidth={2.4} />
+              </div>
+              <div>
+                <strong style={{ display: 'block', fontSize: 'var(--fs-sm)', color: 'var(--text-strong)' }}>
+                  Productos 100% naturales
+                </strong>
+              </div>
+            </div>
+
+            <div className="mg-trust-card">
+              <div className="mg-badge-3d-gold">
+                <Truck size={26} color="#FFFFFF" strokeWidth={2.4} />
+              </div>
+              <div>
+                <strong style={{ display: 'block', fontSize: 'var(--fs-sm)', color: 'var(--text-strong)' }}>
+                  Envíos a todo el Perú
+                </strong>
+              </div>
+            </div>
+
+            <div className="mg-trust-card">
+              <div className="mg-badge-3d-green">
+                <Wallet size={26} color="#FFFFFF" strokeWidth={2.4} />
+              </div>
+              <div>
+                <strong style={{ display: 'block', fontSize: 'var(--fs-sm)', color: 'var(--text-strong)' }}>
+                  Descuento de por vida para socios
+                </strong>
+              </div>
+            </div>
+
+            <div className="mg-trust-card">
+              <div className="mg-badge-3d-gold">
+                <TrendingUp size={26} color="#FFFFFF" strokeWidth={2.4} />
+              </div>
+              <div>
+                <strong style={{ display: 'block', fontSize: 'var(--fs-sm)', color: 'var(--text-strong)' }}>
+                  Comisiones hasta 10 niveles
+                </strong>
+              </div>
             </div>
           </div>
         </div>
@@ -396,10 +451,7 @@ export default function Portada() {
         </div>
       </section>
 
-      {/* 7. Cinta oscura */}
-      <TickerBand dark={true} />
-
-      {/* 8. Plan de compensación (4 Bonos) + 5 Packs */}
+      {/* 6. Plan de compensación (4 Bonos) + 5 Packs */}
       <section className="packs" id="plan">
         <div className="mg-container">
           <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--sp-3)', marginBottom: 'var(--sp-2)' }}>
@@ -482,7 +534,7 @@ export default function Portada() {
                   >
                     {pack.etiqueta && <span className="rb">{pack.etiqueta}</span>}
                     <img
-                      src={`/images/packs/insignia-${pack.id}.svg`}
+                      src={`/images/packs/icono-${pack.id}.svg`}
                       alt={`Insignia de ${pack.nombre}`}
                       width="96"
                       height="96"
@@ -607,9 +659,6 @@ export default function Portada() {
           </div>
         </div>
       </section>
-
-      {/* 10. Cinta dorada antes del footer */}
-      <TickerBand variant="gold" />
     </div>
   );
 }

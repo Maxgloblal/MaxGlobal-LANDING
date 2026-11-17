@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import { BrowserRouter, Routes, Route, useLocation, useSearchParams } from 'react-router-dom';
+import AnnouncementBar from './components/AnnouncementBar';
 import SiteHeader from './components/SiteHeader';
 import SiteFooter from './components/SiteFooter';
 import WhatsAppFab from './components/WhatsAppFab';
@@ -165,6 +166,7 @@ export default function App() {
         <RefTracker />
         <RouteManager />
         <div style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
+          <AnnouncementBar />
           <SiteHeader />
           <main style={{ flex: 1 }}>
             <Routes>
