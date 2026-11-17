@@ -884,6 +884,11 @@ html, body {
   margin-top: 6px;
 }
 
+@keyframes mv {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
 /* 3. Product Marquee Ribbon */
 .pr-mq-outer {
   position: relative;
@@ -904,7 +909,12 @@ html, body {
   display: flex;
   gap: 22px;
   width: max-content;
+  animation: mv 48s linear infinite;
   padding: 8px 12px 20px;
+}
+.pr-mq:hover .pr-in,
+.pr-in:hover {
+  animation-play-state: paused;
 }
 .pr-mq-card {
   flex: 0 0 280px;

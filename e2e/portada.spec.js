@@ -51,6 +51,35 @@ test.describe('Portada Comercial (TAREA-76) E2E', () => {
     await expect(page).toHaveURL(/.*productos\/cafe-moringa/);
   });
 
+  test('3b · La cinta de productos (.pr-in) se desplaza con animación mv y se pausa al hacer hover', async ({ page }) => {
+    await page.goto('/');
+
+    const ribbon = page.locator('.pr-in');
+    await expect(ribbon).toBeVisible();
+
+    // 1. Confirmar animation-name "mv"
+    const animName = await ribbon.evaluate((el) => window.getComputedStyle(el).animationName);
+    expect(animName).toBe('mv');
+
+    // 2. Confirmar que su transform cambia después de ~1.5 s
+    const transformT0 = await ribbon.evaluate((el) => window.getComputedStyle(el).transform);
+    await page.waitForTimeout(1500);
+    const transformT1 = await ribbon.evaluate((el) => window.getComputedStyle(el).transform);
+    expect(transformT1).not.toBe(transformT0);
+
+    // 3. Con hover encima de la cinta: el transform no cambia
+    await page.locator('.pr-mq').hover();
+    await page.waitForTimeout(200);
+
+    const playState = await ribbon.evaluate((el) => window.getComputedStyle(el).animationPlayState);
+    expect(playState).toBe('paused');
+
+    const transformPaused0 = await ribbon.evaluate((el) => window.getComputedStyle(el).transform);
+    await page.waitForTimeout(1500);
+    const transformPaused1 = await ribbon.evaluate((el) => window.getComputedStyle(el).transform);
+    expect(transformPaused1).toBe(transformPaused0);
+  });
+
   test('4 · Los 5 packs de afiliación se muestran con sus insignias oficiales icono-*.svg y llevan a /registro?pack=<id>', async ({ page }) => {
     // Escuchar solicitudes de red para verificar 0 errores 404 en las imágenes de packs
     const failedImages = [];
